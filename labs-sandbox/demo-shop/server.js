@@ -195,6 +195,59 @@ const server = http.createServer((req, res) => {
     });
   }
 
+  // ── PRODUCT-SPEC §5 — static handler (web/) ─────────────────────────────
+  // Placed after every /api/* branch and before the hello catch-all below.
+  // No /api/* line above was touched or reordered.
+  const WEB_ROOT = path.join(__dirname, 'web');
+
+  // Route -> file in web/. Names are literals from this table, never user input,
+  // so nothing can resolve outside web/; the prefix check below is belt-and-braces
+  // (§5 note 1: do not rely on URL normalisation for %2e%2e%2f-style requests).
+  // Anything not listed falls through to the catch-all, unchanged (§5, §8 note 2).
+  const staticFile = (() => {
+    const p = url.pathname;
+    if (p === '/') return 'index.html';
+    if (p === '/products') return 'products.html';
+    if (p === '/cart') return 'cart.html';
+    if (p.startsWith('/product/')) return 'product.html'; // :id parsed client-side
+    if (p === '/styles.css') return 'styles.css';
+    if (p === '/app.js') return 'app.js';
+    return null;
+  })();
+
+  if (staticFile) {
+    const notFound = () => {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('not found');
+    };
+
+    const resolved = path.resolve(WEB_ROOT, staticFile);
+    const rel = path.relative(WEB_ROOT, resolved);
+    if (!rel || rel === '..' || rel.startsWith('..' + path.sep) || path.isAbsolute(rel)) {
+      return notFound(); // path would escape web/
+    }
+
+    const contentType = rel.endsWith('.css')
+      ? 'text/css'
+      : rel.endsWith('.js')
+        ? 'text/javascript'
+        : 'text/html; charset=utf-8'; // page routes are .html
+
+    fs.readFile(resolved, (err, buf) => {
+      if (err) {
+        // web/ may not exist yet (frontend owns it) -> 404, never crash.
+        if (err.code === 'ENOENT') return notFound();
+        console.error('static read failed:', resolved, err);
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('internal server error');
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': contentType, 'Content-Length': buf.length });
+      res.end(buf);
+    });
+    return;
+  }
+
   sendJson(res, 200, { hello: '9expert demo shop' });
 });
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Shop — Home</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="home">
+  <header class="site-header">
+    <div class="container head-row">
+      <a class="brand" href="/">Demo Shop</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/products">Catalog</a>
+        <a href="/product/1">Featured</a>
+        <a href="/cart">Cart <span class="nav-badge" id="nav-cart-count" hidden></span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Demo Shop</h1>
+      <p>A small storefront wired to the demo-shop API. Browse the catalog, open a product, fill the cart, and watch the server do the totals.</p>
+      <p class="cta">
+        <a class="btn" href="/products">Browse the catalog</a>
+      </p>
+    </section>
+
+    <h2 class="section-title">Featured</h2>
+    <div id="featured" class="grid" aria-live="polite"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      Demo data only. Catalog resets on server restart.
+    </div>
+  </footer>
+</body>
+</html>
