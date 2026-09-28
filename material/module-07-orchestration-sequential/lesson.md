@@ -67,7 +67,7 @@ Anatomy:
 | `implement exactly what DESIGN.md specifies` | สัญญากลางคือแหล่งความจริงเดียว |
 | `Report a 5-line summary` | คุม output ให้กระชับ |
 
-## 5. Headless ทดสอบ (✅ tested — runs/module-07/)
+## 5. Headless ทดสอบ (✅ tested — runs/module-07/run-005)
 
 ```bash
 claude -p "<prompt ข้อ 4>" --permission-mode acceptEdits --max-turns 30
@@ -75,8 +75,11 @@ claude -p "<prompt ข้อ 4>" --permission-mode acceptEdits --max-turns 30
 
 (`acceptEdits` ให้เขียนไฟล์โค้ด/docs อัตโนมัติ — ระวัง: ไม่คลุม `.claude/**` ดู run-003)
 
+> ⚠️ **ข้อค้นพบจากการรันจริง (run-005):** ใน headless จะ **ปฏิเสธ Bash ทุกคำสั่งโดย default** — Stage Implement ทำได้แค่ "เขียนโค้ดแบบ static" โดยไม่ได้ `node --check`/รันจริง และ Reviewer จะแจ้งเองว่า "not executed" ถ้า lab ของคุณต้องรันคำสัง ให้เพิ่มเช่น `--allowedTools "Bash(node:*)"` **หรือรันใน TUI แล้วกดอนุมัติ** (แนะนำสำหรับผู้เรียน)
+
 ## กับดักที่พบบ่อย
 
 - ไม่บังคับ task list → Leader ทำเงียบ ๆ จบหมด ผู้เรียนไม่เห็นพัฒนาการ
 - ไม่ห้าม "Fix nothing" ในด่าน Review → ด่านตรวจแก้โค้ดเอง ทำให้ trace ไม่ได้ว่าใครแก้อะไร
 - ปล่อย Stage 1 เขียนสเปกกำกวม → Stage 2 เดา → Review จับ mismatch ได้ (จริง ๆ อันหลังคือ "บทเรียนที่ดี" ให้สอนเรื่องคุณภาพสัญญากลาง)
+- **รัน headless แล้วคิดว่า "โค้ดถูกรันทดสอบแล้ว"** → ไม่ใช่! ดู warning "not executed" จาก Reviewer เสมอ (เคสจริง run-005)

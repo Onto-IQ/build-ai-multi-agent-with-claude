@@ -21,6 +21,65 @@ function sendJson(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
+const MAX_BODY_BYTES = 8192;
+const MAX_NAME_LENGTH = 120;
+const MAX_AMOUNT = 1000000;
+const ALLOWED_FIELDS = ['name', 'price', 'stock'];
+
+function errorBody(code, message, details) {
+  return { error: { code, message, details } };
+}
+
+// DESIGN.md §5 — collects every failing rule (V2-V5) so one round-trip tells
+// the client all that is wrong. V1 is handled by the caller: it is about the
+// body as a whole, not a field. Order of details follows V2 -> V5.
+function validateProduct(body) {
+  const details = [];
+
+  if (body.name === undefined || body.name === null) {
+    details.push({ field: 'name', rule: 'REQUIRED_NON_EMPTY_STRING' });
+  } else if (typeof body.name !== 'string') {
+    details.push({ field: 'name', rule: 'TYPE_STRING' });
+  } else if (body.name.trim() === '') {
+    details.push({ field: 'name', rule: 'REQUIRED_NON_EMPTY_STRING' });
+  } else if (body.name.trim().length > MAX_NAME_LENGTH) {
+    details.push({ field: 'name', rule: 'LENGTH_TOO_LONG' });
+  }
+
+  if (body.price === undefined || body.price === null) {
+    details.push({ field: 'price', rule: 'REQUIRED_NUMBER' });
+  } else if (typeof body.price !== 'number' || !Number.isFinite(body.price)) {
+    details.push({ field: 'price', rule: 'TYPE_NUMBER' });
+  } else if (body.price <= 0) {
+    details.push({ field: 'price', rule: 'NUMBER_NOT_POSITIVE' });
+  } else if (body.price > MAX_AMOUNT) {
+    details.push({ field: 'price', rule: 'NUMBER_TOO_LARGE' });
+  }
+
+  if (body.stock === undefined || body.stock === null) {
+    details.push({ field: 'stock', rule: 'REQUIRED_INTEGER' });
+  } else if (!Number.isInteger(body.stock)) {
+    details.push({ field: 'stock', rule: 'TYPE_INTEGER' });
+  } else if (body.stock < 0) {
+    details.push({ field: 'stock', rule: 'INTEGER_NEGATIVE' });
+  } else if (body.stock > MAX_AMOUNT) {
+    details.push({ field: 'stock', rule: 'INTEGER_TOO_LARGE' });
+  }
+
+  if (Object.prototype.hasOwnProperty.call(body, 'id')) {
+    details.push({ field: 'id', rule: 'FORBIDDEN_FIELD' });
+  }
+
+  // 'id' is reported above as FORBIDDEN_FIELD, so it must not also be UNKNOWN_FIELD.
+  for (const key of Object.keys(body)) {
+    if (!ALLOWED_FIELDS.includes(key) && key !== 'id') {
+      details.push({ field: key, rule: 'UNKNOWN_FIELD' });
+    }
+  }
+
+  return details;
+}
+
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
 
@@ -33,23 +92,94 @@ const server = http.createServer((req, res) => {
   if (url.pathname.startsWith('/api/products/') && req.method === 'GET') {
     const id = Number(url.pathname.split('/').pop());
     const item = products.find((p) => p.id === id);
-    if (!item) return sendJson(res, 200, { error: 'not found' });
+    if (!item) return sendJson(res, 404, errorBody('NOT_FOUND', `no product with id ${id}`, []));
     return sendJson(res, 200, item);
+  }
+
+  if (url.pathname === '/api/products' && req.method === 'POST') {
+    let raw = '';
+    let responded = false;
+    req.on('data', (c) => {
+      if (responded) return;
+      raw += c;
+      if (Buffer.byteLength(raw, 'utf8') > MAX_BODY_BYTES) {
+        responded = true;
+        sendJson(res, 400, errorBody('BODY_TOO_LARGE', 'request body exceeds 8192 bytes', []));
+      }
+    });
+    req.on('end', () => {
+      if (responded) return;
+      responded = true;
+
+      let body;
+      try {
+        body = JSON.parse(raw);
+      } catch (err) {
+        return sendJson(res, 400, errorBody('INVALID_JSON', 'request body must be valid JSON', []));
+      }
+      if (body === null || typeof body !== 'object' || Array.isArray(body)) {
+        return sendJson(res, 400, errorBody('INVALID_JSON', 'request body must be valid JSON', []));
+      }
+
+      const details = validateProduct(body);
+      if (details.length > 0) {
+        return sendJson(res, 400, errorBody('VALIDATION_FAILED', 'product failed validation', details));
+      }
+
+      try {
+        const name = body.name.trim();
+        const id = products.reduce((max, p) => (p.id > max ? p.id : max), 0) + 1;
+        const product = { id, name, price: body.price, stock: body.stock };
+        products.push(product);
+        res.writeHead(201, {
+          'Content-Type': 'application/json; charset=utf-8',
+          Location: `/api/products/${id}`,
+        });
+        res.end(JSON.stringify(product));
+      } catch (err) {
+        console.error('POST /api/products failed:', err);
+        sendJson(res, 500, errorBody('INTERNAL_ERROR', 'internal error while creating product', []));
+      }
+    });
+    return;
+  }
+
+  if (url.pathname.startsWith('/api/products/') && req.method === 'POST') {
+    return sendJson(res, 404, errorBody('NOT_FOUND', 'no route for this method and path', []));
   }
 
   if (url.pathname === '/api/cart/total' && req.method === 'POST') {
     let raw = '';
     req.on('data', (c) => (raw += c));
     req.on('end', () => {
-      const body = JSON.parse(raw);
+      let body;
+      try {
+        body = JSON.parse(raw);
+      } catch (err) {
+        return sendJson(res, 400, errorBody('INVALID_JSON', 'request body must be valid JSON', []));
+      }
+      if (body === null || typeof body !== 'object' || Array.isArray(body)) {
+        return sendJson(res, 400, errorBody('INVALID_JSON', 'request body must be a JSON object', []));
+      }
+      if (!Array.isArray(body.itemIds)) {
+        return sendJson(res, 400, errorBody('VALIDATION_FAILED', 'itemIds must be an array of product ids', [
+          { field: 'itemIds', rule: 'TYPE_ARRAY' },
+        ]));
+      }
+
       // total = ราคารวมของ itemIds + ส่วนลดรวม
       let total = 0;
       for (const id of body.itemIds) {
         const p = products.find((x) => x.id === id);
+        if (!p) {
+          return sendJson(res, 404, errorBody('NOT_FOUND', `no product with id ${id}`, []));
+        }
         total += p.price;
       }
-      if (body.discountPercent) {
-        total = total - (total * body.discountPercent) / 100;
+      const discountPercent = Number(body.discountPercent);
+      if (Number.isFinite(discountPercent) && discountPercent !== 0) {
+        const clamped = Math.min(100, Math.max(0, discountPercent));
+        total = total - (total * clamped) / 100;
       }
       sendJson(res, 200, { total });
     });
