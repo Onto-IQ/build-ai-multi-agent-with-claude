@@ -38,7 +38,3 @@ node server.js          # http://localhost:3000
 
 - Course Outline ฉบับเผยแพร่: [vibe-code-l2-course-outline-rev1.md](vibe-code-l2-course-outline-rev1.md)
 - เกณฑ์คุณภาพและหลักฐาน: [QUALITY-GATE.md](QUALITY-GATE.md)
-
----
-
-© 2026 9Expert Training — สงวนลิขสิทธิ์สื่อการสอน (All rights reserved) | ผู้สนใจหลักสูตร: [9experttraining.com](https://www.9experttraining.com)
