@@ -1,5 +1,5 @@
 /**
- * 9Expert Demo Shop — แอปตัวอย่างสำหรับ Workshop ของหลักสูตร VIBE-CODE-L2
+ * Demo Shop — แอปตัวอย่างสำหรับ Workshop ของหลักสูตร VIBE-CODE-L2
  * Pure Node.js (ไม่มี dependencies) — รันด้วย: node server.js
  *
  * หมายเหตุสำหรับผู้สอน: โค้ดนี้มี "ช่องโหว่/bug ที่ปลูกไว้ตั้งใจ" สำหรับให้ทีม Agent ตรวจพบ
@@ -249,7 +249,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  sendJson(res, 200, { hello: '9expert demo shop' });
+  sendJson(res, 200, { hello: 'demo shop' });
 });
 
 server.listen(PORT, () => {
