@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
+// ⚠️ FAKE token — ปลูกไว้ตั้งใจเพื่อสอน (Module 9) ไม่ใช่ key จริงของผู้ให้บริการใด
 const ADMIN_TOKEN = 'sk-live-9expert-secret-2026';
 
 const products = JSON.parse(

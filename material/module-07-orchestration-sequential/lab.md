@@ -1,4 +1,4 @@
-# Workshop 4 — Sequential Pipeline (Design → Build → Test)
+# Workshop 4 — Sequential Pipeline (Design → Build → Review)
 
 ## บริบท
 

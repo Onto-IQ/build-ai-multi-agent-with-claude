@@ -12,17 +12,17 @@
 
 | Module | หัวข้อ | Workshop |
 |---|---|---|
-| [module-01](material/module-01-agent-foundations/lesson.md) | สถาปัตยกรรม AI Agent และแนวโน้มปัจจุบัน | — |
-| [module-02](material/module-02-environment-setup/lesson.md) | Technical Environment & Workspace Setup | — |
-| [module-03](material/module-03-swarm-parallel/lesson.md) | Parallel Execution ด้วย Swarm Pattern | Workshop 1 |
-| [module-04](material/module-04-specialty-agents/lesson.md) | การสร้าง Specialty Agent | Workshop 2 |
-| [module-05](material/module-05-skills/lesson.md) | Skills และ Extended Tools | — |
-| [module-06](material/module-06-mcp/lesson.md) | MCP (Model Context Protocol) | Workshop 3 (Guided Demo) |
-| [module-07](material/module-07-orchestration-sequential/lesson.md) | Orchestration & Sequential Workflows | Workshop 4 |
-| [module-08](material/module-08-context-memory/lesson.md) | Context Engineering & Persistent Memory | — |
-| [module-09](material/module-09-guardrails-hooks/lesson.md) | Production Guardrails, Permissions & Hooks | Workshop 5 |
-| [module-10](material/module-10-capstone/lesson.md) | Capstone Project (Leader-first) | Workshop 6 (Capstone) |
-| [module-11](material/module-11-deploy-preflight/lesson.md) | Production Deployment & Pre-flight | (ต่อเนื่อง Capstone) |
+| [module-01](module-01-agent-foundations/lesson.md) | สถาปัตยกรรม AI Agent และแนวโน้มปัจจุบัน | — |
+| [module-02](module-02-environment-setup/lesson.md) | Technical Environment & Workspace Setup | — |
+| [module-03](module-03-swarm-parallel/lesson.md) | Parallel Execution ด้วย Swarm Pattern | Workshop 1 |
+| [module-04](module-04-specialty-agents/lesson.md) | การสร้าง Specialty Agent | Workshop 2 |
+| [module-05](module-05-skills/lesson.md) | Skills และ Extended Tools | — |
+| [module-06](module-06-mcp/lesson.md) | MCP (Model Context Protocol) | Workshop 3 (Guided Demo) |
+| [module-07](module-07-orchestration-sequential/lesson.md) | Orchestration & Sequential Workflows | Workshop 4 |
+| [module-08](module-08-context-memory/lesson.md) | Context Engineering & Persistent Memory | — |
+| [module-09](module-09-guardrails-hooks/lesson.md) | Production Guardrails, Permissions & Hooks | Workshop 5 |
+| [module-10](module-10-capstone/lesson.md) | Capstone Project (Leader-first) | Workshop 6 (Capstone) |
+| [module-11](module-11-deploy-preflight/lesson.md) | Production Deployment & Pre-flight | (ต่อเนื่อง Capstone) |
 
 ## Sandbox สำหรับฝึก
 

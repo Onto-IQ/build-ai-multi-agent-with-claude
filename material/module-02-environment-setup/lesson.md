@@ -64,7 +64,7 @@ claude -p "ตอบกลับมาเป๊ะ ๆ ว่า: CLAUDE-OK"
 ## ขั้นที่ 4 — เตรียม Workspace มาตรฐานของคอร์ส
 
 ```bash
-cd D:\dev\github\Onto-IQ\build-ai-multi-agent-with-claude
+cd <โฟลเดอร์โปรเจกต์ของคุณ>   # เช่น cd ~/projects/build-ai-multi-agent-with-claude
 git status
 code .
 ```

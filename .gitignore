@@ -1,0 +1,22 @@
+# OS (Windows + macOS dev)
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editors / IDE
+.vscode/
+.idea/
+
+# Node (sandbox เป็น zero-dependency แต่กันอนาคต)
+node_modules/
+npm-debug.log*
+
+# ZCode workspace artifacts (แผนงาน session ภายใน)
+.zcode/
+
+# เอกสารภายใน (ประวัติการตรวจทาน — เก็บไว้ในเครื่องเท่านั้น)
+vibe-code-l2-course-outline-internal.md
+
+# Local Claude Code settings (permission ที่ grant ไว้ต่อเครื่อง)
+.claude/settings.local.json
+labs-sandbox/demo-shop/.claude/settings.local.json

@@ -43,7 +43,7 @@
 | เกณฑ์ | สถานะ | หลักฐาน |
 |---|---|---|
 | A1 — 11 lessons | ✅ ผ่าน | `ls material/*/lesson.md` = 11 ไฟล์ |
-| A2 — prompts + anatomy | ✅ ผ่าน | M3/M4/M6/M7/M10 มี prompt + ตาราง anatomy; ทุก module มีคำสั่ง/ขั้นตอนกำกับ |
+| A2 — prompts + anatomy | ✅ ผ่าน | ทุก module มี prompt/คำสั่งพร้อมคำอธิบายทีละส่วน; M3/M4/M7 มีตาราง anatomy เต็มรูป, M6/M10 มีตารางประกอบที่ทำหน้าที่ใกล้เคียง |
 | A3 — 6 labs + acceptance criteria | ✅ ผ่าน | `ls material/*/lab.md` = 6 (W1–W6) ทุกไฟล์มีเกณฑ์ผ่านแบบ checkbox |
 | A4 — deliverable ตรวจได้จริง | ✅ ผ่าน | ไฟล์ agent, DESIGN.md, gate exit code, git commits (ดู runs/) |
 | B1 — รันจริงทุก Workshop | ✅ ผ่าน | runs 001–007: W1, W2, W3, W4, W5, W6 + smoke ทั้งหมดรันจริงกับ claude CLI 2.1.284 |
@@ -62,4 +62,4 @@
 | A5 — คู่ prompt TH/EN ครบทุก module | ✅ ผ่าน | ทุก lesson มี prompt คู่ภาษา; labs มีเวอร์ชันไทยที่ tested (run-008–012); README มีตารางสรุปประสบการณ์ Thai/EN |
 | B5 — ทดสอบ Thai prompting เพิ่ม 5 รอบ | ✅ ผ่าน | run-008 (Thai swarm), run-009 (Thai agent creation), run-010 (Thai Unicode via MCP), run-011 (Thai pipeline+mutation check), run-012 (Thai ambiguous — instructive FAIL) — รวม ~18 ครั้งรันจริงตลอดคอร์ส |
 
-**ผลรวม: ผ่านทุกเกณฑ์ (17/17) — หลักฐานครบทุกข้อ** | ข้อค้นพบระหว่างทางทั้งหมดถูกหมุนกลับเข้าสื่อการสอน (M2/M4/M7/M11 + runs/)
+**ผลรวม: ผ่านทุกเกณฑ์ (19/19 — A1–A4, B1–B5, C1–C6, D1–D3) — หลักฐานครบทุกข้อ** | ข้อค้นพบระหว่างทางทั้งหมดถูกหมุนกลับเข้าสื่อการสอน (M2/M4/M7/M11 + runs/)

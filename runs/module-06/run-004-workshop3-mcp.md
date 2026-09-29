@@ -12,7 +12,7 @@
 ```bash
 claude mcp add shop-echo -- node mcp/echo-server.js
 # → "Added stdio MCP server shop-echo ... to local config"
-# → File modified: C:\Users\phakk\.claude.json [project: ...demo-shop]  (scope=local บันทึกที่ ~/.claude.json ต่อโปรเจกต์)
+# → File modified: ~/.claude.json [project: <working directory ของ demo-shop>]  (output จริงระบุ path เครื่องผู้รัน — generic แทน)  (scope=local บันทึกที่ ~/.claude.json ต่อโปรเจกต์)
 ```
 
 3. **ตรวจ:**
