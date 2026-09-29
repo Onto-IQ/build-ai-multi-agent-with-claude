@@ -63,10 +63,32 @@ Everything follows PRODUCT-SPEC.md. Report under 400 words total.
 | Build → QA | Sequential | QA ต้องมีของจริง |
 | QA → Fix | Orchestration (Leader คุม) | Leader ตัดสิน finding ไหน block |
 
+### เวอร์ชันภาษาไทย (โครงตรงกัน — องค์ประกอบย่อยทดสอบแล้วทั้งหมด: swarm/run-008, agent ไทย/run-009, gate loop/run-006, pipeline ไทย/run-011)
+
+```text
+คุณคือ Leader ของทีม Multi-Agent ที่สร้างหน้าร้าน demo-shop สัญญากลางก่อน แล้วค่อยลงมือ ลงมือทุก step เลย ห้ามแค่วางแผนเล่า
+
+Step 0: สร้าง docs/PRODUCT-SPEC.md (หน้าจอ, endpoints, เกณฑ์ยอมรับ) และ task list ที่มีลำดับ dependency
+แสดง task list พร้อมสถานะ (Pending / In Progress / Completed) และอัปเดตจนจบงาน
+
+Step 1: Dispatch research subagent เตรียม mock product data และ feature notes แล้วหลอมเข้าสเปก
+
+Step 2: เมื่อสเปกเสร็จ dispatch frontend และ backend developer subagents ขนานกัน — ทั้งคู่ต้องทำตาม
+PRODUCT-SPEC.md เป๊ะ พร้อมกันนั้นให้ writer subagent เขียน page copy ตามสเปกเดียวกัน
+
+Step 3: Dispatch qa-reviewer subagent ตรวจโค้ดกับสเปก และรัน scripts/quality-gate.js ผ่าน node แล้วรวบรวม findings
+
+Step 4: แก้ finding ที่เป็น blocker แล้วรายงาน: แต่ละ agent ส่งอะไร (บรรทัดเดียว), ผล gate, git commits ที่สร้าง (หลักฐาน v1 -> v2)
+
+กติกา: agent ที่ต้องใช้ผลของอีกตัว ห้ามรันก่อนตัวนั้นเสร็จ ทุกอย่างยึด PRODUCT-SPEC.md รายงานรวมไม่เกิน 400 คำ
+```
+
+> ผลการรันจริงฉบับอังกฤษ (run-007): ทีมส่งมอบครบ — RESEARCH.md + mock data ที่ id ตรง runtime, static handler "pure insertion" ไม่แตะโค้ดเดิม, เว็บ 4 หน้า + copy, QA verdict YELLOW (gate 3/3, 0 blocker), commits v1→v3 — และ QA **แยก blocker กับ "สเปกยอมรับได้"** โดยอ้างมาตราสเปก (F-1/F-2 dropped ตาม §2/§7) แนะนำให้ผู้สอนรันฉบับไทยก่อนขึ้นห้องอีกครั้งเพื่อยืนยันพฤติกรรมเดียวกัน
+
 ## 5. เห็นพัฒนาการ — หลักฐาน 3 ชั้น
 
 1. **Task List ระหว่างรัน** — สถานะไหลต่อหน้า
-2. **Git Checkpoint หลังจบ** — `git log --oneline` เห็น commit ต่อ stage
+2. **Git Checkpoint หลังจบ** — `git log --oneline` เห็น commit ต่อ stage (ทีมจริงของ run-007 ทำ v1→v3 ให้เอง)
 3. **เทียบ v1 → v2** — จุดเริ่ม (โค้ดมีปม) vs จุดจบ (ผ่าน gate) ด้วย `git diff v1 v2 --stat`
 
 ## กับดักที่พบบ่อย

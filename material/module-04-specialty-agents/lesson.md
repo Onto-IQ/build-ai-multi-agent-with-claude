@@ -82,6 +82,23 @@ Keep the whole file under 40 lines.
 
 จุดที่ต้องสอน: prompt นี้ **กำหนดทั้ง frontmatter และโครง body** ให้ครบ — Claude จะเขียนไฟล์ถูกรูปแบบตั้งแต่ครั้งเดียว (✅ tested: runs/module-04/)
 
+### เวอร์ชันภาษาไทย (✅ tested — runs/module-04/run-009: สร้าง `product-writer` agent ผ่านรอบเดียว)
+
+```text
+สร้างไฟล์ subagent ใหม่ที่ .claude/agents/product-writer.md ภายใน working directory ปัจจุบัน ห้ามถามคำถามเพิ่ม สร้างไฟล์เลย
+
+Frontmatter: name ใช้ product-writer / description อธิบายว่าเป็นนักเขียนคำโฆษณาสินค้าภาษาไทยสำหรับร้านนี้ ใช้ proactively เมื่อต้องเขียนหรือแก้คำบรรยายสินค้า / tools ให้แค่ Read, Grep, Glob / model ใช้ sonnet
+Body: system prompt มี 3 ส่วน — วิธีทำงาน (อ่านสินค้าจริงจาก data ก่อนเขียน ไม่มั่วสเปก/ราคา), รูปแบบผลลัพธ์ (ชื่อสินค้า, คำโฆษณาไม่เกิน 2 ประโยค, จุดขาย 3 ข้อ), ข้อจำกัด (อ่านอย่างเดียว ห้ามแก้ไฟล์)
+ไฟล์ทั้งหมดไม่เกิน 40 บรรทัด
+```
+
+**สิ่งที่ต้องสังเกตจากการรันจริง:**
+
+- สั่งภาษาไทย แต่ **ค่า machine-readable ออกมาถูกต้องเสมอ** — `name: product-writer` (Latin kebab-case ไม่ใช่ชื่อไทย), `tools`/`model` ตรงสเปก
+- `description` เป็นภาษาไทยได้เต็มที่ และวลี trigger **"ใช้ proactively เมื่อ..."** ถูกวางตำแหน่งถูกต้อง
+- **Body ของ system prompt จะถูกเขียนเป็นอังกฤษโดย default** แม้สั่งไทย — ถ้าอยากได้ body ภาษาไทย ให้เติม "เขียน body เป็นภาษาไทย" ใน prompt
+- ⚠️ **กรณีศึกษาตรงข้าม (run-012):** สั่งแบบกำกวม "สร้าง subagent ให้โปรเจกต์นี้หน่อย แบบที่ใช้งานได้เลย" กับ `--max-turns 8` → **หมดเทิร์น ไม่มีไฟล์ ไม่มีคำตอบ** — ความกำกวมเป็นอุปสรรคในทุกภาษา (เทียบ run-003 ที่ EN กำกวมแล้ว "ถามกลับ")
+
 ## 6. ตรวจว่า Agent ถือกำเนิดถูกต้อง (✅ tested — runs/module-04/run-003)
 
 **ใน TUI:** รัน prompt ข้อ 5 แล้ว **กดอนุมัติ** เมื่อ Claude ขอ permission เขียนไฟล์ `.claude/**` (ระบบจะไม่ยอม auto-approve ไฟล์กลุ่มนี้เพราะเป็น executable config — เป็นมาตรการกัน prompt injection ที่ดี)

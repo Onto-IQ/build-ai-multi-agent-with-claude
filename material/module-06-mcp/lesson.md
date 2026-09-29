@@ -42,11 +42,13 @@ claude mcp list
 **ขั้น 3 — เรียก tool ผ่าน Agent จริง:**
 
 ```bash
-claude -p "Use the shop-echo MCP server's echo tool with the text 'hello-multi-agent' and tell me exactly what came back." --allowedTools "mcp__shop-echo__echo" --max-turns 10
+EN: claude -p "Use the shop-echo MCP server's echo tool with the text 'hello-multi-agent' and tell me exactly what came back." --allowedTools "mcp__shop-echo__echo" --max-turns 10
+TH: claude -p "เรียกใช้ tool echo ของ MCP server ชื่อ shop-echo โดยส่งข้อความ 'สวัสดี 9Expert — ทดสอบภาษาไทย ก-ฮ ๐๑๒๓' แล้วรายงานให้ตรงว่าได้รับข้อความกลับมาแบบไหน ถอดรหัสถูกหรือเพี้ยน" --allowedTools "mcp__shop-echo__echo" --max-turns 10
 ```
 
 - ชื่อ tool ของ MCP ใน Claude Code = `mcp__<ชื่อ server>__<ชื่อ tool>` — จุดนี้แหละที่ทำให้ Permission ระบุได้ละเอียดระดับ tool
-- ผลที่คาดหวัง: Claude รายงานว่า echo ส่งกลับ `hello-multi-agent`
+- ผลที่คาดหวัง: EN → echo กลับ `hello-multi-agent`; TH → echo กลับข้อความไทยครบถ้วน
+- **Thai Unicode ผ่าน MCP ครบสาย (✅ tested — runs/module-06/run-010):** ส่งไทยผสมเลขไทย (๐๑๒๓) ผ่าน tool call → server → กลับ context **ไม่มี mojibake** — Agent ตรวจระดับ codepoint ให้เอง (U+002D hyphen ไม่เพี้ยนเป็น em dash, U+0E60–0E63 ถูกต้อง) เมื่อเราถามว่า "ถอดรหัสถูกหรือเพี้ยน"
 
 **ขั้น 4 — ผูกให้ Specialty Agent (จาก Module 4):**
 

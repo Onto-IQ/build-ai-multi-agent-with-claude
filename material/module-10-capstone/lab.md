@@ -37,7 +37,9 @@ claude
 
 ## Solution แนวทาง
 
-โครง prompt เต็มอยู่ใน `lesson.md` หัวข้อ 3 — หัวใจ 3 จุด: (1) Step 0 สัญญากลางก่อน (2) กติกา dependency "must NOT run before" (3) คุมรายงานรวม
+โครง prompt เต็มอยู่ใน `lesson.md` หัวข้อ 3 (มีทั้ง **EN — ✅ tested run-007** และ **TH version**) — หัวใจ 3 จุด: (1) Step 0 สัญญากลางก่อน (2) กติกา dependency "must NOT run before" (3) คุมรายงานรวม
+
+> หลักฐานการรันจริงฉบับ EN (run-007): ทีมส่งมอบ v1→v3, QA verdict YELLOW แยก blocker/สเปกยอมรับได้, gate 3/3 — ผู้สอนควรรันฉบับไทยทดลองก่อนสอน 1 รอบ (โครงเดียวกัน) แล้วเก็บ transcript ตามแบบ runs/
 
 ## ต่อยอด (หลังจบคอร์ส)
 

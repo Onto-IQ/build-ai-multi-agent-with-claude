@@ -12,6 +12,16 @@ Before deploying: run scripts/quality-gate.js — if it fails, stop and report.
 After deploying: give me the production URL and the commit that was deployed.
 ```
 
+**เวอร์ชันไทย (โครงตรงกัน):**
+
+```text
+Deploy โปรเจกต์นี้ขึ้น Vercel โดยใช้ Vercel connection
+ก่อน deploy: รัน scripts/quality-gate.js — ถ้าไม่ผ่านให้หยุดและรายงานเลย
+หลัง deploy: ส่ง production URL และ commit ที่ถูก deploy มาให้ผม
+```
+
+> ทั้งสองเวอร์ชันมีโครงเดียวกัน: Pre-flight ฝังใน prompt (`ก่อน deploy: รัน gate — ไม่ผ่านให้หยุด`) + traceability (`ส่ง commit ที่ขึ้นจริงมาให้`) — หลักไม่ต่างกันตามภาษา
+
 - `Before deploying: run gate` = Pre-flight ฝังใน prompt (ผ่านด่านก่อนขึ้นจริง)
 - `give me the commit` = traceability — รู้ว่าขึ้นโค้ดเวอร์ชันไหน
 
@@ -39,8 +49,10 @@ After deploying: give me the production URL and the commit that was deployed.
 | Agent อ้างว่าทำแล้วแต่ไม่ได้ทำ | run-003 (เขียนไฟล์) | Verify บน filesystem |
 | ทีมขนานแล้วไปคนละทิศ | บทเรียนข้อ 11 | Shared contract ก่อน dispatch |
 | Output ท่วม context | W1 ถ้าไม่จำกัดความยาว | คุมรูปแบบ/ความยาวรายงาน |
-| Loop ไม่รู้จบ | ต้นทุน 15× | Stop Condition + `--max-turns` |
-| Permission ที่ไม่คิดว่าต้องอนุมัติ | run-003 (`.claude/**`) | ทดลองก่อนขึ้นจริง / ดู denial ด้วย stream-json |
+| Loop ไม่รู้จบ / turn budget หมดก่อนลงมือ | run-006 (max-turns 15 หมดตอนสำรวจ) | Stop Condition + `--max-turns` ให้พอ + สั่ง "ทำก่อนสำรวจเยอะ" |
+| Permission ที่ไม่คิดว่าต้องอนุมัติ | run-003 (`.claude/**`), run-005 (Bash ใน headless) | ทดลองก่อนขึ้นจริง / ดู denial ด้วย stream-json |
+| **Kill process แบบกว้างขณะระบบทำงาน** | run-007 attempt 1 (`taskkill node.exe` ฆ่า capstone ตาย) | Kill ด้วย **PID เฉพาะ** (`netstat -ano` หา port → `taskkill //PID`) |
+| Port ชนกับ server เดิม | run-007 (gate จับ "port busy" ถูกต้อง) | ปิด server เก่าก่อนรัน gate / ใช้ PORT อื่น |
 
 ## 4. ปิดคอร์ส — เทียบพัฒนาการ
 

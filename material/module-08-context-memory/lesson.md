@@ -46,7 +46,12 @@ memory: project
 ## 4. ทำตามทีละขั้น (10 นาที)
 
 1. เพิ่ม `memory: project` ให้ `code-researcher` ใน sandbox
-2. รัน: `claude -p "Ask the code-researcher subagent to remember: 'demo-shop uses plain Node http, no deps — do not suggest Express unless asked.'" --allowedTools "Task" --max-turns 10`
+2. รัน (อังกฤษ/ไทยใช้ได้เหมือนกัน):
+
+```text
+EN: Ask the code-researcher subagent to remember: 'demo-shop uses plain Node http, no deps — do not suggest Express unless asked.'
+TH: ให้ subagent code-researcher จดไว้ว่า: 'demo-shop ใช้ Node http ล้วน ไม่มี dependency — ห้ามแนะนำ Express เว้นแต่จะขอ'
+```
 3. ปิดเซสชัน → เปิดใหม่ → ถามซ้ำเรื่อง Express แล้วสังเกตว่า agent อ้างข้อตกลงที่จำไว้
 
 ## 5. กับดักที่พบบ่อย

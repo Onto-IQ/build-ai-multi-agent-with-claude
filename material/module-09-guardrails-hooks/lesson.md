@@ -66,6 +66,17 @@ Hook = คำสั่ง shell ที่รันอัตโนมัติท
 
 **Cost Gate** — คุมงบ Token: วัดจาก output ของ run (`--output-format json` มี usage/total cost) + ตั้งกติกา effort scaling ใน prompt (งานง่าย = 1 agent, ยาก = หลาย agent) — จำตัวเลข Module 1: 15× token คือราคาของทีม
 
+**Prompt "แก้ตาม gate" — คู่ภาษา (✅ tested — runs/module-09/run-006 วงจรจบ 3/3 PASS):**
+
+```text
+EN: scripts/quality-gate.js currently FAILS with these findings: [วาง findings]
+    Fix server.js minimally so the gate passes: ... Do not run any commands. Do not ask questions.
+TH: scripts/quality-gate.js ตอนนี้ FAIL ด้วย findings เหล่านี้: [วาง findings]
+    แก้ server.js ให้น้อยที่สุดเพื่อให้ gate ผ่าน: ... ห้ามรันคำสั่ง ห้ามถามคำถาม
+```
+
+(เวอร์ชันไทยเต็มที่ใช้รันจริงอยู่ใน lab.md — ผลวงจร: gate 2/3 FAIL จาก server crash → แก้ → 3/3 PASS)
+
 ## 5. ทำตามทีละขั้น (อยู่ใน lab.md)
 
 ลำดับ: ตรวจ sandbox ด้วยตา → สร้าง hook ดัก crash → สร้าง quality-gate script → รัน agent พร้อม gate → สังเกตการถูกบล็อกและการ feedback กลับ

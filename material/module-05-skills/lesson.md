@@ -57,7 +57,19 @@ skills: release-checklist
 ## 4. ทำตามทีละขั้น (10 นาที)
 
 1. สร้างโฟลเดอร์: `mkdir -p .claude/skills/release-checklist` (ใน `labs-sandbox/demo-shop`)
-2. เขียน `SKILL.md` ตามตัวอย่างข้อ 2 (หรือสั่ง Claude: *"Create a skill at .claude/skills/release-checklist/SKILL.md with the steps in my message"* แล้ววาง 4 ขั้นตอน)
+2. เขียน `SKILL.md` ตามตัวอย่างข้อ 2 — หรือสั่ง Claude สร้างให้ (✅ tested pattern จาก Module 4):
+
+```text
+EN: Create a skill at .claude/skills/release-checklist/SKILL.md. Frontmatter: name
+release-checklist, description "Use before releasing the demo-shop". Body: the 4
+steps I list next. <วาง 4 ขั้นตอน>
+
+TH: สร้าง skill ที่ .claude/skills/release-checklist/SKILL.md — frontmatter: name
+release-checklist, description "Use before releasing the demo-shop" (ให้เป็นอังกฤษ)
+body เขียน 4 ขั้นตอนที่ผมให้ต่อจากนี้ <วาง 4 ขั้นตอน>
+```
+
+> ทิปจากการทดสอบคอร์ส: `description` ของ skill ควรเป็นภาษาอังกฤษ (ตัว trigger อ่านง่ายที่สุด) ส่วน body ที่เป็นขั้นตอนใช้ไทยได้ตามถนัดทีม — และอย่าลืมว่าการเขียนไฟล์ใน `.claude/**` จะ**มี permission prompt ให้กดอนุมัติ** (ดู run-003)
 3. ทดสอบ trigger:
 
 ```bash

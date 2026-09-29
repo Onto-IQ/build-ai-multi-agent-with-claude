@@ -24,6 +24,8 @@ Demo นำโดยผู้สอน ผู้เรียนพิมพ์�
 
 ชื่อ tool ใน permission คือ `mcp__shop-echo__echo` — underscore สองตัวคั่น server กับ tool
 
+**เวอร์ชันไทยของคำสั่งขั้น 3 (✅ tested — runs/module-06/run-010 พร้อมการทดสอบ Unicode ไทย):** ใช้คำสั่ง TH ใน `lesson.md` หัวข้อ 4 — และลองเปลี่ยนข้อความเป็นภาษาของคุณเอง (ผลรันจริง: ไทย+เลขไทยผ่านครบทั้งสาย ไม่มี mojibake)
+
 ## Solution (ท้าทาย)
 
 ใน `handleToolsCall` เพิ่ม case `shout` ที่ return `{ content: [{ type: 'text', text: String(text).toUpperCase() }] }` และเพิ่ม entry ใน `tools/list`
