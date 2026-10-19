@@ -46,7 +46,7 @@
 
 * **ระบบปฏิบัติการ:** Windows 10 / 11, macOS หรือ Linux
 * **Software:** Node.js (Latest LTS version), Git, VS Code หรือ Cursor
-* **Claude Platform:** Claude Account และ Claude for Desktop / Claude Code CLI
+* **Claude Platform:** Claude Account และ Claude Code CLI (ติดตั้งผ่าน npm ใช้งานผ่าน Terminal)
 * **Subscription:** สิทธิ์การใช้งาน Claude Pro / Team (ทางผู้จัดเตรียม Account ให้ระหว่างอบรม)
 
 ---

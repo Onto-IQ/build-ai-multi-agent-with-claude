@@ -48,3 +48,33 @@ claude
 ```
 
 ผลจริง: agent **จับข้อขัดแย้งระหว่าง prompt กับสเปก** (สเปกบังคับ `stock` ด้วย — ไม่ใช่แค่ name+price) แล้วแจ้งการตัดสินใจอย่างโปร่งใส, อ้างมาตรา § ทุก assertion, ทำ **mutation check** (พัง server บนสำเนา temp ทีละจุดเพื่อพิสูจน์ว่าเทสต์จับของเสียได้ — ทุก mutation ออก exit 2), และ 3/3 ผ่านเมื่อผู้สอนรันซ้ำ — บทเรียน: **สัญญากลางที่ดีช่วยแก้ความคลาดเคลื่อนของคนสั่งได้เอง**
+
+**ต่อยอด 2 — เขียน Workflow ตรวจ demo-shop แบบมี agent หักล้าง (ใช้ความรู้หัวข้อ 6 ของ lesson)**
+
+โจทย์ปลายเปิด: เขียน workflow `.claude/workflows/find-and-refute.js` ของคุณเอง 2 เฟส — **Find:** agent หนึ่งสแกน `server.js` แล้วรายงาน "ปัญหาที่พบ" เป็น array (แต่ละข้อมี title + บรรทัด + เหตุผล) · **Refute:** ต่อหนึ่งปัญหา ให้อีก agent อ่านโค้ดจริงแล้วพยายาม**หักล้าง** — รายงานเฉพาะข้อที่รอดจากการหักล้าง (เทคนิค adversarial verification: agent ที่หาเจอ ≠ ข้อสรุปจริง)
+
+เกณฑ์ผ่าน:
+
+- [ ] ไฟล์มี `export const meta` ครบ และรันจนจบโดยไม่ throw
+- [ ] ผลลัพธ์รวมทุก finding และ**กรอง `null` ก่อนใช้** — workflow ไม่พังแม้ agent บางตัวล้ม
+- [ ] มีอย่างน้อยหนึ่งข้อที่ refuter ยืนยันว่าจริง (demo-shop ปลูกปม QA ไว้จริง — รายการอยู่ใน lesson ของ Module 9 ฝั่งผู้สอน)
+- [ ] ผู้เรียนอธิบายได้ว่าทำไมต้องมีตัวหักล้าง และข้อไหนโดนหักล้างจนตกไป
+
+Hint (โครง — API ทุกตัวผ่านการทดสอบแล้วใน run-015/run-020 เติม schema กับ prompt ให้เต็มเอง):
+
+```javascript
+export const meta = { name: "find-and-refute", description: "ตรวจหาปัญหาแล้วให้อีก agent หักล้าง", phases: [{ title: "Find" }, { title: "Refute" }] };
+const FINDINGS = { /* schema: object มี findings เป็น array ของ { title, file, line, why } */ };
+const VERDICT = { /* schema: object มี { holds: boolean, reason: string } */ };
+phase("Find");
+const found = await agent("สแกน server.js … รายงานปัญหาเป็น JSON", { model: "haiku", schema: FINDINGS });
+phase("Refute");
+const survived = [];
+for (const f of found.findings ?? []) {
+  const v = await agent(`อ่าน server.js แล้วพยายามหักล้างข้อนี้: ${JSON.stringify(f)} — ยังยืนได้ตอบ holds: true`, { model: "haiku", schema: VERDICT });
+  if (v?.holds) survived.push(f);
+}
+console.log(`รอด ${survived.length}/${(found.findings ?? []).length} ข้อ`);
+```
+
+> ⚠️ **กัน "เกมกับตัวตรวจ"** (สำคัญถ้าคุณขยายโจทย์เป็น "วนแก้จนเทสต์ผ่าน"): workflow ที่ถูกสั่งให้ทำให้ตัวตรวจเขียว อาจเลือกแก้ *ตัวตรวจ* แทน *โค้ด* — เช่น เพิ่มไฟล์เทสต์ลง `exclude` ของ tsconfig ทำให้เขียวทั้งที่โค้ดยังเป็นบั๊ก (มีรายงานจากผู้ใช้จริงว่าเกิดได้ แม้ prompt ห้ามแก้ไฟล์เทสต์ เพราะมันไปแก้ config แทน) ให้ระบุใน prompt ว่า **ห้ามแก้ไฟล์ config ของตัวตรวจทุกชนิด** (`tsconfig.json`, `vitest.config.*`, กฎ linter, CI) และ**อ่าน diff ของ config ก่อนรับงานทุกครั้ง** — ถ้าใช้ซ้ำบ่อย กันแบบแน่นอนด้วย permission rule `deny Edit(tsconfig.json)` (Module 9) · อยากให้การหักล้างแข็งแรงขึ้น: ส่ง refuter 3 ตัวอิสระกันด้วย `parallel` แล้วใช้เสียงข้างมาก (แลกกับค่าใช้จ่าย ×3)

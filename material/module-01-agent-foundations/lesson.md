@@ -21,6 +21,8 @@
 
 > ประเด็นสอน: พลังของ Agent ไม่ได้มาจาก "โมเดลฉลาดขึ้น" แต่มาจาก **การให้โมเดลมีมือและตา** (tools + feedback loop)
 
+> อัปเดตปี 2026: เส้นแบ่งนี้ในแอป Claude ฝั่งผู้บริโภคเริ่มเบลอ — แชทเดียวรันงาน agentic ได้เอง แต่ dev workflow จริง (แก้โค้ด รัน test จัดการ repo) ยังอยู่ที่ Claude Code CLI ซึ่งเป็นเครื่องมือของหลักสูตรนี้
+
 ## 2. แผนที่ Multi-Agent ใน Claude Code (ปี 2026)
 
 | รูปแบบ | คืออะไร | เหมาะกับ | ต้นทุน |
@@ -28,6 +30,10 @@
 | **Subagent** | สำเนาของ Claude ที่มี context/system prompt/tools แยกของตัวเอง ทำงานเสร็จแล้วสรุปผลส่งกลับผู้เรียก | งานโฟกัสที่ output ยาวมาก (สแกนโค้ด, ค้นคว้า) ไม่อยากให้บดบังบทสนทนาหลัก | ต่ำสุด |
 | **Agent Teams** (experimental) | หลาย instance ของ Claude Code คุยกันเองได้ มี Task List ร่วม มี Team Lead คนหนึ่ง | งานซับซ้อนที่ต้องถกเถียง/ประสานข้ามสายงาน | สูง |
 | **Background Agents** | Subagent ที่รันอยู่เบื้องหลัง ไม่บล็อกการสนทนา | รัน test suite / build ยาว ๆ ระหว่างทำงานอื่น | ปานกลาง |
+
+**แผนที่ผลิตภัณฑ์หลัง "one Claude" (ก.ย. 2026):** Anthropic รวมโหมดทำงาน agentic เข้ากับ chat ในแอป Claude แล้ว — แชทเดียวจัดการทั้งคำถามเร็วและงานอัตโนมัติ (knowledge work) ส่วน **Claude Code คือ dev surface ที่รันบนเครื่องผู้ใช้** สำหรับ workflow การพัฒนาซอฟต์จริง — หลักสูตรนี้ทำงานบน Claude Code ทั้งหมด
+
+> Agent Teams: มีเอกสารทางการแล้ว (code.claude.com/docs/en/agent-teams) แต่ยังเป็น experimental ปิดโดย default — ต้องเปิดด้วย env var `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
 
 **Built-in Subagents ที่ต้องรู้จักก่อนสร้างของตัวเอง:**
 

@@ -2,9 +2,11 @@
 
 > **เวลา:** ~30 นาที | **ผลลัพธ์ที่คาดหวัง:** งานของทีม Agent ขึ้น Production (Vercel) และผู้เรียนมี Checklist ติดตัวก่อนส่งมอบทุกครั้ง
 
-## 1. Deploy ด้วย Claude Integration
+## 1. Deploy ด้วย Claude Code Integration (Vercel)
 
-แนวทางที่หลักสูตรใช้: เชื่อม Vercel เข้ากับ Claude (Connector) แล้วให้ Leader รับผิดชอบขั้นตอน deploy ผ่าน Prompt — ผู้เรียนสั่งเป้าหมาย ไม่ใช่พิมพ์คำสั่ง deploy เอง
+แนวทางที่หลักสูตรใช้: deploy ผ่าน **Claude Code** — เชื่อม Vercel เข้ากับ Claude Code เป็น Connector/Integration แล้วให้ Leader รับผิดชอบขั้นตอน deploy ผ่าน Prompt — ผู้เรียนสั่งเป้าหมาย ไม่ใช่พิมพ์คำสั่ง deploy เอง
+
+> ⚠️ **สถานะการทดสอบ (ตรงไปตรงมา):** Workshop นี้**ยังไม่เคยรันจริงเพื่อเก็บ transcript** ใน `runs/` (ต่างจาก Workshop อื่น) — ทั้ง path Connector นี้และทางเลือก Vercel CLI ด้านล่างต้องทดสอบจริงและเก็บ transcript ก่อนใช้สอนรอบถัดไป (รายละเอียด: รายงานวิจัย `research-2026-10-09-one-claude-impact.md` §4)
 
 ```text
 Deploy this project to Vercel. Use the Vercel connection.

@@ -9,7 +9,7 @@
 | Node.js | LTS (≥ 20) | `node --version` |
 | npm | ≥ 10 | `npm --version` |
 | Git | ใด ๆ ที่ใหม่ | `git --version` |
-| Claude Code CLI | ล่าสุด | `claude --version` |
+| Claude Code CLI | ≥ 2.1.296 (ล่าสุด) | `claude --version` |
 | Editor | VS Code หรือ Cursor | เปิดได้ |
 
 ## ขั้นที่ 1 — ติดตั้ง Claude Code CLI
@@ -25,6 +25,8 @@ claude --version
 ```
 
 ผลลัพธ์ที่คาดหวัง: หมายเลขเวอร์ชัน (เช่น `2.x.x`) — ถ้า error `Cannot find module ... cli.js` แปลว่า PATH ชี้ไป install เก่า (พบบ่อยกับผู้ใช้ mise/nvm ที่เปลี่ยนเวอร์ชัน Node) — วิธีแก้: ติดตั้งซ้ำด้วยคำสั่งข้างบนภายใต้ Node เวอร์ชันปัจจุบัน
+
+เวอร์ชันขั้นต่ำของคอร์สคือ **2.1.296** — ถ้าต่ำกว่าให้อัปเกรดด้วย `claude update` เหตุผล: ครึ่งหนึ่งของประโยชน์ `--debug` (ข้อความเตือนเมื่อ frontmatter ของไฟล์ agent สะกดฟิลด์ผิด พร้อมคำแนะนำ "did you mean ...") มีเฉพาะ v2.1.296 ขึ้นไป (✅ tested — runs/module-04/run-014: บน 2.1.284 เงียบ บน 2.1.302 มีข้อความครบ)
 
 ## ขั้นที่ 2 — ล็อกอินครั้งแรก
 
@@ -101,7 +103,7 @@ git commit -m "course: init workspace + sandbox"
 
 ## ผ่านเกณฑ์ Module นี้เมื่อ
 
-- [ ] `claude --version` แสดงเวอร์ชัน
+- [ ] `claude --version` แสดงเวอร์ชัน ≥ 2.1.296 (ต่ำกว่านี้ให้รัน `claude update` ก่อน)
 - [ ] `claude -p "Reply with exactly: CLAUDE-OK"` ตอบ `CLAUDE-OK`
 - [ ] demo-shop รันและเปิด localhost:3000 ได้
 - [ ] git commit แรกถูกสร้าง
