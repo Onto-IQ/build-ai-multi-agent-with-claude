@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales Insight</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Sales Insight · มีนาคม 2025</p>
+    <h1>ยอดขายหลังทำความสะอาดข้อมูล</h1>
+    <p class="lead">ตัวเลขนี้ใช้ได้เมื่อ quality gate ผ่านแล้วเท่านั้น</p>
+    <section class="cards">
+      <article><h2>ออเดอร์ที่ใช้ได้</h2><p id="orders">…</p></article>
+      <article><h2>รายได้ (บาท)</h2><p id="revenue">…</p></article>
+      <article><h2>ภาคที่นำ</h2><p id="region">…</p></article>
+      <article><h2>ช่องทางที่นำ</h2><p id="channel">…</p></article>
+      <article><h2>สินค้าที่นำ</h2><p id="product">…</p></article>
+    </section>
+    <h2>รายได้ตามภาค</h2>
+    <table>
+      <thead><tr><th>ภาค</th><th>บาท</th></tr></thead>
+      <tbody id="regions"></tbody>
+    </table>
+    <p id="status" class="status"></p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

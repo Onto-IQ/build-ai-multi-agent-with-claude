@@ -19,7 +19,7 @@ vibe-code-l2-course-outline-internal.md
 
 # Local Claude Code settings (permission ที่ grant ไว้ต่อเครื่อง)
 .claude/settings.local.json
-labs-sandbox/demo-shop/.claude/settings.local.json
+sandbox/sales-insight/.claude/settings.local.json
 
 # Agent worktrees (สร้างโดย isolation: worktree — ดู Module 4)
 .claude/worktrees/

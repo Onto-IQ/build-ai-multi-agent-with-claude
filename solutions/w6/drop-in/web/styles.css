@@ -1,0 +1,13 @@
+:root { color-scheme: light; font-family: "Segoe UI", Tahoma, sans-serif; }
+body { margin: 0; background: #f4f1ea; color: #1f2933; }
+main { max-width: 880px; margin: 0 auto; padding: 32px 20px; }
+.eyebrow { letter-spacing: 0.04em; text-transform: uppercase; color: #8a5a00; font-size: 0.8rem; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+article, table { background: white; border: 1px solid #e4dcc8; border-radius: 12px; }
+article { padding: 16px; }
+article h2 { margin: 0 0 8px; font-size: 0.95rem; }
+article p { margin: 0; font-size: 1.4rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; overflow: hidden; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid #f0e8d8; }
+.status { margin-top: 16px; }
+@media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
