@@ -61,18 +61,27 @@ cat .claude/agents/data-researcher.md
 
    คำตอบที่ผ่านต้องมีหมายเลขบรรทัดกำกับทุกประเด็น เช่น `server.js:113` — นั่นคือหลักฐานว่าเอเจนต์เปิดไฟล์อ่านเองจริง ไม่ใช่เดาจากชื่อ endpoint
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: In this folder, create .claude/agents/data-researcher.md.
+In this folder, create .claude/agents/data-researcher.md.
 Frontmatter exactly: name data-researcher; description starts with "Use proactively" and says the agent is read-only; tools Read, Grep, Glob; model sonnet.
 Body sections: Method, Output format with file:line evidence, Constraints that forbid Edit, Write, and Bash.
 Do not change server.js or the CSV.
-TH: ในโฟลเดอร์นี้ ให้สร้าง .claude/agents/data-researcher.md
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ในโฟลเดอร์นี้ ให้สร้าง .claude/agents/data-researcher.md
 frontmatter ต้องตรงนี้: name เป็น data-researcher; description ขึ้นต้น Use proactively และบอกว่าอ่านอย่างเดียว; tools เป็น Read, Grep, Glob; model เป็น sonnet
 เนื้อหามี Method, รูปแบบคำตอบที่อ้าง file:line, และ Constraints ที่ห้าม Edit, Write, Bash
 ห้ามแก้ server.js หรือ CSV
 ```
+
+> 📚 **ทำไมแนะนำ EN:** ฟิลด์ทั้งหมดของไฟล์เอเจนต์ต้องเป็นอังกฤษ (`name`, `tools`, ค่า `model`) — สั่งเป็นอังกฤษจึงตัดขั้นแปลทิ้ง และตัดกับดัก "frontmatter ภาษาไทย" ที่แล็บนี้เตือนไว้ TH ก็ทำได้ (คอร์สทดสอบแล้ว: ค่า machine-readable ออกมาถูกต้องแม้สั่งไทย แต่ body ของ system prompt จะถูกเขียนเป็นอังกฤษตาม default) แต่ต้องเขียนสเปกชัดเป็นพิเศษ
 
 | ส่วน | หน้าที่ |
 |---|---|

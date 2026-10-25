@@ -49,20 +49,27 @@ vercel --prod
 
 4. ปิดงานด้วยหลักฐานสองอย่างที่คุณเก็บเอง: production URL ที่เปิดได้จริง และ commit ที่ขึ้นจริง — จนกว่าจะมีสองอย่างนี้จากรอบจริงหนึ่งรอบ ห้องนี้ยังไม่นับว่า deploy ได้
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
 
-ใช้เมื่อเช็กลิสต์ครบ และทำใน TUI
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: Deploy this Sales Insight app to Vercel with the Vercel connection.
+Deploy this Sales Insight app to Vercel with the Vercel connection.
 Before deploying, run node scripts/quality-gate.js. If it fails, stop and report.
 After deploying, give me the production URL and the commit that was deployed.
 Do not print any sk- value.
-TH: Deploy แอป Sales Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+Deploy แอป Sales Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel
 ก่อน deploy ให้รัน node scripts/quality-gate.js ถ้าไม่ผ่านให้หยุดแล้วรายงาน
 หลัง deploy ส่ง production URL และ commit ที่ขึ้นจริง
 ห้ามพิมพ์ค่าที่ขึ้นต้นด้วย sk-
 ```
+
+> 📚 **ทำไมแนะนำ EN:** ผลลัพธ์ทั้งหมด (URL, commit, ข้อความ error ของ Vercel) เป็นอังกฤษ — สั่งเป็นอังกฤษทำให้รายงานกับหลักฐานอยู่ภาษาเดียวกัน
 
 | ส่วน | หน้าที่ |
 |---|---|

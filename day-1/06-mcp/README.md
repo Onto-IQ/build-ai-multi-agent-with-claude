@@ -55,12 +55,21 @@ claude mcp list
 mcpServers: sales-echo
 ```
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันไทย (แนะนำ):**
 
 ```text
-EN: Use the sales-echo MCP echo tool with the text "hello-sales" and quote exactly what came back.
-TH: เรียก tool echo ของ MCP server ชื่อ sales-echo โดยส่งข้อความ "สวัสดี — ทดสอบ ก-ฮ ๐๑๒๓" แล้วบอกมาตรง ๆ ว่าได้ข้อความกลับแบบใด ตรงทุกตัวหรือเพี้ยน
+เรียก tool echo ของ MCP server ชื่อ sales-echo โดยส่งข้อความ "สวัสดี — ทดสอบ ก-ฮ ๐๑๒๓" แล้วบอกมาตรง ๆ ว่าได้ข้อความกลับแบบใด ตรงทุกตัวหรือเพี้ยน
 ```
+
+**เวอร์ชันอังกฤษ (ใช้ได้เต็มที่):**
+
+```text
+Use the sales-echo MCP echo tool with the text "hello-sales" and quote exactly what came back.
+```
+
+> 📚 **ทำไมแนะนำ TH:** โจทย์ไทยทดสอบสองชั้นในรอบเดียว — การเรียก tool ปกติ และการเดินทางของตัวอักษรไทย+เลขไทยทั้งสาย (คอร์สทดสอบแล้ว: กลับมาตรงทุกตัว ไม่มี mojibake) ส่วน EN ตรวจได้แค่ชั้นแรก
 
 ทำขั้นเรียกเครื่องมือใน TUI จะกดอนุญาตเครื่องมือ MCP ได้เอง ถ้าต้องใช้ headless จริง ๆ ต้องใส่ชื่อเต็มและจำนวนรอบทำงาน (เทิร์น) เช่น `--allowedTools "mcp__sales-echo__echo" --max-turns 10` — แล็บในห้องใช้ TUI
 

@@ -55,12 +55,21 @@ node scripts/quality-gate.js && echo GATE-GREEN
 
 4. หลัง gate เขียว ติดตั้ง hook ตามคำตอบอ้างอิง แล้วลองสั่งคำสั่งต้องห้าม (เช่น ขอให้ลบโฟลเดอร์ด้วย `rm -rf`) — คำสั่งต้องถูกบล็อกพร้อมเหตุผลที่อ่านได้
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: scripts/quality-gate.js currently FAILS. Replace data/sales.csv with a cleaned file and change server.js only enough that all three cases pass. Do not edit scripts/quality-gate.js. Then show me the command output.
-TH: scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data/sales.csv ด้วยไฟล์ที่สะอาด และแก้ server.js น้อยที่สุดจน quality gate สามเคสผ่าน ห้ามแก้ scripts/quality-gate.js แล้วแสดงผลคำสั่งให้ดู
+scripts/quality-gate.js currently FAILS. Replace data/sales.csv with a cleaned file and change server.js only enough that all three cases pass. Do not edit scripts/quality-gate.js. Then show me the command output.
 ```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data/sales.csv ด้วยไฟล์ที่สะอาด และแก้ server.js น้อยที่สุดจน quality gate สามเคสผ่าน ห้ามแก้ scripts/quality-gate.js แล้วแสดงผลคำสั่งให้ดู
+```
+
+> 📚 **ทำไมแนะนำ EN:** งานเทคนิคหนักแบบนี้คอร์สทดสอบภาษาไทยมาแล้วและผ่าน (แม้จับข้อขัดแย้งของสเปกได้) — แนะนำ EN เพราะรายงาน findings จะอยู่ภาษาเดียวกับ output ของ quality gate ที่คุณต้องเทียบ
 
 | ส่วน | หน้าที่ |
 |---|---|

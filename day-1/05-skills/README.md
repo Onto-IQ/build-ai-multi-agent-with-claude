@@ -52,16 +52,25 @@ I want to release the sales insight app now. Walk me through it.
 
 4. ผูกเข้าเอเจนต์: เพิ่มบรรทัด `skills: release-checklist` ใน frontmatter ของ `data-researcher` (เปิดไฟล์แก้ผ่าน TUI ได้) — จากนี้ทุกงานของนักวิจัยจะมีขั้นตอนปล่อยของติดตัวโดยไม่ต้องสั่ง
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: Create .claude/skills/release-checklist/SKILL.md.
+Create .claude/skills/release-checklist/SKILL.md.
 Frontmatter: name release-checklist; description "Use before releasing the Sales Insight app".
 Body: four checks — server boots, quality gate result is recorded, /api/health must not contain sk-, server is stopped before the gate.
-TH: สร้าง .claude/skills/release-checklist/SKILL.md
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+สร้าง .claude/skills/release-checklist/SKILL.md
 frontmatter: name เป็น release-checklist และ description เป็นภาษาอังกฤษว่า Use before releasing the Sales Insight app
 เนื้อหาเป็น 4 ขั้น: เซิร์ฟเวอร์ขึ้น, จดผล quality gate, /api/health ห้ามมี sk-, ปิดเซิร์ฟเวอร์ก่อนรัน `node scripts/quality-gate.js`
 ```
+
+> 📚 **ทำไมแนะนำ EN:** ฟิลด์ `description` ต้องเป็นอังกฤษ (เป็นตัวจับว่างานไหนควรใช้ skill) — สั่งเป็นอังกฤษทำให้ข้อความใน description ตรงกับที่คุณตั้งใจเป๊ะ ไม่ผ่านการแปลกลับ TH ก็ทำได้ (คอร์สทดสอบแล้ว: ค่า machine-readable ถูกต้องแม้สั่งไทย)
 
 | ส่วน | หน้าที่ |
 |---|---|

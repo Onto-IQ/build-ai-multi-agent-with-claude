@@ -57,10 +57,12 @@ node scripts/quality-gate.js && echo GATE-GREEN
 
 4. รายงานรวมของ leader ต้องระบุของส่งของแต่ละบทบาท ไม่เกิน 400 คำ — ใช้ตรวจว่าครบตาม TASKS.md
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: Build the Sales Insight dashboard with a 5-role team. Execute, do not only plan.
+Build the Sales Insight dashboard with a 5-role team. Execute, do not only plan.
 Step 0: Write docs/PRODUCT-SPEC.md (page, endpoints, acceptance) and docs/TASKS.md with dependencies.
 planner finishes Step 0 before anyone else starts.
 researcher reports order count and revenue from data/sales.csv.
@@ -69,7 +71,12 @@ writer creates docs/EXECUTIVE-SUMMARY.md in Thai using only figures from the API
 qa runs node scripts/quality-gate.js and checks that /api/health has no sk-.
 Agents that need another agent's output must NOT run before it.
 Report under 400 words and name each deliverable.
-TH: สร้างแดชบอร์ด Sales Insight ด้วยทีม 5 บทบาท ทำให้จริง อย่าหยุดที่แผน
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+สร้างแดชบอร์ด Sales Insight ด้วยทีม 5 บทบาท ทำให้จริง อย่าหยุดที่แผน
 ขั้น 0: เขียน docs/PRODUCT-SPEC.md (หน้าจอ, endpoints, เกณฑ์ยอมรับ) และ docs/TASKS.md ที่มี dependency
 planner ทำขั้น 0 ให้เสร็จก่อนคนอื่นเริ่ม
 researcher รายงานจำนวนออเดอร์และรายได้จาก data/sales.csv
@@ -79,6 +86,8 @@ qa รัน node scripts/quality-gate.js และตรวจว่า /api/he
 งานที่ต้องใช้ผลของอีกตัว ห้ามรันก่อนตัวนั้นเสร็จ
 รายงานรวมไม่เกิน 400 คำ และระบุของส่งของแต่ละบทบาท
 ```
+
+> 📚 **ทำไมแนะนำ EN:** prompt นี้ยาวที่สุดของคอร์สและคุม dependency ห้าตัว — เวอร์ชันอังกฤษกิน token น้อยกว่าโดยทั่วไป และภาษาของสรุปผู้บริหารถูกบังคับเป็นไทยด้วยคำว่า "in Thai" อยู่แล้ว ไม่ต้องกลัวผลลัพธ์เป็นอังกฤษ
 
 | ส่วน | หน้าที่ |
 |---|---|

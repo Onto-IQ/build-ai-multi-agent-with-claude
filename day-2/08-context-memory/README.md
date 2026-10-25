@@ -49,12 +49,21 @@ claude
 
 4. ผลที่ต้องสังเกต: เอเจนต์ควรยึดข้อตกลง (ไม่เสนอ Express) — จดผลว่า "อ้างได้" หรือ "อ้างไม่ได้" ไว้ในบันทึกของคุณ
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: Ask the data-researcher subagent to remember this project note: Sales Insight uses plain Node http and no dependencies. Do not suggest Express unless asked.
-TH: ให้ subagent data-researcher จดไว้ว่า Sales Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ
+Ask the data-researcher subagent to remember this project note: Sales Insight uses plain Node http and no dependencies. Do not suggest Express unless asked.
 ```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ให้ subagent data-researcher จดไว้ว่า Sales Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ
+```
+
+> 📚 **ทำไมแนะนำ EN:** ข้อความที่จดจะถูกอ้างในเซสชันใหม่ — ภาษาอังกฤษสั้นกว่าและคงถ้อยคำเดียวกับกติกาเดิมใน CLAUDE.md TH ทำงานเหมือนกันทุกอย่าง
 
 | ส่วน | หน้าที่ |
 |---|---|
