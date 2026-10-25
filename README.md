@@ -22,22 +22,22 @@
 
 | เวลา | โมดูล | แล็บ |
 |---|---|---|
-| เช้า | [01 สถาปัตยกรรมเอเจนต์](day-1/01-agent-foundations/LESSON.md) | สาธิตสั้น |
-| เช้า | [02 ตั้งเครื่อง](day-1/02-environment-setup/LESSON.md) | [Lab 0](day-1/02-environment-setup/LAB.md) |
-| เช้า | [03 Swarm](day-1/03-swarm/LESSON.md) | [Workshop 1](day-1/03-swarm/LAB.md) |
-| บ่าย | [04 Specialty agent](day-1/04-specialty-agents/LESSON.md) | [Workshop 2](day-1/04-specialty-agents/LAB.md) |
-| บ่าย | [05 Skills](day-1/05-skills/LESSON.md) | [แล็บสั้น](day-1/05-skills/LAB.md) |
-| บ่าย | [06 MCP](day-1/06-mcp/LESSON.md) | [Workshop 3](day-1/06-mcp/LAB.md) guided demo |
+| เช้า | [01 สถาปัตยกรรมเอเจนต์](day-1/01-agent-foundations/README.md) | สาธิตสั้น |
+| เช้า | [02 ตั้งเครื่อง](day-1/02-environment-setup/README.md) | [Lab 0](day-1/02-environment-setup/LAB.md) |
+| เช้า | [03 Swarm](day-1/03-swarm/README.md) | [Workshop 1](day-1/03-swarm/LAB.md) |
+| บ่าย | [04 Specialty agent](day-1/04-specialty-agents/README.md) | [Workshop 2](day-1/04-specialty-agents/LAB.md) |
+| บ่าย | [05 Skills](day-1/05-skills/README.md) | [แล็บสั้น](day-1/05-skills/LAB.md) |
+| บ่าย | [06 MCP](day-1/06-mcp/README.md) | [Workshop 3](day-1/06-mcp/LAB.md) guided demo |
 
 วันที่ 2 — งานทีละขั้น quality gate และ capstone
 
 | เวลา | โมดูล | แล็บ |
 |---|---|---|
-| เช้า | [07 Sequential pipeline](day-2/07-sequential-orchestration/LESSON.md) | [Workshop 4](day-2/07-sequential-orchestration/LAB.md) |
-| เช้า | [08 Context และ memory](day-2/08-context-memory/LESSON.md) | [แล็บสั้น](day-2/08-context-memory/LAB.md) |
-| เช้า | [09 Guardrails และ hooks](day-2/09-guardrails-hooks/LESSON.md) | [Workshop 5](day-2/09-guardrails-hooks/LAB.md) |
-| บ่าย | [10 Capstone 5 บทบาท](day-2/10-capstone/LESSON.md) | [Workshop 6](day-2/10-capstone/LAB.md) |
-| บ่าย | [11 Deploy และ preflight](day-2/11-deploy-preflight/LESSON.md) | [แล็บส่งงาน](day-2/11-deploy-preflight/LAB.md) |
+| เช้า | [07 Sequential pipeline](day-2/07-sequential-orchestration/README.md) | [Workshop 4](day-2/07-sequential-orchestration/LAB.md) |
+| เช้า | [08 Context และ memory](day-2/08-context-memory/README.md) | [แล็บสั้น](day-2/08-context-memory/LAB.md) |
+| เช้า | [09 Guardrails และ hooks](day-2/09-guardrails-hooks/README.md) | [Workshop 5](day-2/09-guardrails-hooks/LAB.md) |
+| บ่าย | [10 Capstone 5 บทบาท](day-2/10-capstone/README.md) | [Workshop 6](day-2/10-capstone/LAB.md) |
+| บ่าย | [11 Deploy และ preflight](day-2/11-deploy-preflight/README.md) | [แล็บส่งงาน](day-2/11-deploy-preflight/LAB.md) |
 
 โครงรายชั่วโมงฉบับเต็มอยู่ที่ [`instructor/outline-rev1.md`](instructor/outline-rev1.md)
 

@@ -1,4 +1,4 @@
-> ผู้สอนเท่านั้น ฉบับเต็มก่อนตัดบันทึกการทดสอบ รวม Workflow demo บทเรียนผู้เรียนอยู่ที่ `day-2/07-sequential-orchestration/LESSON.md`
+> ผู้สอนเท่านั้น ฉบับเต็มก่อนตัดบันทึกการทดสอบ รวม Workflow demo บทเรียนผู้เรียนอยู่ที่ `day-2/07-sequential-orchestration/README.md`
 
 # Module 7 — Orchestration & Sequential Workflows
 
