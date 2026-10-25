@@ -52,20 +52,29 @@ git status
 
 หมายเหตุ headless: ถ้าต้องรันนอก TUI จริง ๆ คำสั่งคือ `claude -p "<prompt>" --allowedTools "Task" --max-turns 20` จากโฟลเดอร์แอป แต่แล็บในห้องไม่ใช้ทางนี้ — คุณภาพการเรียนรู้อยู่ที่การเห็นเอเจนต์วิ่งสด ๆ
 
-## Prompt pattern (EN / TH)
+## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-EN: Dispatch 3 parallel Explore subagents on this Sales Insight app.
+Dispatch 3 parallel Explore subagents on this Sales Insight app.
 1) Map the runtime files and how to start the server.
 2) Read data/README.md and the failure text from node scripts/quality-gate.js. Do not fix anything.
 3) Trace GET /api/summary and POST /api/notes far enough to name the risky behavior.
 Do not modify files. Return one report under 300 words with headings: structure, data quality, risks.
-TH: ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Sales Insight
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Sales Insight
 1) แผนที่ไฟล์ที่ใช้รัน และวิธียกเซิร์ฟเวอร์
 2) อ่าน data/README.md และข้อความ FAIL จาก node scripts/quality-gate.js ห้ามแก้
 3) ไล่ GET /api/summary กับ POST /api/notes พอให้ชี้พฤติกรรมที่เสี่ยง
 ห้ามแก้ไขไฟล์ ส่งรายงานเดียวไม่เกิน 300 คำ มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง
 ```
+
+> 📚 **ทำไมแนะนำ EN:** ภาษาของ prompt เป็นตัวกำหนดภาษาของรายงาน — คอร์สทดสอบคู่กันไว้แล้ว (EN ได้รายงานอังกฤษ, TH ได้รายงานไทย, คุณภาพการสำรวจเท่ากัน) รายงานฉบับนี้จะถูกอ้างต่อใน Workshop ถัด ๆ ไป ซึ่งของที่ถูกอ้าง (ชื่อ endpoint, `file:line`, หัวข้อ structure / data quality / risks) เป็นอังกฤษทั้งหมด รายงานอังกฤษจึงต่อกันเนียนที่สุด และเวลาห้องเทียบผลท้ายแล็บทุกคนอยู่รูปแบบเดียว ถ้าคุณสะดวกอ่านไทย TH ใช้ได้เต็มสิทธิ์ — ของเทคนิคในรายงาน (ชื่อไฟล์, endpoint, severity) ยังถูกพิมพ์ถูกต้องเสมอ
 
 | ส่วน | หน้าที่ |
 |---|---|
