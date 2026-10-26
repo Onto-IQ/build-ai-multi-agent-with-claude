@@ -77,6 +77,7 @@ node scripts/quality-gate.js
 | quality gate แสดง port busy | ยังไม่ปิด `node server.js` | ปิดก่อนรัน `node scripts/quality-gate.js` |
 | `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้ว unset คีย์ |
 | คำสั่ง bash พัง | อยู่ใน PowerShell | เปลี่ยนไป Git Bash |
+| `claude --version` ต่างกันในแต่ละเทอร์มินัล | ติดตั้งซ้ำสองที่ (native + npm) อัปเดตไม่พร้อมกัน | เก็บตัวเดียว: `npm uninstall -g @anthropic-ai/claude-code` แล้วอัปเดตตัว native ด้วย `claude update` |
 | อยากให้ quality gate exit 0 ภายในวันนี้ | ยังไม่ถึง Workshop 5 | ปล่อยให้แดงไว้ |
 
 อย่าใช้ `--max-turns` สั้น ๆ กับการบ้านที่ต้องเขียนไฟล์ รอบจะหมดก่อนมีผลงาน และอย่าใช้ `taskkill //IM node.exe`
