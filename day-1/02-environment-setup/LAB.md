@@ -8,22 +8,22 @@
 
 ## Steps / ขั้นตอน
 
-1. เปิด Git Bash ที่ราก repo แล้วตรวจรุ่น
+1. เปิด PowerShell ที่ราก repo แล้วตรวจรุ่น
 
-```bash
+```powershell
 node --version
 git --version
 claude --version
-echo "$ANTHROPIC_API_KEY"
+echo $env:ANTHROPIC_API_KEY
 ```
 
-ผลที่คาดหวัง: Node เป็น 20 ขึ้นไป, Claude Code เป็น 2.1.296 ขึ้นไป, บรรทัดตัวแปรว่าง ถ้าคีย์โผล่ให้ `unset ANTHROPIC_API_KEY`
+ผลที่คาดหวัง: Node เป็น 20 ขึ้นไป, Claude Code เป็น 2.1.296 ขึ้นไป, บรรทัดตัวแปรว่าง ถ้าคีย์โผล่ให้ปิดด้วย `Remove-Item Env:ANTHROPIC_API_KEY`
 
 > 📚 **รู้เพิ่ม:** ทำไมคีย์ต้องว่าง — ถ้ามี `ANTHROPIC_API_KEY` ค้างอยู่ Claude จะใช้คีย์นั้นแทนบัญชี Pro/Team ของคลาสทันที และค่าใช้จ่ายไปโผล่ที่บัญชีส่วนตัวแบบจ่ายตามการใช้ โดยไม่มีกล่องเตือนให้เห็น
 
 2. ล็อกอินใน TUI
 
-```bash
+```powershell
 claude
 ```
 
@@ -33,7 +33,7 @@ claude
 
 3. รันสคริปต์ตรวจ
 
-```bash
+```powershell
 node scripts/verify-setup.mjs
 ```
 
@@ -41,7 +41,7 @@ node scripts/verify-setup.mjs
 
 4. เปิดแอปคนละเทอร์มินัล
 
-```bash
+```powershell
 cd sandbox/sales-insight
 node server.js
 ```
@@ -52,7 +52,7 @@ node server.js
 
 5. รัน quality gate หลังปิดเซิร์ฟเวอร์แล้ว
 
-```bash
+```powershell
 node scripts/quality-gate.js
 ```
 
@@ -63,7 +63,7 @@ node scripts/quality-gate.js
 ## ✅ Checkpoint
 
 - [ ] `claude --version` ≥ 2.1.296
-- [ ] `echo "$ANTHROPIC_API_KEY"` ว่าง
+- [ ] `echo $env:ANTHROPIC_API_KEY` ว่าง
 - [ ] `node scripts/verify-setup.mjs` ผ่าน
 - [ ] หน้า `http://127.0.0.1:3000` เปิดได้และปิดเซิร์ฟเวอร์แล้ว
 - [ ] quality gate เป็น exit 2 โดยไม่ได้แก้ไฟล์
@@ -73,14 +73,14 @@ node scripts/quality-gate.js
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
 | `claude` ไม่พบ หรือชี้ไฟล์เก่า | PATH หรือ alias | ดู SETUP.md ขั้นที่ 2 |
-| port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `PORT=3001 node server.js` |
+| port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `$env:PORT=3001; node server.js` |
 | quality gate แสดง port busy | ยังไม่ปิด `node server.js` | ปิดก่อนรัน `node scripts/quality-gate.js` |
-| `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้ว unset คีย์ |
-| คำสั่ง bash พัง | อยู่ใน PowerShell | เปลี่ยนไป Git Bash |
+| `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้วปิดคีย์ (`Remove-Item Env:ANTHROPIC_API_KEY`) |
+| คำสั่ง bash จากบทความอื่น (`export`, `echo $VAR`) | แล็บนี้ใช้ PowerShell | `$env:VAR` แทน `export` · `echo $env:VAR` |
 | `claude --version` ต่างกันในแต่ละเทอร์มินัล | ติดตั้งซ้ำสองที่ (native + npm) อัปเดตไม่พร้อมกัน | เก็บตัวเดียว: `npm uninstall -g @anthropic-ai/claude-code` แล้วอัปเดตตัว native ด้วย `claude update` |
 | อยากให้ quality gate exit 0 ภายในวันนี้ | ยังไม่ถึง Workshop 5 | ปล่อยให้แดงไว้ |
 
-อย่าใช้ `--max-turns` สั้น ๆ กับการบ้านที่ต้องเขียนไฟล์ รอบจะหมดก่อนมีผลงาน และอย่าใช้ `taskkill //IM node.exe`
+อย่าใช้ `--max-turns` สั้น ๆ กับการบ้านที่ต้องเขียนไฟล์ รอบจะหมดก่อนมีผลงาน และอย่าใช้ `taskkill /IM node.exe` (ฆ่า Node ทั้งเครื่อง) หรือ `taskkill //IM node.exe` (รูปแบบ Git Bash)
 
 ## 🆘 Behind? Catch up
 

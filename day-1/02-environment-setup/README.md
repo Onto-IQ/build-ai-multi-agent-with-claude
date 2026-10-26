@@ -32,7 +32,7 @@
 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` | จำนวนเอเจนต์ย่อยที่ทำงานพร้อมกันได้สูงสุด ค่าว่างคือค่าเริ่มต้น |
 | `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | ตั้งเป็น `1` เฉพาะตอนสาธิตทีม |
 
-การตั้งค่าผู้ใช้รายเครื่องอยู่ที่ `~/.claude/settings.json` — ไฟล์ `settings.local.json` เป็นของเครื่องนั้น ไม่ควรเข้า git ส่วน Windows แล็บเขียนด้วย bash จึงใช้ Git Bash ไม่ใช่ PowerShell
+การตั้งค่าผู้ใช้รายเครื่องอยู่ที่ `~/.claude/settings.json` — ไฟล์ `settings.local.json` เป็นของเครื่องนั้น ไม่ควรเข้า git ส่วน Windows แล็บทั้งหมดรันใน **PowerShell** — คำสั่งทุกอันในคอร์สเขียนสำหรับ PowerShell (`$env:VAR`, `$LASTEXITCODE`)
 
 ขั้นติดตั้งทั้งชุดอยู่ใน [SETUP.md](../../SETUP.md) — แล็บนี้แค่ตรวจว่าเครื่องผ่าน ไม่ได้อธิบายแนวคิดซ้ำ
 
@@ -50,15 +50,15 @@ claude --version
 
 2. ตรวจว่าคีย์ API ว่าง:
 
-```bash
-echo $ANTHROPIC_API_KEY
+```powershell
+echo $env:ANTHROPIC_API_KEY
 ```
 
    ควรได้บรรทัดว่าง — ถ้าไม่ว่าง ให้ปิดค่านี้ก่อนเริ่มแล็บอื่น
 
 3. เปิด TUI จากโฟลเดอร์ที่ถูกต้อง แล้ววาง prompt จากหัวข้อถัดไป:
 
-```bash
+```powershell
 cd sandbox/sales-insight
 claude
 ```
@@ -89,7 +89,7 @@ Reply with exactly: CLAUDE-OK
 ## Common pitfalls / กับดัก
 
 - เปิด `claude` จาก `C:\` หรือ home — เอเจนต์เห็นทั้งเครื่องเป็นขอบเขตทำงาน ทำงานผิดที่ได้ทั้งรอบ
-- ใช้ PowerShell 5.1 กับคำสั่งแล็บ (`export`, `echo $VAR`, `mkdir -p`) — คำสั่งพวกนี้เป็นของ bash ใช้ Git Bash
+- ใช้คำสั่ง bash จากบทความอื่น (`export VAR=...`, `echo $VAR`) — แล็บนี้ใช้ PowerShell: `$env:VAR = "..."` และ `echo $env:VAR` (แล็บไม่ต้องใช้ export เลย)
 - alias `claude` เก่าหลังอัปเกรด Node — ชี้ไฟล์ที่ถูกลบไปแล้ว ต้องแก้ alias ให้ชี้ติดตั้งใหม่ (บันทึกเคสจริงอยู่ท้าย `instructor/source-material/module-02-environment-setup/lesson.md`)
 - ตั้ง `--max-turns` ต่ำในการทดสอบ headless — หมดรอบก่อนมีคำตอบ
 - ปล่อย `node server.js` ค้างแล้วรัน quality gate — เจอ **port busy** ปิดเซิร์ฟเวอร์ก่อนรัน gate เสมอ

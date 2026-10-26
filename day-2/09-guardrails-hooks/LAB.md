@@ -33,25 +33,30 @@ node scripts/quality-gate.js
 
 > 📚 **รู้เพิ่ม:** นี่คือกฎการเชื่อของบทบาท qa ที่ Capstone จะใช้ต่อ — คำว่า "ผ่าน" ของเอเจนต์ไม่ใช่หลักฐาน exit code จากเทอร์มินัลของคุณเท่านั้นที่นับ
 
-4. ให้ Claude เพิ่ม hook ใน TUI ตามแบบในบทเรียน หรือคัดลอกจากคำตอบอ้างอิงหลังคุณเขียนเองไม่ทัน แล้วลองด้วยมือ
+4. ให้ Claude เพิ่ม hook ใน TUI ตามแบบในบทเรียน หรือคัดลอกจากคำตอบอ้างอิงหลังคุณเขียนเองไม่ทัน แล้วลองด้วยมือ — เขียน payload เป็นไฟล์แล้วป้อนเข้า stdin (PowerShell 5.1 ส่งข้อความผ่าน pipe ไป native process ได้ไม่ตรง):
 
-```bash
-echo '{"tool_name":"Bash","tool_input":{"command":"rm -rf data"}}' | node .claude/hooks/block-dangerous-bash.js
-echo $?
+```powershell
+[IO.File]::WriteAllText("$pwd\payload-block.json", '{"tool_name":"Bash","tool_input":{"command":"rm -rf data"}}', (New-Object System.Text.UTF8Encoding($false)))
+$proc = Start-Process node -ArgumentList ".claude/hooks/block-dangerous-bash.js" -RedirectStandardInput "payload-block.json" -NoNewWindow -Wait -PassThru
+$proc.ExitCode
 ```
 
-ผลที่คาดหวัง: exit 2
+ผลที่คาดหวัง: `blocked dangerous command: rm -rf data` และ exit 2
 
-```bash
-echo '{"tool_name":"Bash","tool_input":{"command":"node scripts/quality-gate.js"}}' | node .claude/hooks/block-dangerous-bash.js
-echo $?
+```powershell
+[IO.File]::WriteAllText("$pwd\payload-allow.json", '{"tool_name":"Bash","tool_input":{"command":"node scripts/quality-gate.js"}}', (New-Object System.Text.UTF8Encoding($false)))
+$proc = Start-Process node -ArgumentList ".claude/hooks/block-dangerous-bash.js" -RedirectStandardInput "payload-allow.json" -NoNewWindow -Wait -PassThru
+$proc.ExitCode
 ```
 
-ผลที่คาดหวัง: exit 0
+ผลที่คาดหวัง: ไม่มีข้อความบล็อก และ exit 0
+
+> 📚 **รู้เพิ่ม (กับดัก PowerShell จริง):** `echo '...' | node hook.js` ใน PowerShell 5.1 ส่ง payload พัง (hook ขึ้น "malformed payload" แล้ว exit 0 — แปลว่า**ไม่ได้ทดสอบอะไรเลย**) และ `Set-Content -Encoding UTF8` ของ PowerShell ใส่ BOM นำหน้าไฟล์ ทำ `JSON.parse` ใน Node พัง — เขียนไฟล์แบบไม่มี BOM ด้วย `UTF8Encoding($false)` แล้วป้อนด้วย `Start-Process -RedirectStandardInput` จึงเชื่อถือได้
 
 > 📚 **รู้เพิ่ม:** exit code 2 คือการบล็อก — exit อื่นไม่บล็อก และเหตุผลของการบล็อกต้องเขียนที่ stderr เพราะ stdout ของ hook ถูกอ่านต่อเป็นคำสั่ง
 
-5. เขียน `usage.json` จาก `/cost` ใน TUI ถ้ามี หรือใส่ตัวเลขฝึก `{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}` แล้วรัน
+5. เขียน `usage.json` จาก `/cost` ใน TUI ถ้ามี หรือใส่ตัวเลขฝึก — เขียนด้วย PowerShell แบบไม่มี BOM:
+`[IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))` แล้วรัน
 
 ```bash
 node scripts/cost-gate.js usage.json

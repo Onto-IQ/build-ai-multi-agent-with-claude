@@ -30,6 +30,8 @@ node scripts/clean-sales.js data/sales.csv data/sales.clean.csv
 
 ผลที่คาดหวัง: มีไฟล์ `data/sales.clean.csv` และจำนวนแถวข้อมูลน้อยกว่าไฟล์ดิบ `server.js` ยังไม่ถูกแก้
 
+> 📚 **รู้เพิ่ม (จากการรันจริง):** agent ที่เขียนสคริปต์อาจเลือก interface ต่างจาก checkpoint ข้างบน — รอบทดสอบจริง agent เขียน `clean-sales.js` แบบไม่รับพารามิเตอร์ (default `data/sales.csv` → `data/sales.clean.csv`) พร้อม flag `--in-place` และ REVIEW.md ของ agent เองรายงานจุดนี้เป็น finding — ถ้าคำสั่งใน checkpoint ใช้ไม่ได้ ให้รัน `node scripts/clean-sales.js` ไม่ใส่ argument เพื่อดู usage ของสคริปต์ที่ได้มา แล้วปรับตาม
+
 4. รัน `node scripts/quality-gate.js`
 
 ```bash
