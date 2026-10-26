@@ -58,6 +58,8 @@ $proc.ExitCode
 5. เขียน `usage.json` จาก `/cost` ใน TUI ถ้ามี หรือใส่ตัวเลขฝึก — เขียนด้วย PowerShell แบบไม่มี BOM:
 `[IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))` แล้วรัน
 
+> 📚 **เช็คก่อนรัน:** `scripts/cost-gate.js` ยังไม่อยู่ใน starter sandbox — ได้มาหลังรัน `node scripts/catch-up.js w5` หรือคัดลอกจาก `solutions/w5/drop-in/scripts/cost-gate.js` (ตรวจจริง: ถ้ายังไม่มีไฟล์ `node scripts/cost-gate.js` จะขึ้น `MODULE_NOT_FOUND`)
+
 ```bash
 node scripts/cost-gate.js usage.json
 ```
