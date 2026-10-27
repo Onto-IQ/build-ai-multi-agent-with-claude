@@ -37,7 +37,6 @@ quality gate สามเคสที่ต้องเขียว:
 ## ลงมือทำตามลำดับ
 
 ```bash
-cd sandbox/sales-insight
 node scripts/quality-gate.js
 ```
 
@@ -107,4 +106,3 @@ scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data
 ## Go deeper
 
 - [Failure modes](../../reference/failure-modes.md)
-- เฉลยรายแถวอยู่ที่ `instructor/README.md` เปิดเมื่อแล็บจบแล้วเท่านั้น

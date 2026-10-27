@@ -29,7 +29,6 @@ Skill ที่แล็บนี้จะสร้างเก็บที่ `
 ## ลงมือทำตามลำดับ
 
 ```bash
-cd sandbox/sales-insight
 claude
 ```
 
@@ -107,4 +106,3 @@ description ที่บอกว่างานแบบไหนควรใ�
 ## Go deeper
 
 - [ชีต frontmatter](../../reference/frontmatter-cheatsheet.md)
-- ตัวอย่าง skill ในชุดสาธิต: `instructor/agent-lab/.claude/skills/lab-skill/SKILL.md`

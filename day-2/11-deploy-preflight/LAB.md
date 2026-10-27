@@ -11,7 +11,6 @@
 1. ปิด `node server.js` ถ้ายังเปิดอยู่ แล้วรัน `node scripts/quality-gate.js`
 
 ```bash
-cd sandbox/sales-insight
 node scripts/quality-gate.js
 ```
 
@@ -37,7 +36,25 @@ echo "$ANTHROPIC_API_KEY"
 
 ผลที่คาดหวัง: ว่าง และคุณล็อกอิน Vercel ได้ในเบราว์เซอร์
 
-4. เปิด TUI แล้ววาง prompt deploy จากบทเรียน เฉพาะเมื่อผู้สอนบอกว่าห้องนี้ deploy จริง
+4. เปิด TUI แล้ววาง prompt deploy เฉพาะเมื่อผู้สอนบอกว่าห้องนี้ deploy จริง (เลือกอย่างใดอย่างหนึ่ง):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Deploy this Sales Insight app to Vercel with the Vercel connection.
+Before deploying, run node scripts/quality-gate.js. If it fails, stop and report.
+After deploying, give me the production URL and the commit that was deployed.
+Do not print any sk- value.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+Deploy แอป Sales Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel
+ก่อน deploy ให้รัน node scripts/quality-gate.js ถ้าไม่ผ่านให้หยุดแล้วรายงาน
+หลัง deploy ส่ง production URL และ commit ที่ขึ้นจริง
+ห้ามพิมพ์ค่าที่ขึ้นต้นด้วย sk-
+```
 
 ผลที่คาดหวังถ้าขึ้นได้: มี URL และมีรหัส commit ถ้าไม่ขึ้น: มีรายงานว่าหยุดที่ quality gate หรือติดสิทธิ์ ไม่มีคำว่าขึ้นแล้วโดยไม่มี URL
 

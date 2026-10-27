@@ -1,6 +1,6 @@
 # Lab — release checklist
 
-> ⏱ 15 นาที · Start state: อยู่ใน `sandbox/sales-insight` หลัง Workshop 2
+> ⏱ 15 นาที · Start state: อยู่ใน `ราก repo` หลัง Workshop 2
 
 ## Goal / เป้าหมาย
 
@@ -8,15 +8,38 @@
 
 ## Steps / ขั้นตอน
 
-1. เปิด TUI จากโฟลเดอร์แอป แล้ววาง prompt จากบทเรียน
+1. เปิด TUI แล้ววาง prompt สร้าง skill (เลือกอย่างใดอย่างหนึ่ง):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Create .claude/skills/release-checklist/SKILL.md.
+Frontmatter: name release-checklist; description "Use before releasing the Sales Insight app".
+Body: four checks — server boots, quality gate result is recorded, /api/health must not contain sk-, server is stopped before the gate.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+สร้าง .claude/skills/release-checklist/SKILL.md
+frontmatter: name เป็น release-checklist และ description เป็นภาษาอังกฤษว่า Use before releasing the Sales Insight app
+เนื้อหาเป็น 4 ขั้น: เซิร์ฟเวอร์ขึ้น, จดผล quality gate, /api/health ห้ามมี sk-, ปิดเซิร์ฟเวอร์ก่อนรัน `node scripts/quality-gate.js`
+```
 
 ผลที่คาดหวัง: มีไฟล์ `.claude/skills/release-checklist/SKILL.md` และ frontmatter มี `name` กับ `description`
 
 2. เปิดเซสชันใหม่หรือพิมพ์ต่อ
 
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
 ```text
-EN: I want to release the sales insight app now. Walk me through it.
-TH: ฉันจะปล่อย Sales Insight ตอนนี้ พาฉันทำทีละขั้น
+I want to release the sales insight app now. Walk me through it.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ฉันจะปล่อย Sales Insight ตอนนี้ พาฉันทำทีละขั้น
 ```
 
 ผลที่คาดหวัง: คำตอบพาดถึงการเปิดเซิร์ฟเวอร์ quality gate และคำว่า `sk-` ถ้าไม่พาด ให้สั่งชื่อ `release-checklist` ตรง ๆ แล้วจดว่า description ยังไม่ตรงกับประโยคที่พิมพ์

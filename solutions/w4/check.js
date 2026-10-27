@@ -3,10 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 const { clean } = require('./drop-in/scripts/clean-sales');
-const { analyze } = require('../../sandbox/sales-insight/lib/inspect-sales');
+const { analyze } = require('../../lib/inspect-sales');
 
 const root = path.join(__dirname, '..', '..');
-const messyPath = path.join(root, 'sandbox', 'sales-insight', 'data', 'sales.csv');
+const messyPath = path.join(root, 'data', 'sales.csv');
 const committedPath = path.join(__dirname, 'drop-in', 'data', 'sales.clean.csv');
 const design = fs.readFileSync(path.join(__dirname, 'drop-in', 'docs', 'DESIGN.md'), 'utf8');
 const review = fs.readFileSync(path.join(__dirname, 'drop-in', 'docs', 'REVIEW.md'), 'utf8');

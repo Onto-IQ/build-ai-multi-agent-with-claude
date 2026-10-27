@@ -18,7 +18,7 @@
 
 | # | ข้อ | เหตุผล |
 |---|---|---|
-| 1 | เปิด Claude จาก `sandbox/sales-insight` | ขอบเขตของเอเจนต์ |
+| 1 | เปิด Claude จาก `ราก repo` | ขอบเขตของเอเจนต์ |
 | 2 | quality gate exit 0 | ของเสียไม่ขึ้นของจริง |
 | 3 | ไม่มี `sk-` ใน `/api/health` | ไม่ส่งค่าตัวอย่างออกไป |
 | 4 | `ANTHROPIC_API_KEY` ว่าง | ไม่หลุดไปคิดเงินรายครั้ง |
@@ -35,7 +35,6 @@
 1. เดินเช็กลิสต์เจ็ดข้อข้างบนให้ครบ — ข้อ 2 ตรวจด้วยมือคุณ:
 
 ```bash
-cd sandbox/sales-insight
 node scripts/quality-gate.js && echo GATE-GREEN
 ```
 
@@ -108,4 +107,4 @@ quality gate เป็น exit 0 และ health ไม่มี sk-
 
 - [Failure modes](../../reference/failure-modes.md)
 - เอกสาร Vercel เรื่อง deploy และเอกสาร Claude Code เรื่องการเชื่อมบริการ
-- บันทึกว่าของเก่าไม่เคยถูก deploy: `instructor/research/research-2026-10-09-one-claude-impact.md`
+- บันทึกว่าของเก่าไม่เคยถูก deploy

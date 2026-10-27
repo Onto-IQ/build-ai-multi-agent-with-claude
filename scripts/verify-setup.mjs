@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const exec = promisify(execFile);
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const sandbox = path.join(repo, 'sandbox', 'sales-insight');
+const app = repo;
 const skipClaude = process.argv.includes('--skip-claude');
 const skipPrompt = skipClaude || process.argv.includes('--skip-claude-prompt');
 
@@ -120,7 +120,7 @@ async function main() {
 
   const appPort = await freePort();
   const server = spawn(process.execPath, ['server.js'], {
-    cwd: sandbox,
+    cwd: app,
     env: { ...process.env, PORT: String(appPort) },
     stdio: 'ignore',
   });
@@ -134,14 +134,14 @@ async function main() {
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
     }
-    if (status === 200) note(`sandbox homepage responded on port ${appPort}`);
-    else bad('sandbox server did not serve /');
+    if (status === 200) note(`app homepage responded on port ${appPort}`);
+    else bad('app server did not serve /');
   } finally {
     if (server.exitCode === null) server.kill('SIGKILL');
   }
 
   const gatePort = await freePort();
-  const gate = await runNode(['scripts/quality-gate.js'], sandbox, { ...process.env, PORT: String(gatePort) });
+  const gate = await runNode(['scripts/quality-gate.js'], app, { ...process.env, PORT: String(gatePort) });
   if (gate.code === 2 && gate.stdout.includes('FAIL | data-quality')) {
     note('starter quality gate exits 2 (this is the intended starting state)');
   } else {

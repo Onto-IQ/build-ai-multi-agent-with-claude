@@ -11,11 +11,28 @@
 1. เปิด TUI จากโฟลเดอร์แอป
 
 ```bash
-cd sandbox/sales-insight
 claude
 ```
 
-2. วาง prompt สร้างไฟล์จากบทเรียนทั้งชุด ครั้งเดียว แล้วกดอนุญาตเมื่อ TUI ถามสิทธิ์เขียน `.claude/`
+2. วาง prompt สร้างไฟล์ทั้งชุด ครั้งเดียว แล้วกดอนุญาตเมื่อ TUI ถามสิทธิ์เขียน `.claude/` (เลือกอย่างใดอย่างหนึ่ง):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+In this folder, create .claude/agents/data-researcher.md.
+Frontmatter exactly: name data-researcher; description starts with "Use proactively" and says the agent is read-only; tools Read, Grep, Glob; model sonnet.
+Body sections: Method, Output format with file:line evidence, Constraints that forbid Edit, Write, and Bash.
+Do not change server.js or the CSV.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ในโฟลเดอร์นี้ ให้สร้าง .claude/agents/data-researcher.md
+frontmatter ต้องตรงนี้: name เป็น data-researcher; description ขึ้นต้น Use proactively และบอกว่าอ่านอย่างเดียว; tools เป็น Read, Grep, Glob; model เป็น sonnet
+เนื้อหามี Method, รูปแบบคำตอบที่อ้าง file:line, และ Constraints ที่ห้าม Edit, Write, Bash
+ห้ามแก้ server.js หรือ CSV
+```
 
 ผลที่คาดหวัง: ไฟล์ `.claude/agents/data-researcher.md` โผล่จริง เปิดดูแล้วมี `name`, `description`, `tools`, `model`
 
@@ -23,9 +40,16 @@ claude
 
 3. ปิด TUI แล้วเปิด `claude` ใหม่จากโฟลเดอร์เดิม แล้วจึงสั่งให้ใช้เอเจนต์นั้นอธิบาย `POST /api/notes`
 
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
 ```text
-EN: Use the data-researcher subagent to explain POST /api/notes. Cite server.js:line for every claim. Do not edit.
-TH: ให้ subagent data-researcher อธิบาย POST /api/notes ทุกข้ออ้าง server.js:บรรทัด ห้ามแก้ไฟล์
+Use the data-researcher subagent to explain POST /api/notes. Cite server.js:line for every claim. Do not edit.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ให้ subagent data-researcher อธิบาย POST /api/notes ทุกข้ออ้าง server.js:บรรทัด ห้ามแก้ไฟล์
 ```
 
 ผลที่คาดหวัง: คำตอบมีหลักฐานแบบ `server.js:` และพูดถึงการอ่าน JSON ได้ ไม่ต้องใช้คำว่า Answer เป๊ะ

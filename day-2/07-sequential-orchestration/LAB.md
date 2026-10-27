@@ -11,12 +11,29 @@
 1. จุดเทียบก่อนลงมือ
 
 ```bash
-cd sandbox/sales-insight
 git status --short
 claude
 ```
 
-2. วาง prompt สามขั้นจากบทเรียนครั้งเดียว
+2. วาง prompt สามขั้นครั้งเดียว (เลือกอย่างใดอย่างหนึ่ง):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Run three stages now, not as a plan.
+Stage 1: Write docs/DESIGN.md for cleaning data/sales.csv. List fatal row drops and repairs. Include the revenue formula. Do not write code yet.
+Stage 2: Write scripts/clean-sales.js (node only, no dependencies) that implements DESIGN.md. Do not edit server.js.
+Stage 3: Write docs/REVIEW.md comparing the script to DESIGN.md. Cite clean-sales.js. Fix nothing.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+เดินสามขั้นตอนนี้ อย่าหยุดที่แผน
+ขั้น 1: เขียน docs/DESIGN.md สำหรับทำความสะอาด data/sales.csv ระบุแถวที่ทิ้งกับแถวที่ซ่อม และสูตรรายได้ ห้ามเขียนโค้ด
+ขั้น 2: เขียน scripts/clean-sales.js ด้วย Node ล้วนตาม DESIGN.md ห้ามแก้ server.js
+ขั้น 3: เขียน docs/REVIEW.md เทียบสคริปต์กับ DESIGN.md ให้อ้าง clean-sales.js ห้ามแก้ของ
+```
 
 ผลที่คาดหวัง: เกิด `docs/DESIGN.md`, `scripts/clean-sales.js`, `docs/REVIEW.md` ในโฟลเดอร์แอป
 

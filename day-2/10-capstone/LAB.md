@@ -8,7 +8,7 @@
 
 ## Steps / ขั้นตอน
 
-1. จาก `sandbox/sales-insight` รัน `node scripts/quality-gate.js` ก่อนตั้งทีม
+1. จาก `ราก repo` รัน `node scripts/quality-gate.js` ก่อนตั้งทีม
 
 ```bash
 node scripts/quality-gate.js
@@ -18,7 +18,35 @@ node scripts/quality-gate.js
 
 > 📚 **รู้เพิ่ม:** ทีมห้าตัวที่วิ่งบนของแดง จะสร้างของเสียสองชั้น — งานที่ทำไปกับข้อมูลเสีย และงานที่ต้องทำใหม่ ตรวจ gate ก่อนตั้งทีมจึงไม่ใช่พิธีกรรม
 
-2. เปิด TUI แล้ววาง prompt ห้าบทบาทจากบทเรียน กดอนุญาตเมื่อเขียน `.claude/agents/`
+2. เปิด TUI แล้ววาง prompt ห้าบทบาท กดอนุญาตเมื่อเขียน `.claude/agents/` (เลือกอย่างใดอย่างหนึ่ง):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Build the Sales Insight dashboard with a 5-role team. Execute, do not only plan.
+Step 0: Write docs/PRODUCT-SPEC.md (page, endpoints, acceptance) and docs/TASKS.md with dependencies.
+planner finishes Step 0 before anyone else starts.
+researcher reports order count and revenue from data/sales.csv.
+developer and writer may run in parallel only after the spec exists. They must not edit the same files.
+writer creates docs/EXECUTIVE-SUMMARY.md in Thai using only figures from the API.
+qa runs node scripts/quality-gate.js and checks that /api/health has no sk-.
+Agents that need another agent's output must NOT run before it.
+Report under 400 words and name each deliverable.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+สร้างแดชบอร์ด Sales Insight ด้วยทีม 5 บทบาท ทำให้จริง อย่าหยุดที่แผน
+ขั้น 0: เขียน docs/PRODUCT-SPEC.md (หน้าจอ, endpoints, เกณฑ์ยอมรับ) และ docs/TASKS.md ที่มี dependency
+planner ทำขั้น 0 ให้เสร็จก่อนคนอื่นเริ่ม
+researcher รายงานจำนวนออเดอร์และรายได้จาก data/sales.csv
+developer กับ writer ทำขนานได้หลังมีสเปก และห้ามแก้ไฟล์เดียวกัน
+writer เขียน docs/EXECUTIVE-SUMMARY.md เป็นไทย โดยใช้ตัวเลขจาก API เท่านั้น
+qa รัน node scripts/quality-gate.js และตรวจว่า /api/health ไม่มี sk-
+งานที่ต้องใช้ผลของอีกตัว ห้ามรันก่อนตัวนั้นเสร็จ
+รายงานรวมไม่เกิน 400 คำ และระบุของส่งของแต่ละบทบาท
+```
 
 ผลที่คาดหวัง: มีไฟล์ planner, researcher, developer, writer, qa และมี `docs/PRODUCT-SPEC.md` กับ `docs/TASKS.md`
 

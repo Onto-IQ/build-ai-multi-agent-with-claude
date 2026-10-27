@@ -39,7 +39,6 @@
 | บ่าย | [10 Capstone 5 บทบาท](day-2/10-capstone/README.md) | [Workshop 6](day-2/10-capstone/LAB.md) |
 | บ่าย | [11 Deploy และ preflight](day-2/11-deploy-preflight/README.md) | [แล็บส่งงาน](day-2/11-deploy-preflight/LAB.md) |
 
-โครงรายชั่วโมงฉบับเต็มอยู่ที่ [`instructor/outline-rev1.md`](instructor/outline-rev1.md)
 
 ## สิ่งที่ต้องมีก่อนวันเรียน
 
@@ -62,12 +61,11 @@
 node scripts/verify-setup.mjs
 ```
 
-ผ่านเมื่อ Node กับ Git พร้อม หน้าsandbox ตอบได้ และ quality gate ชุดเริ่มต้นจบด้วย exit 2 ถ้ายังไม่ล็อกอิน Claude ให้ใส่ `--skip-claude` ชั่วคราว แล้วกลับมาล็อกอินใน Lab 0
+ผ่านเมื่อ Node กับ Git พร้อม หน้าแอปตอบได้ และ quality gate ชุดเริ่มต้นจบด้วย exit 2 ถ้ายังไม่ล็อกอิน Claude ให้ใส่ `--skip-claude` ชั่วคราว แล้วกลับมาล็อกอินใน Lab 0
 
 เปิดแอป:
 
 ```bash
-cd sandbox/sales-insight
 node server.js
 ```
 
@@ -75,7 +73,7 @@ node server.js
 
 ## ถ้าตามไม่ทัน
 
-จากราก repo คัดลอกผลของแล็บที่ข้ามเข้าsandbox แล้วอ่าน `SOLUTION.md` ในโฟลเดอร์นั้น
+จากราก repo คัดลอกผลของแล็บที่ข้ามเข้า repo แล้วอ่าน `SOLUTION.md` ในโฟลเดอร์นั้น
 
 ```bash
 node scripts/catch-up.js w1
@@ -100,11 +98,10 @@ node scripts/check-solutions.mjs
 
 | ที่ | ใช้ทำอะไร |
 |---|---|
-| `sandbox/sales-insight/` | แอปเริ่มต้น ข้อมูลยอดขายยังไม่สะอาด quality gate ต้องไม่ผ่าน |
+| `` | แอปเริ่มต้น ข้อมูลยอดขายยังไม่สะอาด quality gate ต้องไม่ผ่าน |
 | `day-1/` `day-2/` | บทเรียนและแล็บ |
 | `solutions/w1` … `w6` | ผลอ้างอิงของแต่ละแล็บ พร้อม `check.js` |
 | `reference/` | ชีต frontmatter, คู่ prompt, failure modes, อภิธาน |
-| `instructor/` | บันทึกทดสอบ เฉลย และชุดสาธิต หน้านี้ไม่ใช่ทางเดินของผู้เรียน |
 
 ## เวอร์ชันที่ตรวจแล้ว
 
@@ -115,10 +112,10 @@ node scripts/check-solutions.mjs
 | Git | 2.51.0.windows.1 |
 | ระบบที่รันสคริปต์ | Windows, Git Bash ไม่จำเป็นสำหรับสคริปต์ Node |
 | Claude Code ขั้นต่ำของคอร์ส | 2.1.296 |
-| รัน headless ชุดเก่า | 2.1.302 ดู `instructor/test-runs/` |
+| รัน headless ชุดเก่า | 2.1.302 |
 
 สคริปต์ `verify-setup` และ `check-solutions` ผ่านบนเครื่องนี้โดยไม่เรียก Claude แล็บที่เปิด TUI, hook ที่ยิงจากใน Claude Code, การ deploy จริงขึ้น Vercel และรันบน macOS ยังต้องมีคนเดินหนึ่งรอบก่อนวันสอน
 
 ## วิธีใช้ในห้อง
 
-เปิด Claude Code จากโฟลเดอร์ `sandbox/sales-insight` ด้วยคำสั่ง `claude` แล็บออกแบบมาสำหรับโหมดโต้ตอบนี้ ใช้ `claude -p` เฉพาะขั้นที่แล็บเขียนธงและธงสิทธิ์ไว้ให้ครบ การเขียนไฟล์ใต้ `.claude/` ในโหมด headless ถูกปฏิเสธได้แม้ใส่ `--allowedTools` และ Bash ในโหมด headless ไม่ถูกเปิดให้เอง
+เปิด Claude Code จากโฟลเดอร์ `ราก repo` ด้วยคำสั่ง `claude` แล็บออกแบบมาสำหรับโหมดโต้ตอบนี้ ใช้ `claude -p` เฉพาะขั้นที่แล็บเขียนธงและธงสิทธิ์ไว้ให้ครบ การเขียนไฟล์ใต้ `.claude/` ในโหมด headless ถูกปฏิเสธได้แม้ใส่ `--allowedTools` และ Bash ในโหมด headless ไม่ถูกเปิดให้เอง

@@ -69,10 +69,9 @@ claude -p "Reply with exactly: CLAUDE-OK"
 
 ผลที่คาดหวัง: ข้อความ `CLAUDE-OK`
 
-## 4. เปิด sandbox
+## 4. เปิดแอป
 
 ```bash
-cd sandbox/sales-insight
 node server.js
 ```
 

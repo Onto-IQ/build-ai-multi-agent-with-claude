@@ -59,7 +59,6 @@ echo $env:ANTHROPIC_API_KEY
 3. เปิด TUI จากโฟลเดอร์ที่ถูกต้อง แล้ววาง prompt จากหัวข้อถัดไป:
 
 ```powershell
-cd sandbox/sales-insight
 claude
 ```
 
@@ -90,7 +89,7 @@ Reply with exactly: CLAUDE-OK
 
 - เปิด `claude` จาก `C:\` หรือ home — เอเจนต์เห็นทั้งเครื่องเป็นขอบเขตทำงาน ทำงานผิดที่ได้ทั้งรอบ
 - ใช้คำสั่ง bash จากบทความอื่น (`export VAR=...`, `echo $VAR`) — แล็บนี้ใช้ PowerShell: `$env:VAR = "..."` และ `echo $env:VAR` (แล็บไม่ต้องใช้ export เลย)
-- alias `claude` เก่าหลังอัปเกรด Node — ชี้ไฟล์ที่ถูกลบไปแล้ว ต้องแก้ alias ให้ชี้ติดตั้งใหม่ (บันทึกเคสจริงอยู่ท้าย `instructor/source-material/module-02-environment-setup/lesson.md`)
+- alias `claude` เก่าหลังอัปเกรด Node — ชี้ไฟล์ที่ถูกลบไปแล้ว ต้องแก้ alias ให้ชี้ติดตั้งใหม่
 - ตั้ง `--max-turns` ต่ำในการทดสอบ headless — หมดรอบก่อนมีคำตอบ
 - ปล่อย `node server.js` ค้างแล้วรัน quality gate — เจอ **port busy** ปิดเซิร์ฟเวอร์ก่อนรัน gate เสมอ
 - คิดว่า `claude -p` ให้สิทธิ์เท่า TUI — Bash กับ `.claude/**` ถูกปฏิเสธได้ในโหมดนี้
@@ -104,7 +103,7 @@ Reply with exactly: CLAUDE-OK
 
 <details>
 <summary>2. quality gate exit 2 วันแรกแปลว่าอะไร</summary>
-**starter sandbox** ยัง **FAIL** (quality gate **exit 2**) ตามออกแบบ — ไม่ใช่เครื่องคุณพัง
+**starter** ยัง **FAIL** (quality gate **exit 2**) ตามออกแบบ — ไม่ใช่เครื่องคุณพัง
 </details>
 
 <details>
@@ -116,4 +115,3 @@ Reply with exactly: CLAUDE-OK
 
 - [SETUP.md](../../SETUP.md)
 - [Failure modes](../../reference/failure-modes.md)
-- บันทึก alias เก่าอยู่ท้าย `instructor/source-material/module-02-environment-setup/lesson.md`

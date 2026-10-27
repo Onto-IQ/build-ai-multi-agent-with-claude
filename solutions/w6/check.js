@@ -8,7 +8,7 @@ const os = require('os');
 const path = require('path');
 
 const repo = path.join(__dirname, '..', '..');
-const sandbox = path.join(repo, 'sandbox', 'sales-insight');
+const app = repo;
 const dropIn = path.join(__dirname, 'drop-in');
 
 function freePort() {
@@ -113,7 +113,7 @@ async function main() {
   const port = await freePort();
   let child = null;
   try {
-    fs.cpSync(sandbox, tmp, { recursive: true });
+    fs.cpSync(app, tmp, { recursive: true });
     fs.cpSync(dropIn, tmp, { recursive: true });
     const gate = await runNode(path.join(tmp, 'scripts', 'quality-gate.js'), [], {
       cwd: tmp,

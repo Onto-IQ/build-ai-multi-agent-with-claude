@@ -1,6 +1,6 @@
 # Workshop 1 — สำรวจแอปแบบขนาน
 
-> ⏱ 35 นาที · Start state: starter sandbox quality gate ยัง exit 2
+> ⏱ 35 นาที · Start state: starter quality gate ยัง exit 2
 
 ## Goal / เป้าหมาย
 
@@ -11,11 +11,30 @@
 1. เข้าโฟลเดอร์แอปแล้วเปิด TUI
 
 ```bash
-cd sandbox/sales-insight
 claude
 ```
 
-2. วาง prompt อังกฤษหรือไทยจากบทเรียนทั้งชุด ครั้งเดียว
+2. วาง prompt ทั้งชุด ครั้งเดียว (เลือกอย่างใดอย่างหนึ่ง):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Dispatch 3 parallel Explore subagents on this Sales Insight app.
+1) Map the runtime files and how to start the server.
+2) Read data/README.md and the failure text from node scripts/quality-gate.js. Do not fix anything.
+3) Trace GET /api/summary and POST /api/notes far enough to name the risky behavior.
+Do not modify files. Return one report under 300 words with headings: structure, data quality, risks.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Sales Insight
+1) แผนที่ไฟล์ที่ใช้รัน และวิธียกเซิร์ฟเวอร์
+2) อ่าน data/README.md และข้อความ FAIL จาก node scripts/quality-gate.js ห้ามแก้
+3) ไล่ GET /api/summary กับ POST /api/notes พอให้ชี้พฤติกรรมที่เสี่ยง
+ห้ามแก้ไขไฟล์ ส่งรายงานเดียวไม่เกิน 300 คำ มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง
+```
 
 ผลที่คาดหวัง: leader เรียกเอเจนต์ย่อยมากกว่าหนึ่งตัว แล้วตอบรายงานเดียวที่มีสามหัวข้อ ระบุ `server.js`, `data/sales.csv`, `scripts/quality-gate.js` และพูดถึง `POST /api/notes` กับ `GET /api/summary`
 
@@ -55,7 +74,7 @@ node scripts/quality-gate.js
 | ไฟล์ถูกแก้ | ไม่มีประโยคห้ามแก้ | `git checkout -- .` ในแอปถ้าคุณยังไม่ต้องการของนั้น แล้วสั่งใหม่ |
 | `claude -p` ไม่ยอมรัน quality gate | headless ปิด Bash เป็นค่าเริ่มต้น | รัน `node scripts/quality-gate.js`เองใน Git Bash |
 | หมดเทิร์น | `--max-turns` ต่ำไป | อยู่ใน TUI หรือใส่ `--max-turns 20` เฉพาะตอน headless |
-| สำรวจผิดโฟลเดอร์ | เปิด `claude` นอก `sandbox/sales-insight` | ออกแล้วเปิดใหม่จากโฟลเดอร์แอป |
+| สำรวจผิดโฟลเดอร์ | เปิด `claude` นอก `ราก repo` | ออกแล้วเปิดใหม่จากโฟลเดอร์แอป |
 | port busy ตอนรัน quality gate | เซิร์ฟเวอร์ค้าง | ปิดก่อน หรือตั้ง `PORT` |
 
 ## 🆘 Behind? Catch up
@@ -66,7 +85,7 @@ node scripts/quality-gate.js
 node scripts/catch-up.js w1
 ```
 
-แล้วอ่าน `sandbox/sales-insight/docs/EXPLORATION-REPORT.md`
+แล้วอ่าน `docs/EXPLORATION-REPORT.md`
 
 ## Stretch / ต่อยอด
 

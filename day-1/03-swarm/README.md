@@ -36,7 +36,6 @@ Swarm คือทางออกของปัญหานี้ — คุณ
 ## ลงมือทำตามลำดับ
 
 ```bash
-cd sandbox/sales-insight
 claude
 ```
 
@@ -90,7 +89,7 @@ Do not modify files. Return one report under 300 words with headings: structure,
 - แตกงานที่ต้องใช้ผลกันให้ขนาน — ก้อนที่รอกันจะสรุปคนละสมมติฐาน และคุณต้องเป็นคนกลางเอง
 - ใช้ `claude -p` แล้ว Bash ถูกปฏิเสธ — ขั้น quality gate ต้องรันในเทอร์มินัลของคุณเอง แล็บนี้จึงออกแบบให้สำรวจโดยไม่ต้องรันอะไร
 - ตั้ง `--max-turns` ต่ำ — เอเจนต์ย่อยยังไม่ทันรวมรายงาน รอบจบแบบไม่มีผล
-- เปิดคนละโฟลเดอร์กับแอป — สำรวจผิดที่ตั้งแต่ต้น ตรวจ prompt แรกว่าเปิดจาก `sandbox/sales-insight/`
+- เปิดคนละโฟลเดอร์กับแอป — สำรวจผิดที่ตั้งแต่ต้น ตรวจ prompt แรกว่าเปิดจาก ``
 
 ## Quick check / ทบทวน
 
@@ -112,4 +111,3 @@ Do not modify files. Return one report under 300 words with headings: structure,
 ## Go deeper
 
 - [คู่ prompt](../../reference/prompt-pairs-th-en.md)
-- บท swarm ฉบับเก่าอยู่ใน `instructor/source-material/module-03-swarm-parallel/`

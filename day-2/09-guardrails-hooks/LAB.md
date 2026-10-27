@@ -11,7 +11,6 @@
 1. ใน Git Bash ให้เห็นของแดงก่อนลงมือ
 
 ```bash
-cd sandbox/sales-insight
 node scripts/quality-gate.js
 ```
 
@@ -19,7 +18,19 @@ node scripts/quality-gate.js
 
 > 📚 **รู้เพิ่ม:** ดูหน้าตาของ "แดง" ก่อนแก้เสมอ — ถ้าไม่รู้ว่าเคสไหนแดงอย่างไร คุณจะไม่มีทางรู้ว่าการแก้ของคุณเปลี่ยนอะไร รายงานรอบนี้คือ baseline ที่ขั้นถัดไปจะเทียบด้วย
 
-2. เปิด TUI แล้ววาง prompt จากบทเรียน กดอนุญาตเมื่อจะเขียน `server.js` หรือทับ CSV
+2. เปิด TUI แล้ววาง prompt (เลือกอย่างใดอย่างหนึ่ง) กดอนุญาตเมื่อจะเขียน `server.js` หรือทับ CSV:
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+scripts/quality-gate.js currently FAILS. Replace data/sales.csv with a cleaned file and change server.js only enough that all three cases pass. Do not edit scripts/quality-gate.js. Then show me the command output.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data/sales.csv ด้วยไฟล์ที่สะอาด และแก้ server.js น้อยที่สุดจน quality gate สามเคสผ่าน ห้ามแก้ scripts/quality-gate.js แล้วแสดงผลคำสั่งให้ดู
+```
 
 ผลที่คาดหวัง: `data/sales.csv` เป็นชุดที่สะอาด และ `POST /api/notes` ไม่ทำให้โปรเซสตาย
 
@@ -58,7 +69,7 @@ $proc.ExitCode
 5. เขียน `usage.json` จาก `/cost` ใน TUI ถ้ามี หรือใส่ตัวเลขฝึก — เขียนด้วย PowerShell แบบไม่มี BOM:
 `[IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))` แล้วรัน
 
-> 📚 **เช็คก่อนรัน:** `scripts/cost-gate.js` ยังไม่อยู่ใน starter sandbox — ได้มาหลังรัน `node scripts/catch-up.js w5` หรือคัดลอกจาก `solutions/w5/drop-in/scripts/cost-gate.js` (ตรวจจริง: ถ้ายังไม่มีไฟล์ `node scripts/cost-gate.js` จะขึ้น `MODULE_NOT_FOUND`)
+> 📚 **เช็คก่อนรัน:** `scripts/cost-gate.js` ยังไม่อยู่ใน starter — ได้มาหลังรัน `node scripts/catch-up.js w5` หรือคัดลอกจาก `solutions/w5/drop-in/scripts/cost-gate.js` (ตรวจจริง: ถ้ายังไม่มีไฟล์ `node scripts/cost-gate.js` จะขึ้น `MODULE_NOT_FOUND`)
 
 ```bash
 node scripts/cost-gate.js usage.json

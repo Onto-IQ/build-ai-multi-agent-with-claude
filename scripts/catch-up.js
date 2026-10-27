@@ -2,7 +2,7 @@
 'use strict';
 
 /**
- * Copies a workshop solution into the starter sandbox.
+ * Copies a workshop solution into the repo root.
  * Usage: node scripts/catch-up.js w4
  */
 
@@ -19,9 +19,9 @@ if (!known.has(workshop)) {
 }
 
 const src = path.join(root, 'solutions', workshop, 'drop-in');
-const dest = path.join(root, 'sandbox', 'sales-insight');
+const dest = root;
 fs.cpSync(src, dest, { recursive: true });
-console.log(`catch-up: copied solutions/${workshop}/drop-in into sandbox/sales-insight`);
+console.log(`catch-up: copied solutions/${workshop}/drop-in into the repo root`);
 if (workshop === 'w5' || workshop === 'w6') {
-  console.log('data/sales.csv in the sandbox is now the cleaned file.');
+  console.log('data/sales.csv is now the cleaned file.');
 }

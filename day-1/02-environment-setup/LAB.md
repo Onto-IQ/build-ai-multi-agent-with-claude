@@ -31,7 +31,7 @@ claude
 
 ผลที่คาดหวัง: เห็นบัญชีของคลาส ไม่ใช่โหมด API key
 
-3. รันสคริปต์ตรวจ
+3. รันสคริปต์ตรวจ — ต้องอยู่ที่ราก repo (โฟลเดอร์ที่มี `scripts/`) เท่านั้น
 
 ```powershell
 node scripts/verify-setup.mjs
@@ -42,7 +42,6 @@ node scripts/verify-setup.mjs
 4. เปิดแอปคนละเทอร์มินัล
 
 ```powershell
-cd sandbox/sales-insight
 node server.js
 ```
 
@@ -73,6 +72,7 @@ node scripts/quality-gate.js
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
 | `claude` ไม่พบ หรือชี้ไฟล์เก่า | PATH หรือ alias | ดู SETUP.md ขั้นที่ 2 |
+| `Cannot find module .../verify-setup.mjs` | รันจากผิดโฟลเดอร์ (เช่นอยู่ในโฟลเดอร์แอป) หรือ clone จากสำเนาเก่า | กลับไปราก repo (โฟลเดอร์ที่มี `scripts/`) แล้วรันใหม่ ถ้าไม่มีไฟล์จริงให้ `git pull` หรือ clone ใหม่จาก main |
 | port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `$env:PORT=3001; node server.js` |
 | quality gate แสดง port busy | ยังไม่ปิด `node server.js` | ปิดก่อนรัน `node scripts/quality-gate.js` |
 | `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้วปิดคีย์ (`Remove-Item Env:ANTHROPIC_API_KEY`) |

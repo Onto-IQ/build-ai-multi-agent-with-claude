@@ -33,7 +33,6 @@
 เริ่มได้เมื่อ Workshop 5 จบแล้ว (quality gate exit 0):
 
 ```bash
-cd sandbox/sales-insight
 claude
 ```
 

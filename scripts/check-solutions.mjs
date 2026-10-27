@@ -36,8 +36,8 @@ function run(script, args, options) {
 
 async function main() {
   const port = await freePort();
-  const gate = await run(path.join(repo, 'sandbox', 'sales-insight', 'scripts', 'quality-gate.js'), [], {
-    cwd: path.join(repo, 'sandbox', 'sales-insight'),
+  const gate = await run(path.join(repo, 'scripts', 'quality-gate.js'), [], {
+    cwd: repo,
     env: { ...process.env, PORT: String(port) },
   });
   const starterOk =
