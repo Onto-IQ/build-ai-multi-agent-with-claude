@@ -22,6 +22,8 @@ node scripts/quality-gate.js
 
 ผลที่คาดหวัง: มีไฟล์ planner, researcher, developer, writer, qa และมี `docs/PRODUCT-SPEC.md` กับ `docs/TASKS.md`
 
+> 📚 **ตรวจจริงบน CLI 2.1.310:** ผู้นำอาจแจกงานเป็น agent เฉพาะงาน (ad-hoc) โดยไม่เขียนไฟล์เอเจนต์ — ถ้ารายงานจบแล้ว `.claude/agents/` ยังว่าง ให้สั่งเพิ่มตรง ๆ เช่น "เขียนไฟล์เอเจนต์ทั้ง 5 บทบาทจากทีมที่เพิ่งทำงานลง .claude/agents/ (planner, researcher, developer, writer, qa) แต่ละไฟล์มี frontmatter: name, description, tools, model" แล้วจึงเช็ค checkpoint ได้
+
 > 📚 **รู้เพิ่ม:** ขั้น 0 คือสัญญากลางของห้าคน — ไม่มี PRODUCT-SPEC ห้าบทบาทจะจบงานคนละแอป TASKS.md บอกใครรอใคร จึงเป็นตัวกันทั้งทำซ้ำและชนไฟล์
 
 3. ปิดเซิร์ฟเวอร์เก่า แล้วเปิดของใหม่

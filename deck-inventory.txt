@@ -1,0 +1,813 @@
+[1] Build AI Multi-Agent with Claude Code
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: วิทยากร: ภัคพงศ์ กฤตวัฒน์ (พี่เอก)
+    :: สร้าง Multi-Agent Systems โดยใช้ Claude Code ในระดับ Production ¶ หลักสูตร 2 วัน · 09:00–16:00 น. · VIBE-CODE-L2
+[2] 
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 2
+[3] กำหนดการ 2 วัน: จาก Swarm สู่ Capstone
+    :: วันที่ 1  Foundation, Local Environment & Agent Specialization
+    :: วันที่ 2  Coordination, Production Guardrails & Capstone Deployment
+    :: วันที่ 1 · เช้า  09:00–12:00 น.
+    :: Architecture, Setup & Swarm ¶ Module 1 สถาปัตยกรรม AI Agent ¶ Module 2 Environment & Workspace Setup ¶ Module 3 Parallel Execution ด้วย Swarm Pattern
+    :: 🛠 Workshop 1: Parallel Codebase Exploration
+    :: วันที่ 1 · บ่าย  13:00–16:00 น.
+    :: Specialty Agents, Skills & MCP ¶ Module 4 Specialty Agent (.claude/agents/) ¶ Module 5 Skills & Extended Tools ¶ Module 6 MCP (Model Context Protocol)
+    :: 🛠 Workshop 2: สร้าง data-researcher ¶ 🛠 Workshop 3: MCP Guided Demo
+    :: วันที่ 2 · เช้า  09:00–12:00 น.
+    :: Pipelines, Memory & Guardrails ¶ Module 7 Orchestration & Sequential ¶ Module 8 Context Engineering & Memory ¶ Module 9 Guardrails, Permissions & Hooks
+    :: 🛠 Workshop 4: Sequential Pipeline ¶ 🛠 Workshop 5: Quality & Cost Gate
+    :: วันที่ 2 · บ่าย  13:00–16:00 น.
+    :: Capstone & Deployment ¶ Module 10 Capstone: ทีม Multi-Agent แบบ Leader-first ¶ Module 11 Deploy ขึ้น Vercel & Pre-flight Checklist
+    :: 🛠 Workshop 6: แดชบอร์ด + สรุปผู้บริหาร
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 3
+[4] จบ 2 วัน คุณจะทำได้ 5 เรื่อง
+    :: 01  Environment & Profiles ¶ จัดการพารามิเตอร์และโปรไฟล์ Claude Code บน Local ได้ถูกต้อง ¶ 02  Specialty Agents ¶ สร้างด้วย Markdown + YAML Frontmatter พร้อม Skills และ MCP ¶ 03  Agent Architecture ¶ Swarm (Parallel) · Sequential Pipeline · Leader-first Orchestration ¶ 04  Guardrails ¶ Permission Boundaries · Approval Gates · Hooks คุมคุณภาพ ความปลอดภัย และ Token ¶ 05  Production Delivery ¶ ส่งมอบ
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 4
+[5] ใครควรเรียน และต้องมีพื้นฐานอะไร
+    :: กลุ่มเป้าหมาย (Target Audience)
+    :: Developers / Software Engineers ¶ ยกระดับจาก AI Chatbot สู่ Autonomous Agentic Workflows ¶ Tech Leads / System Architects ¶ วางโครงสร้าง Multi-Agent Systems ใช้จริงในทีมและองค์กร ¶ Founders / Technical Builders ¶ ใช้ทีม AI Agent ขับเคลื่อนการพัฒนาและส่งมอบซอฟต์แวร์
+    :: พื้นฐานที่ต้องมี (Prerequisites)
+    :: Terminal / Command Line / PowerShell ¶ ใช้คำสั่งพื้นฐานได้ เช่น cd, ls, mkdir ¶ Prompt Writing ¶ เขียน Prompt กำหนดบทบาท วัตถุประสงค์ และขอบเขตงานของ AI ¶ Git & GitHub ¶ จัดการ Source Control เบื้องต้น
+    :: ทั้ง 3 กลุ่มเริ่มจากพื้นฐานเดียวกัน: Terminal + Prompt + Git — ไม่ต้องเป็น AI Expert มาก่อน
+[6] เตรียมเครื่องให้พร้อมก่อนเรียน
+    :: OS ¶ Windows 10 / 11, macOS 13+, Linux หรือ WSL ¶ Software ¶ Git · VS Code หรือ Cursor · Windows: ใช้ PowerShell (มาพร้อม Windows) ¶ Node.js 20 LTS ขึ้นไป — ใช้รัน Lab (node server.js) ¶ ติดตั้ง Claude Code (Native Install · แนะนำ) ¶ macOS / Linux / WSL: ¶ curl -fsSL https://claude.ai/install.sh | bash ¶ Windows PowerShell: ¶ irm https://claude.ai/install.ps1 | iex ¶ ตรวจเวอร์ชัน (≥ 2.1.296) ¶ cla
+[7] Course Repo + Sales Insight: โจทย์จริงของทุก Workshop
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 7
+    :: sandbox/sales-insight · http://127.0.0.1:3000 (starter: ยังไม่พร้อม)
+    :: สแกนเปิด Repo บน GitHub ¶ github.com/Onto-IQ/build-ai-multi-agent-with-claude
+    :: cd sandbox/sales-insight ¶ claude        # ทุก Lab เริ่มที่นี่ ¶ node server.js → 127.0.0.1:3000
+    :: day-1/ day-2/ (README + LAB) · solutions/w1–w6 · reference/ · Node http ล้วน ไม่มี npm install
+[8] แผนที่ Workshop 1–6: ลงมือทำทุกช่วง
+    :: วันที่ 1 · Foundation & Agent Specialization
+    :: 1
+    :: Workshop 1: สำรวจแอปแบบขนาน (Swarm) ¶ Explore 3 ตัวขนาน → รายงานเดียว ≤ 300 คำ ¶ Module 3
+    :: 2
+    :: Workshop 2: สร้าง data-researcher ผ่าน Prompt ¶ Frontmatter · tools อ่านอย่างเดียว · file:line ¶ Module 4
+    :: 3
+    :: Workshop 3: MCP Guided Demo (sales-echo) ¶ ต่อ MCP server แล้วเรียก tool ด้วยชื่อเต็ม ¶ Module 6
+    :: วันที่ 2 · Coordination, Guardrails & Capstone
+    :: 4
+    :: Workshop 4: Design → Clean → Review ¶ DESIGN.md → clean-sales.js → REVIEW.md ¶ Module 7
+    :: 5
+    :: Workshop 5: Quality Gate และ Cost Gate ¶ gate exit 0 · hook บล็อกคำสั่งอันตราย · cost gate ¶ Module 9
+    :: 6
+    :: Workshop 6: แดชบอร์ดและสรุปผู้บริหาร ¶ ทีม 5 บทบาทบนสเปกเดียว + preflight ก่อน Vercel ¶ Module 10–11
+[9] Module 1 · Agent Architecture
+    :: จาก Single Prompt / Chatbot สู่ Autonomous Multi-Agent Systems
+    :: วันที่ 1 · เช้า · ⏱ ~45 นาที
+[10] Chatbot ตอบแล้วจบ — Agent ทำงานจนสำเร็จ
+    :: พลังของ Agent ไม่ได้มาจาก “โมเดลฉลาดขึ้น” แต่มาจาก “การให้โมเดลมีมือและตา” (tools + feedback loop)
+    :: Chatbot
+    :: ตอบคำถามแล้วจบ ¶ ไม่มีอะไรเปลี่ยนในโลกจริง ¶ ให้คำตอบเป็นข้อความ ¶ ผู้ใช้ต้อง copy ไปทำต่อเอง
+    :: AI Agent
+    :: วงจร Agentic Loop ¶ รับโจทย์ → วางแผน → เลือกเครื่องมือ → ลงมือ → ตรวจผล → ส่งมอบ ¶ Tool Calling ¶ เรียกรันเครื่องมือเอง แล้วอ่านผลจริงกลับเข้า context
+[11] Tool Calling: วงจรที่ทำให้ Agent ลงมือได้จริง
+    :: 1  รับรายการเครื่องมือ ¶ โมเดลเห็น tools พร้อมคำอธิบายหน้าที่ ¶ 2  ตอบเป็น tool use ¶ เมื่อโจทย์ต้องการ — แทนข้อความธรรมดา ¶ 3  Runtime รันจริง ¶ Claude Code รันเครื่องมือ แล้วส่งผลกลับเข้า context ¶ 4  อ่านผล → ตัดสินใจต่อ ¶ วนซ้ำจนงานเสร็จ
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 11
+    :: Agentic ¶ Loop
+    :: โมเดลเลือก Tool
+    :: รันสคริปต์ / คำสั่ง
+    :: ผลลัพธ์กลับเข้า Context
+    :: ตัดสินใจขั้นถัดไป
+[12] รูปแบบ Multi-Agent ใน Claude Code: เลือกตามงานและงบ
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 12
+    :: 1
+    :: Subagent ¶ สำเนาของ Claude ที่มี context / system prompt / tools แยก ทำเสร็จแล้วสรุปผลส่งกลับ ¶ เหมาะกับ: งาน output ยาว: สแกนโค้ด ค้นคว้า
+    :: ต้นทุนต่ำสุด
+    :: 2
+    :: Agent Teams ¶ หลาย instance คุยกันเองได้ มี Task List ร่วม และ Team Lead (experimental) ¶ เหมาะกับ: งานซับซ้อนที่ต้องถก/ประสานข้ามสายงาน
+    :: ต้นทุนสูง
+    :: 3
+    :: Background Agents ¶ Subagent ที่รันเบื้องหลัง ไม่บล็อกการสนทนา ¶ เหมาะกับ: รัน test suite / build ยาว ๆ ระหว่างทำงานอื่น
+    :: ต้นทุนปานกลาง
+    :: Agent Teams ปิดโดย default — เปิดด้วย CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 · ในคอร์ส: ผู้สอนสาธิต แล็บปกติไม่เปิด
+[13] Leader แจกงาน · Workers ทำขนาน
+    :: Leader ¶ วิเคราะห์โจทย์ → วางแผน → แตกงานเป็น task ที่ระบุชัด: วัตถุประสงค์ / รูปแบบผลลัพธ์ / เครื่องมือ / ขอบเขต ¶ Workers ¶ ทำงานขนานกัน แต่ละตัวมี context ของตัวเอง ¶ Synthesize ¶ Leader รวมผล แล้วปล่อยรอบเพิ่มถ้ายังขาดข้อมูล
+    :: Leader ¶ วางแผน / แจกงาน
+    :: Subagent A ¶ ค้นแหล่ง X
+    :: Subagent B ¶ ค้นแหล่ง Y
+    :: Subagent C ¶ ตรวจผล
+    :: สังเคราะห์ ¶ → คำตอบ
+    :: ที่มา: Anthropic “How we built our multi-agent research system”
+[14] ทีม Agent เก่งขึ้น แต่จ่าย Token มากขึ้นมาก
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: ~15×
+    :: Token ที่ Multi-agent ใช้ ¶ เทียบกับการแชทเดี่ยว
+    :: +90.2%
+    :: Multi-agent ทำงานวิจัยกว้าง ๆ ได้ดีกว่า single-agent
+    :: ~80%
+    :: ของผลลัพธ์อธิบายได้ด้วย Token — คุม Token = คุมคุณภาพ / งบ
+    :: ใช้เมื่อ: งานขนานได้และอ่านหนัก (research, review, สแกน) ¶ เลี่ยงเมื่อ: ต้องแชร์ context แน่น แก้โค้ดชิ้นเดียวกันไปมา
+[15] Swarm หรือ Sequential? ดูว่างานขึ้นต่อกันไหม
+    :: สถานการณ์
+    :: เลือก
+    :: เหตุผล
+    :: สำรวจ server.js + sales.csv + quality gate
+    :: Swarm ขนาน
+    :: อ่านคนละไฟล์ ผลไม่ขึ้นต่อกัน
+    :: ออกแบบตัวทำความสะอาด → เขียน → รีวิว
+    :: Sequential
+    :: ขั้นหลังต้องเปิดไฟล์ของขั้นก่อน
+    :: หน้าเว็บ + API หลังมี PRODUCT-SPEC
+    :: Swarm (หลังมีสัญญากลาง)
+    :: สัญญาชัด = ขนานได้ปลอดภัย
+    :: แก้บั๊กจุดเดียว ต้องไล่สถานะต่อเนื่อง
+    :: อย่าตั้งทีม
+    :: Multi-agent บวมโดยไม่จำเป็น
+    :: Subagent ที่ขนานกันโดยไม่มี “สัญญากลาง” (spec/contract) จะตัดสินใจขัดแย้งกันเอง เช่น ตั้งชื่อ API คนละแบบ
+[16] Lab สาธิต 2 นาที: หาไฟล์ที่เสี่ยงที่สุด (Module 1)
+    :: ⏱ 10 นาที · 🎯 เป้าหมาย ¶ บอกไฟล์ที่เสี่ยงที่สุด 1 ไฟล์ และบอกว่างานต่อไปควร swarm หรือ sequential ¶ ขั้นตอน (ทำใน TUI) ¶ 1. เปิด PowerShell → cd sandbox/sales-insight → claude ¶ 2. วาง prompt EN หรือ TH — เลือกอย่างใดอย่างหนึ่ง ¶ 3. ถามต่อ 1 ประโยค: งานที่เหลือควร swarm หรือ sequential ¶ ผลที่คาดหวัง ¶ คำตอบ ≤ 80 คำ ชี้ไฟล์จริง เช่น server.js หรือ data/sales.csv พร้อมเหตุผล 1 ข้อ ¶ อ่านหลายไฟล์ขนา
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[17] Module 2 · Environment Setup
+    :: เครื่องพร้อมใช้ Claude Code 100% ภายใน ~30 นาที
+    :: วันที่ 1 · เช้า · ⏱ ~30 นาที
+[18] ติดตั้ง Claude Code CLI แล้วใช้ 2 โหมด
+    :: ขั้นที่ 1 · Native Install (แนะนำ · อัปเดตอัตโนมัติ) ¶ macOS / Linux / WSL ¶ curl -fsSL https://claude.ai/install.sh | bash ¶ Windows PowerShell ¶ irm https://claude.ai/install.ps1 | iex ¶ ทางเลือก: brew · winget · npm (Node.js 22+, ห้าม sudo) ¶ ขั้นที่ 2 · ตรวจ แล้วล็อกอิน ¶ claude --version   # ≥ 2.1.296 ¶ claude doctor      # ตรวจการติดตั้ง ¶ พิมพ์ claude → login ผ่านเบราว์เซอร์ · /status · /ex
+[19] Lab 0 ตรวจเครื่อง: 4 ขั้นก่อนเริ่ม Workshop 1
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 19
+    :: CLI
+    :: 1
+    :: ตรวจรุ่น + คีย์ ¶ PowerShell: node · git · claude --version · echo $env:ANTHROPIC_API_KEY ต้องว่าง
+    :: /status
+    :: 2
+    :: ล็อกอินใน TUI ¶ claude → /status เห็นบัญชีคลาส ไม่ใช่โหมด API key → /exit
+    :: verify
+    :: 3
+    :: สคริปต์ตรวจ ¶ node scripts/verify-setup.mjs → verify-setup: passed
+    :: exit 2
+    :: 4
+    :: เปิดแอป + gate ¶ node server.js → 127.0.0.1:3000 · Ctrl+C แล้วรัน quality gate → exit 2
+    :: ✅ Checkpoint (⏱ 25 นาที)
+    :: ☑ claude --version ≥ 2.1.296 · ANTHROPIC_API_KEY ว่าง
+    :: ☑ node scripts/verify-setup.mjs ผ่าน
+    :: ☑ เปิด 127.0.0.1:3000 ได้ แล้วปิดเซิร์ฟเวอร์
+    :: ☑ quality gate = exit 2 โดยไม่แก้ไฟล์ (ตั้งใจ)
+[20] ตามไม่ทัน? Catch-up ทีละ Workshop
+    :: คำสั่ง (ราก repo)
+    :: คัดลอกอะไรเข้า sandbox/sales-insight
+    :: ใช้เมื่อ
+    :: catch-up.js w1
+    :: docs/EXPLORATION-REPORT.md
+    :: ก่อนเริ่ม Workshop 2
+    :: catch-up.js w2
+    :: .claude/agents/data-researcher.md
+    :: ก่อน Module 5–6
+    :: catch-up.js w3
+    :: mcp/sales-server.js
+    :: ก่อน Workshop 4
+    :: catch-up.js w4
+    :: docs/DESIGN.md · scripts/clean-sales.js · docs/REVIEW.md
+    :: ก่อน Module 8–9
+    :: catch-up.js w5
+    :: hooks · settings.json · cost-gate.js · sales.csv ที่สะอาด
+    :: ก่อน Capstone
+    :: catch-up.js w6
+    :: ทีม 5 บทบาท · PRODUCT-SPEC · EXECUTIVE-SUMMARY · vercel.json
+    :: ก่อน Module 11
+    :: check-solutions.mjs
+    :: ไม่คัดลอก — ตรวจคำตอบ w1–w6 ทั้งชุด
+    :: ผู้สอนตรวจก่อนคลาส
+    :: เรียกด้วย node scripts/... แล้วอ่าน SOLUTION.md ในโฟลเดอร์ solutions/wN · w5 และ w6 เขียนทับ data/sales.csv ด้วยไฟล์ที่สะอาดแล้ว
+[21] Workspace, Config JSON และ Feature Flags
+    :: ตั้งค่าที่ใช้ใน Module ถัดไป ¶ ~/.claude/settings.json ¶ ตั้งค่าผู้ใช้รายเครื่อง · settings.local.json ไม่เข้า git ¶ PORT ¶ พอร์ตของ server.js และ quality gate (ค่าเริ่มต้น 3000) ¶ CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS ¶ จำนวนเอเจนต์ย่อยพร้อมกันสูงสุด · ว่าง = ค่าเริ่มต้น ¶ CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 ¶ เฉพาะตอนผู้สอนสาธิตทีม ¶ Workspace = sandbox/sales-insight ¶ data/ lib/ mcp/ scripts/
+[22] Module 3 · Swarm Pattern
+    :: Parallel Execution: สั่งงาน Subagents หลายตัวขนานกันจาก Prompt เดียว
+    :: วันที่ 1 · เช้า · ⏱ ~60 นาที · Workshop 1
+[23] Built-in Subagents ทำงานใน Isolated Context
+    :: Context แยก ¶ ไม่เห็นบทสนทนาหลัก ได้เฉพาะโจทย์ที่ Leader เขียนส่งให้ ¶ Tools ของตัวเอง ¶ เช่น Explore อ่านได้อย่างเดียว ¶ ขอบเขตชัดเจน ¶ ทำจบแล้ว “สรุปผล” กลับมาเท่านั้น
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 23
+    :: บทสนทนาหลัก · Leader ¶ ส่งโจทย์ลง ↓   รับสรุปกลับ ↑
+    :: Explore ¶ isolated context ¶ อ่าน / ค้น / สรุป ห้ามแก้ไข
+    :: Plan ¶ isolated context ¶ ค้นคว้าใน Plan Mode ก่อนเสนอแผน
+    :: General-purpose ¶ isolated context ¶ ทำได้ทุกอย่าง รวมแก้ไฟล์
+    :: Subagent เห็นเฉพาะโจทย์ที่ได้รับ — context หลักไม่บวม
+[24] Leader-first: ส่งโจทย์ระดับสูง ให้ Leader แตกงานเอง
+    :: Anatomy ของ prompt สั่ง Swarm ที่ดี ¶ 1  บริบท  สิ่งที่ Leader ควรรู้ก่อน (แอปอะไร อยู่ไหน) ¶ 2  เป้าหมาย  ผลลัพธ์สุดท้ายหน้าตาเป็นอย่างไร ¶ 3  การแตกงาน  แบ่งกี่ส่วน แต่ละส่วนทำอะไร (หรือให้ Leader เสนอ) ¶ 4  รูปแบบผล  รายงานรวมยาวเท่าไร โครงหน้าตาอย่างไร ¶ 5  ขอบเขต  ห้ามทำอะไร เช่น แก้ไขไฟล์ รันคำสั่งเสี่ยง
+[25] Parallel Dispatching จาก Prompt เดียว
+    :: EN (แนะนำ) — วางใน TUI ครั้งเดียว ¶ Dispatch 3 parallel Explore subagents on this Sales Insight app. ¶ 1) Map the runtime files and how to start the server. ¶ 2) Read data/README.md and the failure text from node scripts/quality-gate.js. Do not fix anything. ¶ 3) Trace GET /api/summary and POST /api/notes far enough to name the risky behavior. ¶ Do not modify files. Return one report under 300 wor
+    :: TH (ใช้ได้เหมือนกัน ทดสอบแล้ว) ¶ ส่ง Explore subagent 3 ตัวทำพร้อมกัน ¶ ในแอป Sales Insight ¶  ¶ 1) แผนที่ไฟล์ที่ใช้รัน และวิธียกเซิร์ฟเวอร์ ¶ 2) อ่าน data/README.md และข้อความ FAIL ¶    จาก node scripts/quality-gate.js ห้ามแก้ ¶ 3) ไล่ GET /api/summary กับ POST /api/notes ¶    พอให้ชี้พฤติกรรมที่เสี่ยง ¶  ¶ ห้ามแก้ไขไฟล์ ส่งรายงานเดียวไม่เกิน 300 คำ ¶ มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง
+[26] รวมผลกลับ Leader — และสัญญาณว่าแบ่งงานผิด
+    :: Result Aggregation: leader รวมเป็นรายงานเดียว 3 หัวข้อ — structure · data quality · risks — สิ่งที่กลับมาคือบทสรุป ไม่ใช่เนื้อไฟล์เต็ม
+    :: สัญญาณ
+    :: หมายความว่า
+    :: แก้อย่างไร
+    :: Agent ส่งข้อความหากันบ่อยมาก
+    :: สองส่วนผูกกันแน่นเกินจะแยก
+    :: รวมเป็นตัวเดียว
+    :: ไฟล์ชนกัน
+    :: เจ้าของไฟล์ไม่ชัด
+    :: แบ่งใหม่ตามไฟล์ หรือแยก worktree
+    :: รอกันเป็นทอด
+    :: งานเรียงลำดับ ไม่ได้ขนานจริง
+    :: ทำในตัวเดียว หรือเรียงเป็นชั้น
+    :: ผลไม่ต่อกัน
+    :: ไม่มีสัญญาที่จุดเชื่อม
+    :: เขียนสัญญากลางก่อนแบ่งงาน
+    :: ทำงานบนสมมติฐานผิด
+    :: ข้อความมอบงานขาดบริบท
+    :: เติมบริบทใน task หรือใช้ fork
+[27] Workshop 1: สำรวจแอป Sales Insight แบบขนาน
+    :: โจทย์ ⏱ 35 นาที: prompt เดียว ได้รายงานเดียวครบโครงสร้าง คุณภาพข้อมูล จุดเสี่ยง — ไม่แก้ไฟล์ ¶ ผลที่คาดหวัง ¶ leader เรียกเอเจนต์ย่อยหลายตัว แล้วตอบรายงานเดียว 3 หัวข้อ อ้าง server.js, data/sales.csv, scripts/quality-gate.js ¶ ✅ Checkpoint ¶ ☑  ใช้ prompt เดียว ไม่ถามทีละชิ้นสามรอบ ¶ ☑  รายงานมีสามหัวข้อ อ่านจบในห้านาที ¶ ☑  ระบุ /api/summary และ /api/notes ¶ ☑  git status --short ไม่มีความแก้จากเ
+[28] Module 4 · Specialty Agents
+    :: สร้าง Agent เฉพาะทางด้วย Markdown + YAML Frontmatter
+    :: วันที่ 1 · บ่าย · ⏱ ~55 นาที · Workshop 2
+[29] CLAUDE.md: คู่มือประจำบ้านของ Agent
+    :: เขียนอะไรลงไป ¶ แอปคืออะไร · ไฟล์หลักอยู่ไหน · กติกาที่ทุกเอเจนต์ต้องรู้ ¶ อยู่ 2 ระดับ ¶ ./CLAUDE.md  Project — ทีมแชร์ผ่าน Git ¶ ~/.claude/CLAUDE.md  Global — ระดับผู้ใช้ ¶ จาก sandbox/sales-insight/CLAUDE.md ¶ ห้าม: เพิ่ม dependency — Node http ล้วน ¶ กติกา: งานสำรวจห้ามแก้ไฟล์ · ห้ามคัดลอกค่า sk- ¶ ก่อนส่ง: รัน quality gate แล้วรายงาน exit code จริง
+[30] ไฟล์เดียว = Agent หนึ่งตัว ใน .claude/agents/
+    :: YAML Frontmatter ¶ ส่วนตั้งค่าระหว่างเส้น --- สองเส้น ¶ Body = System Prompt ¶ บทบาท วิธีทำงาน รูปแบบผล และข้อห้าม ¶ ฟิลด์บังคับมีแค่ 2 ¶ name กับ description — ที่เหลือเลือกใส่ ¶ ไฟล์ = definition ¶ การ dispatch แต่ละครั้ง = instance
+    :: .claude/agents/data-researcher.md ¶ --- ¶ name: data-researcher ¶ description: Researches how the Sales ¶   Insight code and sales.csv behave. Use ¶   proactively for "how does this work?" ¶   or data-quality questions. Read-only. ¶ tools: Read, Grep, Glob ¶ model: sonnet ¶ --- ¶ ## Method ¶ - Search before answering. Cite path:line. ¶ ## Output format ¶ - Answer · Evidence · Risks ¶ ## Constraint
+[31] Frontmatter Parameters ที่ใช้บ่อย
+    :: Field
+    :: ค่า
+    :: หน้าที่
+    :: name
+    :: kebab-case ไม่ซ้ำ
+    :: ชื่อ agent (บังคับ)
+    :: description
+    :: สั้น ขึ้นต้น Use proactively
+    :: หัวใจของ auto-delegation (บังคับ)
+    :: tools
+    :: Read, Grep, Glob
+    :: allowlist — ไม่ใส่ = ได้ทุกเครื่องมือ
+    :: disallowedTools
+    :: WebFetch, WebSearch
+    :: denylist — ชื่อซ้ำทั้งสองรายการ = หลุดออก
+    :: model
+    :: haiku / sonnet / opus (ชื่อตระกูล)
+    :: Model routing
+    :: permissionMode
+    :: เช่น plan
+    :: มีผลเมื่อเซสชันหลักยังเป็น default
+    :: skills · memory
+    :: release-checklist · project
+    :: preload skill · จำข้ามเซสชัน
+    :: กับดัก permissionMode: เปิดเซสชันหลักด้วยโหมดยอมรับอัตโนมัติ → เอเจนต์ย่อยใช้โหมดนั้นตาม ค่าที่เขียนไว้ถูกเมินโดยไม่เตือน
+[32] Lab 0 · จับหน้าจอจริง (1/2) — ตรวจรุ่น + คีย์ + สคริปต์ตรวจ
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[33] Lab 0 · จับหน้าจอจริง (2/2) — quality gate แดงตามออกแบบ (exit 2)
+    :: จับภาพจริงจากเทอร์มินัล (นอก TUI) · Claude Code 2.1.310 · sandbox/sales-insight
+    :: 3 เคส: data-quality · bad-json-does-not-crash · summary-matches-valid-rows — แดงครบตั้งแต่ starter ¶ exit 2 คือ baseline — Workshop 5 ทำให้เขียวโดยห้ามแก้ scripts/quality-gate.js ¶ ตัวเลขจริงรอบนี้: 18 violations · server ล่มหลัง POST ที่ไม่ใช่ JSON · revenue 7529.25 กับ 24 orders (ที่ถูกคือ 4168 / 8)
+[34] TUI vs headless (claude -p) — ใช้ให้ถูกงาน
+    :: TUI (ซ้าย): interactive — กดอนุญาตทีละขั้น เห็น subagent และ spinner จริง · เหมาะกับทุก Lab ในคอร์สนี้ ¶ headless claude -p (ขวา): รันจากสคริปต์/CI ไม่มีหน้าจอ · เขียน .claude/** ถูกปฏิเสธ ต้องส่ง --allowedTools เอง · เหมาะกับ automation ¶ กติกา: งานที่ต้องมีคนกดอนุญาต/ตรวจกลางทาง = TUI · งานที่สั่งด้วยสคริปต์และไม่ต้องแตะ .claude/ = headless
+[35] Permission Modes: กด Shift+Tab วนโหมดระหว่างทำงาน
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 35
+    :: M
+    :: 1
+    :: Manual (default) ¶ ถามก่อนแก้ไฟล์ / รันคำสั่ง — งานอ่อนไหว
+    :: E
+    :: 2
+    :: Accept edits ¶ แก้ไฟล์ใน working dir ได้เลย · คำสั่งอื่นยังถาม
+    :: P
+    :: 3
+    :: Plan ¶ อ่าน สำรวจ เสนอแผน — ยังไม่แก้จนกว่าจะอนุมัติ
+    :: A
+    :: 4
+    :: Auto ¶ classifier ตรวจ action แทนเรา · โหมดเริ่มต้นของรุ่นใหม่
+    :: วนด้วย Shift+Tab · ดูโหมดที่ status bar
+    :: ☑ Bypass อยู่ในวงเฉพาะเมื่อเปิดตอนเริ่ม session เท่านั้น
+    :: ☑ dontAsk ไม่อยู่ในวง — ตั้งด้วย --permission-mode (CI)
+    :: ☑ /plan นำหน้า prompt = เข้า Plan เฉพาะครั้งนั้น
+    :: ☑ permissionMode ของเอเจนต์ถูกเมินเมื่อเซสชันหลักไม่ใช่ default
+[36] Model Routing: จับคู่งานกับ Model
+    :: งานยากมาก / ตัดสินใจสถาปัตยกรรม → opus · ตั้งใน frontmatter: model: haiku | sonnet | opus | inherit
+    :: haiku · Fast Scan
+    :: สแกน / ค้นเร็ว, จัดหมวด ¶ ถูกและเร็ว ¶ เหมาะกับ ¶ Explore ไฟล์จำนวนมาก งานเบ็ดเตล็ด
+    :: sonnet · Logic
+    :: วิเคราะห์ logic, สรุปงานวิจัย ¶ สมดุลระหว่างคุณภาพกับราคา ¶ เหมาะกับ ¶ Code Researcher, Reviewer
+    :: ลำดับการเลือก model: ระบุตอนเรียก → model ใน definition → env CLAUDE_CODE_SUBAGENT_MODEL → model ของ session หลัก
+[37] เรียกใช้ Specialty Agent ได้ 3 วิธี
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 37
+    :: auto
+    :: 1. Auto-delegation
+    :: Leader อ่าน description แล้วเลือก agent เองเมื่อโจทย์ตรง
+    :: description ต้องชัด — ใส่ “Use proactively for ...”
+    :: @
+    :: 2. @-mention
+    :: @data-researcher <โจทย์>
+    :: รับประกันว่า agent ตัวนี้ถูกเรียก
+    :: CLI
+    :: 3. CLI flag / settings
+    :: claude --agent data-researcher
+    :: หรือ "agent": "data-researcher" ใน .claude/settings.json
+[38] Description & Error ที่ดี: Agent เลือกถูก แก้ทางเองได้
+    :: แบบที่พลาด
+    :: ✅  แบบที่ดี
+    :: Description
+    :: "helps with code" — กว้าง กำกวม
+    :: บอกว่าทำอะไร + ใช้เมื่อไหร่ ("Use proactively for …")
+    :: Input schema
+    :: ทุกฟิลด์ required · ช่อง free text หมด
+    :: required เท่าที่ขาดไม่ได้ · enum สำหรับค่าตายตัว
+    :: Error message
+    :: "Error" เฉย ๆ หรือซ่อน error ไว้
+    :: บอกว่าพังเพราะอะไร + ควรลองอะไรต่อ
+    :: Retry
+    :: retry ทุก error ซ้ำไปเรื่อย ๆ
+    :: retry เฉพาะ transient (timeout, rate limit) · permanent → รายงาน
+    :: Agent/tool ถูกเลือกผิดตัว → แก้ description ก่อน · error ต้องส่งกลับให้ Claude เห็นเสมอ ไม่ซ่อน (เชื่อม MCP ใน Module 6)
+[39] Workshop 2: สร้าง data-researcher ผ่าน Prompt
+    :: โจทย์ ⏱ 35 นาที: ให้ Claude เขียน .claude/agents/data-researcher.md ใน TUI แล้วเรียกใช้อธิบาย POST /api/notes ¶ ผลที่คาดหวัง ¶ ไฟล์โผล่จริง มี name, description, tools, model · คำตอบมีหลักฐาน server.js:บรรทัด ¶ ✅ Checkpoint ¶ ☑  ไฟล์ถูกสร้างโดย Claude ใน TUI ไม่ใช่ก็อปจาก solutions/ ¶ ☑  tools = Read, Grep, Glob ไม่มี Bash, Edit, Write ¶ ☑  model เป็น sonnet ¶ ☑  คำอธิบาย POST /api/notes มี server
+    :: ทดสอบเรียกใช้ (เซสชันเดิม)
+    :: EN: Use the data-researcher subagent to ¶   explain POST /api/notes. Cite server.js:line ¶   for every claim. Do not edit. ¶ TH: ให้ subagent data-researcher อธิบาย ¶   POST /api/notes ทุกข้ออ้าง server.js:บรรทัด ห้ามแก้ไฟล์
+    :: Answer ¶ อธิบายวิธีทำงาน 2–4 ประโยค
+    :: Evidence ¶ server.js:บรรทัด ทุกประเด็น
+    :: Risks ¶ ความเสี่ยงที่พบ (ถ้ามี)
+[40] Module 5 · Skills
+    :: ขยายความสามารถด้วย Skills และ Extended Tools
+    :: วันที่ 1 · บ่าย · ⏱ ~25 นาที
+[41] Skill vs Subagent: ความรู้ที่ฉีดเข้า vs ตัวลงมือทำ
+    :: Subagent
+    :: Skill
+    :: รูปแบบ
+    :: ตัวลงมือทำ (context แยก, tools ของตัวเอง)
+    :: ชุดคำสั่ง/ความรู้ที่ฉีดเข้า context
+    :: เก็บที่
+    :: .claude/agents/*.md
+    :: .claude/skills/<ชื่อ>/SKILL.md
+    :: ใช้เมื่อ
+    :: งานหนัก output ยาว ต้องแยก context
+    :: ขั้นตอนมาตรฐานที่ต้องทำซ้ำให้ถูกต้อง
+    :: Trigger
+    :: description ของ agent → Leader เลือก
+    :: description ของ skill → Claude โหลดเมื่อตรงงาน
+    :: ใช้ร่วมกันได้: ผูก Skill ให้ Subagent ผ่าน frontmatter skills (สไลด์ถัดไป)
+[42] Workshop 1 · Explore 3 ตัวขนาน รายงานเดียว
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[43] โครงสร้าง SKILL.md: frontmatter + ขั้นตอนที่รันได้
+    :: ที่อยู่ ¶ .claude/skills/release-checklist/SKILL.md ¶ description คือตัว trigger ¶ Claude อ่านเพื่อจับคู่งานกับ skill — ต้องเป็นภาษาอังกฤษ เนื้อขั้นตอนเป็นไทยได้ ¶ กับดักที่พบบ่อย ¶ description กว้างเกิน → trigger พร่ำเพรื่อ ¶ body เป็นเรียงความ → ต้องเป็นขั้นตอนที่ตรวจได้ ¶ ชื่อโฟลเดอร์ไม่ตรง name → สับสนตอน preload
+    :: .claude/skills/release-checklist/SKILL.md ¶ --- ¶ name: release-checklist ¶ description: Use before releasing the ¶   Sales Insight app ¶ --- ¶ # Release checklist ¶ 1. Boot node server.js until it prints ¶    "listening". ¶ 2. Record the quality gate result. ¶ 3. /api/health must not contain sk-. ¶ 4. Stop the server before running ¶    node scripts/quality-gate.js.
+[44] ผูก Skill ให้ Subagent ล่วงหน้าด้วย frontmatter skills
+    :: .claude/agents/release-manager.md ¶ --- ¶ name: release-manager ¶ description: Runs releases for Sales Insight. ¶   Use proactively when the user asks ¶   to release or ship. ¶ tools: Read, Grep, Glob ¶ model: sonnet ¶ skills: release-checklist ¶ ---
+    :: Auto-trigger ¶ Claude โหลด skill เองเมื่อ description ตรงงาน — อาจโหลดหรือไม่ก็ได้
+    :: Preload ผ่าน skills ¶ เนื้อหา skill ทั้งหมดอยู่ใน context ของ agent ตั้งแต่เริ่มทำงาน
+    :: เพิ่มบรรทัดเดียว ¶ skills: release-checklist
+    :: Lab release checklist (⏱ 15 นาที): ทดสอบใน TUI ด้วย "I want to release the sales insight app now. Walk me through it." แล้วจดว่าถูกหยิบเองหรือต้องเอ่ยชื่อ
+[45] Plugins: รวม Skills + Agents + Hooks + MCP — ตรวจก่อนติดตั้ง
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 45
+    :: ✓
+    :: แหล่งที่มา: marketplace ทางการของ Anthropic หรือ third-party? ใครดูแล
+    :: ✓
+    :: อ่าน SKILL.md · agents · hooks · scripts ก่อน — หาคำสั่งแฝงหรือ curl | bash
+    :: ✓
+    :: ดูสิทธิ์: tools ที่ agent ขอ · MCP server ต่อไปที่ไหน · hooks รันอะไร
+    :: ✓
+    :: ล็อกเวอร์ชันที่ตรวจแล้ว — ระวังอัปเดตที่เปลี่ยนพฤติกรรมเงียบ ๆ
+    :: ✓
+    :: ลองใน sandbox / repo ทดลองก่อน แล้วค่อยติดตั้งแบบ project scope
+    :: ✓
+    :: ไม่ได้ใช้ → disable ด้วย /plugin (ลด context และ process ที่รันอยู่)
+    :: โครงสร้าง plugin (ตัวอย่าง) ¶ my-plugin/ ¶   .claude-plugin/plugin.json ¶   skills/<name>/SKILL.md ¶   agents/reviewer.md ¶   hooks/hooks.json ¶   .mcp.json   # MCP servers
+    :: Plugin = หลายชิ้นรวมเป็นหน่วยเดียว · ติดตั้ง/จัดการผ่าน /plugin
+    :: รันด้วยสิทธิ์ของเรา: plugin ที่เปิดไว้อยู่ในทุก session — hooks ทำงาน MCP รันคู่ และ description กิน context ทุก turn
+[46] Module 6 · MCP
+    :: Model Context Protocol: ต่อเครื่องมือและข้อมูลภายนอกเข้ากับ Agent
+    :: วันที่ 1 · บ่าย · ⏱ ~35 นาที · Workshop 3
+[47] MCP Transports: เลือกตามที่ตั้งของ Server
+    :: MCP = โปรโตคอลมาตรฐาน (JSON-RPC) ¶ ให้ Agent ต่อแหล่งเครื่องมือ/ข้อมูลภายนอก ¶ รูปแบบ Deployment ¶ Node.js (npx) · Docker Container · Remote URL ¶ = วิธีติดตั้ง ไม่ใช่ชนิดของ MCP ¶ SSE deprecated — เหลือแค่ auto-fallback ให้ server เก่า
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 47
+    :: Claude ¶ Code
+    :: stdio ¶ Server รันในเครื่องเดียวกัน ¶ npx some-mcp-server · script เราเอง
+    :: Streamable HTTP ¶ Remote service ¶ https://mcp.notion.com/mcp
+    :: WebSocket ¶ Server ที่ push event สด ¶ ตั้งผ่าน JSON config เท่านั้น
+[48] MCP Scopes: ตั้งค่าไว้ระดับไหน ใครเห็นบ้าง
+    :: User ¶ ทุกโปรเจกต์ของเรา
+    :: Project · .mcp.json ¶ แชร์กับทีมผ่าน Git
+    :: Local ¶ โปรเจกต์นี้ · เครื่องนี้ ¶ claude mcp add sales-echo ¶   -- node mcp/echo-server.js
+    :: ผูก MCP ให้ Specialty Agent เฉพาะตัว
+    :: .claude/agents/data-researcher.md ¶ --- ¶ name: data-researcher ¶ ... ¶ mcpServers: sales-echo ¶ ---
+    :: ชื่อ tool ใน Claude Code ¶ mcp__<server>__<tool> ¶ เช่น mcp__sales-echo__echo → ตั้ง permission ได้ละเอียดระดับ tool
+[49] Workshop 3 (Guided Demo ⏱ 20 นาที): ต่อ MCP ทีละขั้น
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 49
+    :: 1
+    :: ลงทะเบียน server
+    :: claude mcp add sales-echo ¶ -- node mcp/echo-server.js
+    :: จาก sandbox/sales-insight · scope local
+    :: 2
+    :: ตรวจว่าเห็น
+    :: claude mcp list
+    :: ผลที่คาดหวัง: มี sales-echo
+    :: 3
+    :: เรียก tool ใน TUI
+    :: claude ¶ วาง prompt TH (แนะนำ) ¶ หรือ EN → กดอนุญาต tool
+    :: ชื่อเต็ม mcp__sales-echo__echo
+    :: 4
+    :: ผูกให้ data-researcher
+    :: mcpServers: sales-echo ¶ (ผ่าน TUI แล้วกดอนุญาต)
+    :: tools: Read, Grep, Glob ยังครบ
+    :: กับดัก: ลืม -- คั่นก่อน node → Claude Code อ่าน flag เป็นของตัวเองแล้ว error · ดีบักไป stderr เท่านั้น ห้าม console.log ลง stdout ¶ ✅ Checkpoint: mcp list มี sales-echo · echo ไทยกลับมาตรงทุกตัว · พูดชื่อเต็มได้ · ไม่เพิ่ม console.log
+[50] Workshop 2 · ให้ Claude เขียน data-researcher
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[51] Workshop 2 อ้าง server.js ทุกประเด็น
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[52] ทดสอบภาษาไทยผ่าน MCP: ตัวอักษรต้องกลับมาครบทั้งสาย
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 52
+    :: Prompt TH (แนะนำ) — วางใน TUI ¶ เรียก tool echo ของ MCP server ชื่อ sales-echo ¶ โดยส่งข้อความ "สวัสดี — ทดสอบ ก-ฮ ๐๑๒๓" ¶ แล้วบอกมาตรง ๆ ว่าได้ข้อความกลับแบบใด ¶ ตรงทุกตัวหรือเพี้ยน ¶  ¶ Prompt EN (ใช้ได้เต็มที่) ¶ Use the sales-echo MCP echo tool with the text ¶ "hello-sales" and quote exactly what came back. ¶  ¶ ✅ ผลที่คาดหวัง: ข้อความไทยกลับมาตรงทุกตัว ¶ ✅ เลขไทย ๐๑๒๓ อยู่ในช่วง U+0E50–U+0E53
+    :: Prompt ไทย
+    :: Tool call
+    :: MCP Server (Node)
+    :: Tool result
+    :: Context
+    :: ถ้าเพี้ยน: มีที่ไหนพิมพ์ของแปลกปลอมลง stdout
+[53] Module 7 · Orchestration
+    :: ส่งต่องานเป็นสายการผลิต และให้ Leader กำกับทีม
+    :: วันที่ 2 · เช้า · ⏱ ~60 นาที · Workshop 4
+[54] Sequential Pipeline: ส่งต่อ Output เป็น Input
+    :: Design  →  Clean  →  Review ¶ ขั้นเขียนต้องมี DESIGN.md ก่อน ¶ ไม่งั้น Agent เดาเอง ¶ ขั้นรีวิวต้องมีสคริปต์จริง ¶ REVIEW.md เทียบ clean-sales.js กับ DESIGN.md ¶ วัดผลด้วยไฟล์ ไม่ใช่ความเรียงในแชท ¶ ไม่มีสองไฟล์นี้ งานสามขั้นเหลือแค่เรื่องเล่า
+[55] Module 5 · ประโยค trigger เดียว ตรวจครบ 4 ขั้น
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[56] Leader-first Orchestration: Leader คุม Task List และสถานะ
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 56
+    :: 1
+    :: Plan Approval ¶ Leader เสนอแผน — เราอนุมัติก่อนเริ่ม
+    :: 2
+    :: Pending ¶ งานใน Task List ที่ยังไม่เริ่ม
+    :: 3
+    :: In Progress ¶ Leader แจกงานและติดตาม
+    :: ✅
+    :: Completed ¶ ปิดงานทีละด่าน เห็นพัฒนาการ
+    :: บรรทัดที่ต้องมีใน prompt
+    :: Before starting, create a task list for the 3 stages and keep it updated ¶ as you complete each stage. I want to see progress: ¶ Pending → In Progress → Completed.
+[57] Agent Teams: Teammates คุยกันเองผ่าน SendMessage
+    :: Shared ¶ Task List
+    :: Designer ¶ เขียนแผนก่อน
+    :: Implementer ¶ รอแผนแล้วลงมือ
+    :: Reviewer ¶ ตรวจตอนท้าย
+    :: SendMessage
+    :: ในคอร์ส: ผู้สอนสาธิต — เปิดด้วย CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 แล็บปกติไม่เปิด ¶ สื่อสาร: SendMessage + แชร์ Task List — dependency ปลดล็อกอัตโนมัติ ¶ ขนาดทีม: เริ่มที่ 3–5 ตัว — token โตเป็นเส้นตรงตามจำนวนสมาชิก ¶ ข้อจำกัด: สร้าง teammate ได้เฉพาะ session แบบ interactive ¶ ในโปรดักชัน: ยัง experimental → ใช้ sequential pipeline ก่อน
+[58] Workshop 4: Design → Clean → Review (⏱ 40 นาที)
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 58
+    :: 1
+    :: Design
+    :: docs/DESIGN.md: แถวที่ทิ้ง การซ่อม และสูตร qty * unit_price_thb
+    :: Do not write code yet
+    :: 2
+    :: Clean
+    :: scripts/clean-sales.js (node ล้วน) ทำตาม DESIGN.md
+    :: Do not edit server.js
+    :: 3
+    :: Review
+    :: docs/REVIEW.md เทียบสคริปต์กับ DESIGN.md อ้าง clean-sales.js
+    :: Fix nothing
+    :: ✅ Checkpoint
+    :: ☑ DESIGN.md มีรายการที่ทิ้ง + สูตรรายได้
+    :: ☑ node scripts/clean-sales.js data/sales.csv data/sales.clean.csv
+    :: ☑ REVIEW.md อ้าง clean-sales.js และ DESIGN.md
+    :: ☑ git diff -- server.js ว่าง
+    :: ผลที่คาดหวัง: gate อาจยังแดง — sales.csv ยังดิบ และ POST /api/notes ยังล้ม แก้ใน Workshop 5 · ห้ามแตะ quality-gate.js
+[59] OpenAI Agents SDK vs Claude Code: แนวคิดคล้าย ไม่ใช่ 1:1
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: เรื่อง
+    :: OpenAI Agents SDK
+    :: Claude Code (L2)
+    :: ส่งงานต่อ
+    :: Handoffs / agents as tools
+    :: Subagent ผ่าน Leader · Agent Teams + SendMessage
+    :: ด่านตรวจ
+    :: Guardrails ตรวจ input / output
+    :: Hooks (exit 2) + permissions
+    :: Human-in-the-loop
+    :: มีกลไก HITL ในตัว
+    :: Plan Approval · permission prompt
+    :: ความจำ / state
+    :: Sessions: memory layer ข้าม turn
+    :: frontmatter memory · CLAUDE.md
+    :: เครื่องมือ
+    :: Function tools (Python) + MCP
+    :: Built-in tools + MCP servers
+    :: นิยาม agent
+    :: โค้ด Python (Agent + Runner)
+    :: ไฟล์ .claude/agents/*.md
+    :: ดีบัก
+    :: Tracing ในตัว
+    :: transcript · --debug log
+[60] Module 8 · Context & Memory
+    :: ไม่ให้ทีม Agent ท่วม context และจำข้ามเซสชันได้
+    :: วันที่ 2 · เช้า · ⏱ ~30 นาที
+[61] Module 6 · echo ไทย+เลขไทย กลับมาตรงทุกตัวอักษร
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[62] Context Window คือทรัพยากรที่แพงที่สุด
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: รายงาน 2,000 คำ × 5 agent = บานปลาย ¶ ทุกอย่างที่ไหลกลับมา กิน context ของ Leader
+    :: 1
+    :: Context ของแต่ละ Agent แยกกัน ¶ Subagent ไม่เห็นบทสนทนาหลัก ได้เฉพาะ task ที่ Leader เขียน
+    :: 2
+    :: ทุกอย่างที่ไหลกลับ กิน context ของ Leader ¶ คุมความยาวรายงานทุกครั้ง
+    :: 3
+    :: Context ที่ดี ≠ Context ที่มาก ¶ มากมักแปลว่า noise
+[63] /compact vs /clear: Agent มึน → สงสัย Context ก่อน
+    :: Context rot: ข้อค้นพบที่ถูกตั้งแต่ต้นถูกกลบด้วยทางตันหลายสิบรอบ — Agent รันนานแล้วแย่ลง ให้สงสัย context รกก่อนสรุปว่าพัง
+    :: /compact
+    :: งานเดิม ทำต่อ ¶ สรุปเก็บเป้าหมาย การตัดสินใจ กรอบงาน แล้วทิ้งบทสนทนาที่ไม่จำเป็น ¶ ใช้เมื่อ ¶ context ใกล้เต็ม แต่ยังทำงานชิ้นเดิมอยู่
+    :: /clear
+    :: เริ่มงานใหม่ที่ไม่เกี่ยวกัน ¶ ล้าง context ทั้งหมด เริ่มจากหน้ากระดาษเปล่า ¶ ใช้เมื่อ ¶ เปลี่ยนเรื่อง — ของเก่าไม่ช่วยงานใหม่ มีแต่ถ่วง
+[64] Summarization Handoff: ส่งกลับเฉพาะที่จำเป็น
+    :: ส่งกลับ ไม่ใช่ “ทุกอย่างที่เจอ” ¶ ปฏิบัติ: ทุก prompt สั่งทีมต้องมีบรรทัดคุม output ¶ under 300 words ¶ 5-line summary ¶ table only ¶ กับดัก: ส่ง raw output กลับโดยไม่สรุป → context โดนกินใน 2–3 dispatch แรก
+    :: Subagent ¶ (context แยก)
+    :: Leader
+    :: คำตอบ ¶ กระชับ
+    :: หลักฐาน ¶ file:line, ลิงก์
+    :: ความไม่แน่นอน ¶ สิ่งที่ตรวจไม่ได้
+    :: raw output ¶ ทุกอย่างที่เจอ
+[65] Persistent Memory: ให้ Agent จำข้ามเซสชัน
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 65
+    :: U
+    :: memory: user ¶ ของผู้ใช้ ข้ามทุกโปรเจกต์ ¶ ความชอบ / สไตล์ส่วนตัว
+    :: P
+    :: memory: project ¶ ของโปรเจกต์นี้ แชร์ทีม ¶ ข้อตกลงโครงสร้าง / ข้อตกลงโค้ด
+    :: L
+    :: memory: local ¶ โปรเจกต์นี้ เครื่องนี้ ¶ สถานะการทำงานส่วนตัว
+    :: --- ¶ name: data-researcher ¶ description: ... Read-only. ¶ tools: Read, Grep, Glob ¶ model: sonnet ¶ memory: project ¶ ---
+    :: Lab (⏱ 15 นาที): เพิ่ม memory: project ให้ data-researcher ใน TUI → สั่งให้จด "Sales Insight ใช้ Node http ล้วน ห้ามแนะนำ Express ถ้าไม่ได้ขอ" → /exit → เปิด claude ใหม่แล้วถามเรื่อง Express ¶ CLAUDE.md = กติกาที่เราเขียนให้ · memory = สิ่งที่เอเจนต์จดเองแล้วพกข้ามเซสชัน — ถ้าไม่อ้าง ให้จดผลไว้ ไม่บล็อก Workshop 5
+[66] Workshop 4 · ตัวทำความสะอาดเก็บ 16 ทิ้ง 8
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[67] Module 9 · Guardrails & Hooks
+    :: คุมคุณภาพ ความปลอดภัย และงบ Token
+    :: วันที่ 2 · เช้า · ⏱ ~55 นาที · Workshop 5
+[68] Guardrails 3 ชั้น เริ่มจาก Permissions
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 68
+    :: 1
+    :: Permissions   tools allowlist · disallowedTools · permissionMode ¶ กัน Agent ทำเกินขอบเขต (เขียน/ลบ/รันคำสั่งอันตราย)
+    :: 2
+    :: Approval Gates   Stop Conditions · Human-in-the-Loop ¶ กันงานรุดหน้าผิดทิศโดยไม่มีคนเห็น
+    :: 3
+    :: Hooks   PreToolUse · TaskCompleted ฯลฯ ¶ บังคับมาตรฐานอัตโนมัติทุกครั้ง
+    :: ความจำของ Agent ไม่ใช่กลไกควบคุม — สิ่งสำคัญต้องอยู่ใน config ที่บังคับจริง
+    :: # .claude/agents/data-researcher.md ¶ tools: Read, Grep, Glob ¶   # allowlist — ไม่มี Bash/Edit/Write ¶ disallowedTools: WebFetch, WebSearch ¶   # denylist เฉพาะจุด ¶ permissionMode: plan
+    :: จากการทดสอบของผู้สอน ¶ ไฟล์ใน .claude/** ถูกปฏิเสธใน claude -p ทุกแบบของ --allowedTools · permissionMode ถูกเมินเมื่อเซสชันหลักไม่ใช่ default
+[69] Anti-pattern: --dangerously-skip-permissions
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 69
+    :: !
+    :: Bypass Permissions ¶ = โหมด bypassPermissions · ไม่กัน prompt injection
+    :: ใช้ได้เฉพาะ container / VM / devcontainer ที่แยกขาด ¶ เครื่องนั้นต้องไม่มี secrets หรือ credential จริง ¶ มี git checkpoint ก่อนรัน → พลาดแล้วย้อนได้
+    :: ✅
+    :: ทางที่ปลอดภัยกว่า ¶ ลด prompt โดยไม่ถอดเบรก
+    :: Allowlist: --allowedTools "Bash(npm test)" · permissions.allow ¶ Hooks PreToolUse บล็อกคำสั่งเสี่ยง (exit 2) เช่น block-dangerous-bash.js ¶ Auto mode: classifier ตรวจแทน — ลด prompt แต่ไม่ใช่ guarantee
+    :: ระวังตัวอย่างที่เปิด bypass + "ทำอะไรก็ได้": ใน L2 ห้ามใช้บนเครื่องที่มีข้อมูลหรือ key จริง
+[70] Gate Pattern: Stop Conditions + Human-in-the-Loop
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 70
+    :: Agent ทำงาน ¶ ตามแผนที่อนุมัติ
+    :: Gate
+    :: ผ่าน → ทำด่านถัดไป
+    :: ไม่ผ่าน → หยุด แล้วรายงานให้คนตัดสิน
+    :: Stop Conditions ¶ --max-turns / maxTurns เพดานรอบ ¶ "if it fails, stop and report" ¶ แผน B เมื่อ Agent ติด loop
+    :: Human-in-the-Loop ¶ Plan Approval ก่อนเริ่มงาน ¶ คนตัดสิน finding ไหน block ¶ ตรวจผลก่อนขึ้น Production
+[71] Hooks: บังคับมาตรฐานอัตโนมัติด้วย Exit Code
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 71
+    :: PreToolUse
+    :: ดัก tool ก่อนรัน ¶ exit 2 = บล็อก
+    :: PostToolUse
+    :: ตรวจผลหลังรัน เช่น lint ไฟล์ที่เพิ่งแก้ ¶ ตรวจหลังทำ
+    :: TaskCompleted
+    :: ด่านสุดท้ายของ agent ¶ exit 2 = งานไม่ผ่าน + feedback
+    :: .claude/settings.json — Workshop 5 ¶ { "hooks": { ¶   "PreToolUse": [{ "matcher": "Bash", ¶     "hooks": [{ "type": "command", ¶       "command": "node .claude/hooks/ ¶         block-dangerous-bash.js" }] }], ¶   "TaskCompleted": [{ ¶     "hooks": [{ "type": "command", ¶       "command": "node .claude/hooks/ ¶         task-completed-gate.js" }] }] ¶ } }
+    :: กับดัก: exit code 2 เท่านั้นที่บล็อก · hook พิมพ์ลง stdout = กลายเป็น context ของ agent · อย่าใส่ gate ทั้งชุดตั้งแต่แรก เริ่มจากด่านที่พังบ่อยสุด
+[72] 
+    :: Module 8 · memory ข้ามเซสชัน (index โหลดจริง)
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[73] กับดัก Exit Code: exit 2 เท่านั้นที่ Block
+    :: Hook ตัดสินผลด้วย exit code ¶ Claude Code อ่าน exit code ของสคริปต์ แล้วเลือกว่าจะไปต่อหรือหยุด ¶ exit 1 ≠ บล็อก ¶ แม้เป็นรหัส error ปกติของ Unix แต่ Claude Code นับเป็น hook error แล้วปล่อย action ไปต่อ ¶ security hook ที่คืน 1 = ไม่ได้กันอะไรเลย ¶ Policy hook → ใช้ exit 2 เสมอ · path สคริปต์ผิด = hook ไม่ได้รัน = ไม่บล็อก
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 73
+    :: Hook ¶ exit ?
+    :: exit 0 · ผ่าน ¶ action ไปต่อตาม permission ปกติ ¶ no output = ไม่มีคำตัดสิน
+    :: exit 2 · BLOCK ¶ PreToolUse: tool call ถูกบล็อก ¶ stderr → ส่งให้ Claude เป็นเหตุผล
+    :: exit 1 / อื่น ๆ · ไม่ Block ¶ hook error — action ยังไปต่อ ¶ แค่ขึ้น notice ใน transcript
+[74] Workshop 5: Quality Gate + Cost Gate (⏱ 40 นาที)
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 74
+    :: ✅
+    :: Quality Gate ¶ กัน Bug / Runtime Error
+    :: quality gate 3 เคส: data-quality · bad-json-does-not-crash · summary-matches-valid-rows ¶ ห้ามแก้ scripts/quality-gate.js · รันเองจนได้ 3/3 passed, exit 0 ¶ hook block-dangerous-bash.js: rm -rf → exit 2 · node scripts/quality-gate.js → exit 0
+    :: USD
+    :: Cost Gate ¶ ป้องกัน Token Exceeding
+    :: node scripts/cost-gate.js usage.json ¶ exit 2 เมื่อเกิน 2 USD หรือ 20,000 output token ¶ usage.json จาก /cost ใน TUI หรือตัวเลขฝึก · ทีมใช้ ~15× token
+    :: เพดาน 2 USD เป็นตัวเลขฝึกของคอร์ส ยังไม่ใช่ตัวเลขจากรัน TUI ของห้อง · ตามไม่ทัน: node scripts/catch-up.js w5
+[75] Gate-first: เห็นแดงก่อน แก้ แล้วพิสูจน์ด้วย exit code
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 75
+    :: 1
+    :: ดูแดงก่อน
+    :: node scripts/quality-gate.js ¶ → exit 2 · FAIL 3 บรรทัด
+    :: baseline ใน PowerShell
+    :: 2
+    :: แก้ใน TUI
+    :: claude → วาง prompt ¶ แทน sales.csv ที่สะอาด ¶ แก้ server.js น้อยที่สุด
+    :: ห้ามแก้ quality-gate.js
+    :: 3
+    :: รัน gate เอง
+    :: ปิดเซิร์ฟเวอร์ที่ค้าง ¶ node scripts/quality-gate.js
+    :: 3/3 passed · exit 0
+    :: 4
+    :: ทดสอบ guard
+    :: hook: rm -rf → exit 2 ¶ cost-gate.js: เกิน 2 USD ¶ → exit 2
+    :: $LASTEXITCODE ใน PowerShell
+    :: Prompt EN: scripts/quality-gate.js currently FAILS. Replace data/sales.csv with a cleaned file and change server.js only enough that all three cases pass. Do not edit scripts/quality-gate.js. Then show me the command output. ¶ TH: scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data/sales.csv ด้วยไฟล์ที่สะอาด และแก้ server.js น้อยที่สุดจน quality gate สามเคสผ่าน ห้ามแก้ scripts/quality-gate.js แล้วแ
+[76] Module 10 · Capstone
+    :: ทีม Multi-Agent สร้างระบบธุรกิจจริงแบบ Leader-first
+    :: วันที่ 2 · บ่าย · ⏱ ~90 นาที · Workshop 6
+[77] โจทย์ Capstone: สัญญากลางก่อน แล้วค่อยลงมือ
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 77
+    :: แดชบอร์ด Sales Insight ที่อ่าน /api/summary + สรุปผู้บริหารภาษาไทยที่ยอดตรงกับ API (ภาพ: solutions/w6)
+    :: Shared Contract ที่ Leader ต้องมีก่อน dispatch
+    :: 1. Product Spec ¶ docs/PRODUCT-SPEC.md ¶ หน้าจอ · endpoints · เกณฑ์ยอมรับ
+    :: 2. Task Dependency List ¶ docs/TASKS.md ¶ ใครรอใคร: developer กับ writer รอสเปก
+    :: ก่อนตั้งทีม (before capstone): quality gate ต้อง exit 0 — ทีมห้าตัวบนของแดงสร้างของเสียสองชั้น
+[78] Handoff Message: ส่งต่องานแบบมีโครงสร้าง
+    :: ใคร → ใคร ¶ task_id · from · to ชัดเจน ตรวจย้อนได้ ¶ สถานะจริง ¶ status บอกผลตรง ๆ: done / blocked ¶ หลักฐานงาน ¶ artifacts = ไฟล์ · branch · ผลเทสต์ ที่ผู้รับเปิดดูได้ ¶ ก้าวถัดไป ¶ next_action บอกผู้รับว่าต้องทำอะไรต่อ
+    :: ตัวอย่าง handoff message (JSON) ¶ { ¶   "task_id": "T-04", ¶   "from": "backend", ¶   "to": "qa-security", ¶   "status": "done", ¶   "context": "cart discount API per ¶              docs/PRODUCT-SPEC.md", ¶   "artifacts": ["server.js", ¶                 "docs/TASKS.md"], ¶   "next_action": "run quality gate, ¶                   report findings" ¶ }
+[79] 
+    :: Workshop 5 · จับหน้าจอจริง (1/2) — quality gate เขียว 3/3 exit 0
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[80] 
+    :: Workshop 5 · จับหน้าจอจริง (2/2) — hook บล็อก rm -rf · cost gate
+    :: จับภาพจริงจากเทอร์มินัล (นอก TUI) · Claude Code 2.1.310 · sandbox/sales-insight
+[81] ทีม 5 บทบาทของ Capstone
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 81
+    :: Leader (เซสชันหลัก)  ·  ถือ PRODUCT-SPEC.md + TASKS.md · คุมลำดับ · ตัดสิน findings
+    :: planner · sonnet ¶ เขียน PRODUCT-SPEC + TASKS ก่อนใคร
+    :: researcher · haiku ¶ ยอดออเดอร์และรายได้จาก CSV
+    :: developer · sonnet ¶ API + แดชบอร์ดตามสเปก
+    :: writer · haiku ¶ สรุปผู้บริหารไทย ตัวเลขจาก API
+    :: qa · sonnet ¶ quality gate + /api/health ไม่มี sk-
+    :: Findings ¶ → Leader
+    :: ขนานได้หลังมีสเปก · ห้ามแก้ไฟล์เดียวกัน
+    :: แต่ละบทบาทคือไฟล์ใน .claude/agents/ ที่ Claude เขียนผ่าน prompt ใน TUI · งานที่ต้องใช้ผลของอีกตัว ห้ามรันก่อนตัวนั้นเสร็จ
+[82] Result Synthesis: รวมผลด้วย Git Checkpoint + Task Tracking
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 82
+    :: Pattern ที่ใช้ปนกันใน Capstone
+    :: planner → researcher
+    :: Sequential
+    :: สเปกเสร็จก่อนคนอื่นเริ่ม
+    :: developer ∥ writer
+    :: Swarm
+    :: หลังมีสเปก · คนละไฟล์
+    :: build → qa
+    :: Sequential
+    :: QA ต้องมีของจริง
+    :: QA → Fix
+    :: Orchestration
+    :: Leader ตัดสิน finding ไหน block
+    :: เห็นพัฒนาการ — หลักฐาน 3 ชั้น
+    :: 1. Task List ระหว่างรัน ¶ สถานะไหลต่อหน้า Pending → Completed
+    :: 2. Git Checkpoint หลังจบ ¶ git log --oneline เห็นงานเป็นขั้น
+    :: 3. เทียบยอดกับ API ¶ EXECUTIVE-SUMMARY.md ตรงกับ totalRevenue ของ /api/summary
+[83] Workshop 6: Checkpoint ก่อนส่งมอบ
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 83
+    :: ✓
+    :: ไฟล์เอเจนต์ครบ 5 บทบาท มี name และ tools
+    :: ✓
+    :: TASKS บอกว่า developer กับ writer รอสเปก
+    :: ✓
+    :: หน้า / โหลด /api/summary
+    :: ✓
+    :: /api/health ไม่มี sk-
+    :: ✓
+    :: quality gate exit 0 (รันเองหลังปิดเซิร์ฟเวอร์)
+    :: ✓
+    :: สรุปผู้บริหารเป็นไทย ไม่มียอดคนละชุดกับ API
+    :: solutions/w6 · แดชบอร์ด Sales Insight
+    :: ผลที่คาดหวัง: เห็นยอด ออเดอร์ ชื่อภาคจาก API · gate ยัง exit 0 · ตามไม่ทัน: catch-up.js w6
+[84] 
+    :: Workshop 6 · จับหน้าจอจริง (1/3) — ทีม 5 บทบาทส่งมอบครบ
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[85] 
+    :: Workshop 6 · จับหน้าจอจริง (2/3) — ไฟล์เอเจนต์ครบ 5 บทบาท
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[86] 
+    :: Workshop 6 · จับหน้าจอจริง (3/3) — gate เขียว · ยอดตรง API
+    :: จับภาพจริงจาก TUI (interactive) · Claude Code 2.1.310 · sandbox/sales-insight
+[87] Module 11 · Deploy & Pre-flight
+    :: ขึ้น Production (Vercel) พร้อม Checklist ก่อนปล่อย Agent ทำงานอัตโนมัติ
+    :: วันที่ 2 · บ่าย · ⏱ ~30 นาที
+[88] Deploy ขึ้น Vercel ผ่าน Claude Code Integration
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 88
+    :: Prompt EN (แนะนำ) — ใน TUI เมื่อผู้สอนบอกว่าห้องนี้ deploy จริง ¶ Deploy this Sales Insight app to Vercel with the Vercel connection. ¶ Before deploying, run node scripts/quality-gate.js. ¶ If it fails, stop and report. ¶ After deploying, give me the production URL and ¶ the commit that was deployed. Do not print any sk- value.
+    :: Pre-flight ฝังใน prompt ¶ รัน gate ก่อน — ไม่ผ่านให้หยุดแล้วรายงาน
+    :: Traceability ¶ URL + commit = หลักฐานสองชิ้น ไม่มีไม่นับ
+    :: headless ไม่ยอมเรียก vercel (Bash ถูกปฏิเสธ) → ใช้ TUI หรือรัน CLI เอง
+    :: งานที่จะขึ้น Production: Sales Insight
+    :: สถานะ: repo ยังไม่มี URL จริง — deploy ขึ้น Vercel ยังต้องมีคนทำให้จบหนึ่งรอบ ถ้าห้องไม่ deploy ให้จบที่เช็กลิสต์ + ผล gate
+    :: Prompt TH (ใช้ได้เต็มที่) ¶ Deploy แอป Sales Insight ขึ้น Vercel ¶ โดยใช้การเชื่อม Vercel ¶ ก่อน deploy รัน node scripts/quality-gate.js ¶ ถ้าไม่ผ่านให้หยุดแล้วรายงาน ¶ หลัง deploy ส่ง production URL และ commit ¶ ห้ามพิมพ์ค่าที่ขึ้นต้นด้วย sk-
+[89] From Laptop to Cloud: เลือก Runtime ให้ตรงงาน
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: เรื่อง
+    :: Claude Code (CLI)
+    :: Claude Agent SDK
+    :: Claude Managed Agents (beta)
+    :: Runtime
+    :: เครื่องเรา · terminal / IDE
+    :: process ของเราเอง (Python / TypeScript)
+    :: cloud sandbox ของ Anthropic หรือ self-hosted sandbox
+    :: เหมาะกับใคร
+    :: dev ทำงาน interactive / one-off task
+    :: ทีมที่ฝัง agent loop ของ Claude Code ในแอป / CI
+    :: งานยาว async ที่ไม่อยากสร้าง loop + sandbox เอง
+    :: State / Sessions
+    :: session บนเครื่อง · resume ได้
+    :: sessions: resume / fork ได้
+    :: stateful ฝั่ง server (history + sandbox) · ยังไม่รองรับ ZDR / HIPAA BAA
+    :: Tools / MCP
+    :: built-in tools + MCP + hooks + subagents
+    :: ชุดเดียวกับ Claude Code: tools, hooks, subagents, MCP
+    :: Bash, file ops, web search/fetch + MCP · permission policy
+    :: Cost
+    :: subscription Pro / Max / Team / Enterprise หรือ Console (API)
+    :: API key · จ่ายตาม tokens (pay-as-you-go)
+    :: tokens + $0.08 / session-hour เฉพาะตอน running
+    :: ใช้เมื่อไร
+    :: เรียน + พัฒนาใน L2 (วันนี้)
+    :: เอา agent เข้า product / pipeline
+    :: production agent บน cloud · scheduled runs
+[90] Production Pre-flight Checklist: ติ๊กให้ครบก่อนกด Enter
+    :: 1. เปิด Claude จาก sandbox/sales-insight  — ขอบเขตของเอเจนต์ ¶ 2. quality gate exit 0  — ของเสียไม่ขึ้นของจริง ¶ 3. ไม่มี sk- ใน /api/health  — ไม่ส่งค่าตัวอย่างออกไป ¶ 4. ANTHROPIC_API_KEY ว่าง  — ไม่หลุดไปคิดเงินรายครั้ง ¶ 5. เซิร์ฟเวอร์ในเครื่องถูกปิดแล้ว  — quality gate ไม่เจอ port busy ¶ 6. รู้ว่าจะหยุดเมื่อเอเจนต์วน  — มีคนดูอยู่ ¶ 7. บัญชี Vercel ล็อกอินแล้ว  — ไม่ไปสมัครกลางแล็บ ¶ เสริมจาก
+[91] Pre-flight Eval: วัดทั้งผลและเส้นทาง + กัน Prompt Injection
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 91
+    :: 🎯
+    :: Outcome + Trajectory ¶ ผลถูกอย่างเดียวไม่พอ: tool ถูกตัว? ลำดับสมเหตุผล? กู้ error ได้? หยุดถูกจังหวะ? ¶ จำไว้: ทางที่อันตรายแต่ได้คำตอบถูก ยังนับว่าพลาด
+    :: ผล + ทาง
+    :: k
+    :: pass@k vs pass^k ¶ Agent ไม่ deterministic → รันโจทย์เดิม k รอบ ¶ pass@k: ผ่านอย่างน้อย 1 รอบ = ทำได้ ¶ pass^k: ผ่านครบทุกรอบ = ไว้ใจได้
+    :: ความสม่ำเสมอ
+    :: !
+    :: Indirect Injection ¶ คำสั่งแฝงในเว็บ ไฟล์ หรือผล tool/MCP = untrusted ไม่ใช่คำสั่ง ¶ เช็ก: least privilege · approval gate ก่อน action เสี่ยง · ทดสอบด้วยหน้าเว็บที่ฝังคำสั่ง
+    :: untrusted input
+    :: ระดับความน่าเชื่อถือที่ต้องการขึ้นกับความเสี่ยง — งานเสี่ยงสูง (เช่น deploy production) ต้องมี approval แม้ agent มั่นใจ
+[92] Failure Modes ที่เจอจริง: อาการ → พบใน Lab → กันด้วย
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: อาการ
+    :: พบใน Lab
+    :: กันด้วย
+    :: บอกว่าเขียนไฟล์แล้ว แต่ไฟล์ไม่มี
+    :: W2
+    :: เปิดไฟล์ หรือรัน quality gate ทุกครั้ง
+    :: ทีมขนานแล้วไปคนละทิศ
+    :: W6
+    :: เขียนสัญญากลางก่อนแตกงาน
+    :: รายงานยาวจนบทสนทนาหลักจม
+    :: W1
+    :: จำกัดความยาวหรือรูปแบบใน prompt
+    :: หมดเทิร์นก่อนลงมือ
+    :: W2 · W4
+    :: อย่าตั้ง --max-turns ต่ำเกิน
+    :: เขียน .claude/** ไม่ได้ใน claude -p
+    :: W2 · W3
+    :: ทำใน TUI แล้วกดอนุญาต
+    :: Bash ถูกปฏิเสธใน claude -p
+    :: W1 · W4 · W5
+    :: ใส่ธงที่ Lab ระบุ หรือใช้ TUI
+    :: ANTHROPIC_API_KEY ทับบัญชีคลาส
+    :: Lab 0
+    :: unset ANTHROPIC_API_KEY ก่อนเปิด claude
+    :: ฆ่า Node ทั้งเครื่อง
+    :: Lab 0 · W5
+    :: ปิดเฉพาะ PID ห้าม taskkill //IM node.exe
+    :: port 3000 busy
+    :: Lab 0 · W5 · W6
+    :: ปิดเซิร์ฟเวอร์เก่า หรือตั้ง PORT
+    :: แก้ตัวตรวจแทนของที่ถูกตรวจ
+    :: W4 · W5
+    :: ห้ามแก้ quality-gate.js อ่าน diff ก่อนรับ
+[93] Best Practices: 3 หลักนำ Multi-Agent ไปใช้จริงในองค์กร
+    :: Copyright © 2026 9Expert Co., Ltd. All rights reserved.
+    :: 93
+    :: 1
+    :: สัญญากลางก่อนขนาน
+    :: Product Spec + Task Dependency List ก่อน dispatch ทุกครั้ง
+    :: 2
+    :: คุม Context และงบ Token
+    :: กำหนดรูปแบบ/ความยาวผลลัพธ์ · ใช้ทีมเมื่อคุ้ม 15×
+    :: 3
+    :: Gate + Git Checkpoint
+    :: ตรวจด้วย gate/hook ที่บังคับจริง · commit ทุกครั้งที่สำเร็จ
+    :: ความจำของ Agent ไม่ใช่กลไกควบคุม — สิ่งสำคัญต้องอยู่ใน config ที่บังคับจริง
+[94] Q&A · ขอบคุณครับ
+    :: Build AI Multi-Agent with Claude Code ¶ วิทยากร ภัคพงศ์ กฤตวัฒน์ (พี่เอก)
+    :: สแกน QR เปิด Repo ของคอร์ส
+    :: github.com/Onto-IQ/ ¶ build-ai-multi-agent-with-claude
