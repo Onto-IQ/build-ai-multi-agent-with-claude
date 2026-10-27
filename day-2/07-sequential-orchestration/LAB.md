@@ -8,7 +8,7 @@
 
 ## Steps / ขั้นตอน
 
-1. จุดเทียบก่อนลงมือ
+1. จุดเทียบก่อนลงมือ (repo จาก `git clone` หรือผ่าน snapshot จาก Lab 0 แล้ว)
 
 ```bash
 git status --short

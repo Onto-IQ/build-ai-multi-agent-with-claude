@@ -53,6 +53,16 @@ node scripts/verify-setup.mjs
 
 ผลที่คาดหวัง: บรรทัด `verify-setup: passed` พอร์ต 3000 ว่าง หน้าแอปตอบได้ และstarter quality gateเป็น exit 2
 
+> 📚 **ถ้า download ZIP แทน `git clone`:** โฟลเดอร์ที่แตกออกมาไม่มี `.git` คำสั่ง `git status` / `git diff` ในแล็บจะขึ้น `fatal: not a git repository` — ทำ snapshot เริ่มต้นหนึ่งครั้งก็ใช้ได้ทั้งคอร์ส:
+
+```bash
+git init
+git add -A
+git commit -m "start from zip"
+```
+
+   แนะนำ `git clone` มากกว่า เพราะอัปเดตของคอร์สภายหลังด้วย `git pull` ได้
+
 ถ้ายังไม่ล็อกอิน Claude:
 
 ```bash

@@ -21,6 +21,8 @@ echo $env:ANTHROPIC_API_KEY
 
 > 📚 **รู้เพิ่ม:** ทำไมคีย์ต้องว่าง — ถ้ามี `ANTHROPIC_API_KEY` ค้างอยู่ Claude จะใช้คีย์นั้นแทนบัญชี Pro/Team ของคลาสทันที และค่าใช้จ่ายไปโผล่ที่บัญชีส่วนตัวแบบจ่ายตามการใช้ โดยไม่มีกล่องเตือนให้เห็น
 
+> 📚 **clone หรือ ZIP:** คำสั่ง `git status` / `git diff` ในแล็บทุกตัวต้องมีโฟลเดอร์ `.git` ซึ่งมีเฉพาะเมื่อ `git clone` — ถ้าคุณ download ZIP แทน ให้ทำ snapshot เริ่มต้นหนึ่งครั้งที่ราก repo: `git init` → `git add -A` → `git commit -m "start from zip"` แล้วทุกแล็บเทียบ "แตะไฟล์หรือยัง" กับจุดเริ่มนี้ได้ทั้งคอร์ส (แนะนำ clone มากกว่า — อัปเดตคอร์สด้วย `git pull` ได้)
+
 2. ล็อกอินใน TUI
 
 ```powershell
@@ -72,6 +74,7 @@ node scripts/quality-gate.js
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
 | `claude` ไม่พบ หรือชี้ไฟล์เก่า | PATH หรือ alias | ดู SETUP.md ขั้นที่ 2 |
+| `fatal: not a git repository` ตอนรัน git | โฟลเดอร์มาจาก download ZIP (ไม่มี `.git`) | ทำ snapshot ตามหมายเหตุขั้นที่ 1 หรือ `git clone` ใหม่ |
 | `Cannot find module .../verify-setup.mjs` | รันจากผิดโฟลเดอร์ (เช่นอยู่ในโฟลเดอร์แอป) หรือ clone จากสำเนาเก่า | กลับไปราก repo (โฟลเดอร์ที่มี `scripts/`) แล้วรันใหม่ ถ้าไม่มีไฟล์จริงให้ `git pull` หรือ clone ใหม่จาก main |
 | port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `$env:PORT=3001; node server.js` |
 | quality gate แสดง port busy | ยังไม่ปิด `node server.js` | ปิดก่อนรัน `node scripts/quality-gate.js` |
