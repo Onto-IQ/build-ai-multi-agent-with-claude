@@ -23,3 +23,6 @@ sandbox/sales-insight/.claude/settings.local.json
 
 # Agent worktrees (สร้างโดย isolation: worktree — ดู Module 4)
 .claude/worktrees/
+
+# Deck แจกจ่ายนอก repo (ไม่ track ไฟล์งานนำเสนอ)
+*.pptx
