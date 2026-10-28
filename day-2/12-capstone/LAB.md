@@ -57,7 +57,7 @@ frontmatter: name เป็น writer; description ว่า Use when figures mu
 Build the final Registry Insight release with your existing agent team: planner, data-researcher, developer, qa, writer (they are in .claude/agents/).
 planner first: verify docs/PRODUCT-SPEC.md still matches the app, and update docs/TASKS.md to include the Workshop 8 feature as a task that must survive the release.
 data-researcher: report company count and total capital from data/dataset.csv (or via the data-duckdb MCP).
-developer and qa may run only after planner finishes. developer upgrades the dashboard pages for release. qa runs npm run gate and checks /api/health has no sk-.
+developer and qa may run only after planner finishes. developer builds the release dashboard exactly as docs/PRODUCT-SPEC.md describes: 4 KPI cards, an SVG monthly capital chart from a new GET /api/monthly, region bars, the Workshop 8 provinces table, and a notes panel over the notes API. qa runs npm run gate and checks /api/health has no sk-.
 writer last: creates docs/EXECUTIVE-SUMMARY.md in Thai using only figures from the API or docs/region-capital.csv, and mentions the Workshop 8 feature.
 Agents that need another agent's output must NOT run before it.
 Report under 400 words and name each deliverable.
@@ -69,7 +69,7 @@ Report under 400 words and name each deliverable.
 สร้าง release ฉบับสุดท้ายของ Registry Insight ด้วยทีมเอเจนต์ที่มีอยู่: planner data-researcher developer qa writer (อยู่ใน .claude/agents/)
 planner เริ่มก่อน: ตรวจว่า docs/PRODUCT-SPEC.md ยังตรงกับแอป และอัปเดต docs/TASKS.md ให้มี feature จาก Workshop 8 เป็นงานที่ต้องรอดถึง release
 data-researcher: รายงานจำนวนกิจการและทุนรวมจาก data/dataset.csv (หรือผ่าน MCP data-duckdb)
-developer กับ qa ทำงานได้หลัง planner เสร็จเท่านั้น developer อัปเกรดหน้าแดชบอร์ดเป็นฉบับ release qa รัน npm run gate และตรวจว่า /api/health ไม่มี sk-
+developer กับ qa ทำงานได้หลัง planner เสร็จเท่านั้น developer สร้างแดชบอร์ดฉบับ release ตาม docs/PRODUCT-SPEC.md เป๊ะ: การ์ด KPI 4 ใบ กราฟแท่งทุนรายเดือน SVG จาก GET /api/monthly ใหม่ แท่งรายภาค ตารางจังหวัดจาก feature Workshop 8 และแผงโน้ตบน notes API qa รัน npm run gate และตรวจว่า /api/health ไม่มี sk-
 writer ปิดท้าย: เขียน docs/EXECUTIVE-SUMMARY.md เป็นไทย ใช้ตัวเลขจาก API หรือ docs/region-capital.csv เท่านั้น และพูดถึง feature จาก Workshop 8
 งานที่ต้องใช้ผลของอีกตัว ห้ามรันก่อนตัวนั้นเสร็จ
 รายงานรวมไม่เกิน 400 คำ และระบุของส่งของแต่ละบทบาท
