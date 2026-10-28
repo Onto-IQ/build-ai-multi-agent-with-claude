@@ -2,6 +2,7 @@
 
 import { execFile } from 'node:child_process';
 import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import http from 'node:http';
 import net from 'node:net';
 import path from 'node:path';
@@ -10,7 +11,10 @@ import { fileURLToPath } from 'node:url';
 
 const exec = promisify(execFile);
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const app = repo;
+// The app lives in its own workshop repo; the course repo only ships lessons.
+const workshop = process.env.WORKSHOP_DIR
+  ? path.resolve(process.env.WORKSHOP_DIR)
+  : 'D:\\dev\\multi-agent-workshop';
 const skipClaude = process.argv.includes('--skip-claude');
 const skipPrompt = skipClaude || process.argv.includes('--skip-claude-prompt');
 
@@ -107,6 +111,23 @@ async function commandVersion(bin, args) {
 }
 
 async function main() {
+  if (existsSync(path.join(repo, 'day-1')) && existsSync(path.join(repo, 'day-2'))) {
+    note('course repo has day-1/ and day-2/ lesson folders');
+  } else {
+    bad('course repo is missing day-1/ or day-2/ — re-clone the course repo');
+  }
+
+  if (existsSync(path.join(workshop, 'server.js')) && existsSync(path.join(workshop, 'package.json'))) {
+    note(`workshop project found at ${workshop}`);
+    if (existsSync(path.join(workshop, 'data', 'raw', 'dbd-2558.parquet')) && existsSync(path.join(workshop, '.mcp.json'))) {
+      note('workshop has the real dataset (dbd-2558.parquet) and the project .mcp.json');
+    } else {
+      bad('workshop data is incomplete: expected data/raw/dbd-2558.parquet and .mcp.json — re-clone or git pull the workshop repo');
+    }
+  } else {
+    bad(`workshop project not found at ${workshop}. Clone the workshop repo your instructor shared into that path (or set WORKSHOP_DIR to your copy), then re-run this script.`);
+  }
+
   const nodeVersion = parseVersion(process.version);
   if (atLeast(nodeVersion, [20, 0, 0])) note(`node ${process.version}`);
   else bad(`node ${process.version} is below 20`);
@@ -115,12 +136,20 @@ async function main() {
   if (gitText) note(gitText);
   else bad('git is not on PATH');
 
-  if (await portOpen(3000)) warn('port 3000 is in use. Stop that process or set PORT before node server.js');
+  const duckText = await commandVersion('duckdb', ['--version']);
+  if (duckText) note(`duckdb ${duckText}`);
+  else bad('duckdb is not on PATH. Install the DuckDB CLI and add it to PATH (see SETUP.md)');
+
+  const uvText = await commandVersion('uvx', ['--version']);
+  if (uvText) note(`uvx ${uvText} (runs the DuckDB MCP server)`);
+  else warn('uv is not on PATH — the data-duckdb MCP server needs it (see SETUP.md)');
+
+  if (await portOpen(3000)) warn('port 3000 is in use. Stop that process or set PORT before npm start');
   else note('port 3000 is free');
 
   const appPort = await freePort();
   const server = spawn(process.execPath, ['server.js'], {
-    cwd: app,
+    cwd: workshop,
     env: { ...process.env, PORT: String(appPort) },
     stdio: 'ignore',
   });
@@ -141,7 +170,7 @@ async function main() {
   }
 
   const gatePort = await freePort();
-  const gate = await runNode(['scripts/quality-gate.js'], app, { ...process.env, PORT: String(gatePort) });
+  const gate = await runNode(['scripts/quality-gate.js'], workshop, { ...process.env, PORT: String(gatePort) });
   if (gate.code === 2 && gate.stdout.includes('FAIL | data-quality')) {
     note('starter quality gate exits 2 (this is the intended starting state)');
   } else {
@@ -158,7 +187,7 @@ async function main() {
     else note(claudeText.split('\n')[0]);
 
     if (!skipPrompt && claudeText && atLeast(claudeVersion, [2, 1, 296])) {
-      const prompt = await runNodeProcess('claude', ['-p', 'Reply with exactly: CLAUDE-OK']);
+      const prompt = await runNodeProcess('claude', ['-p', 'Reply with exactly: CLAUDE-OK'], workshop);
       if (prompt.code === 0 && prompt.stdout.includes('CLAUDE-OK')) note('claude -p returned CLAUDE-OK');
       else bad('claude -p did not return CLAUDE-OK. Log in with claude, and unset ANTHROPIC_API_KEY if it overrides the class login.');
     } else if (skipPrompt) {
@@ -173,9 +202,9 @@ async function main() {
   console.log('verify-setup: passed');
 }
 
-function runNodeProcess(bin, args) {
+function runNodeProcess(bin, args, cwd) {
   return new Promise((resolve) => {
-    const child = spawn(bin, args, { cwd: repo, windowsHide: true });
+    const child = spawn(bin, args, { cwd: cwd || repo, windowsHide: true });
     let stdout = '';
     let stderr = '';
     const timer = setTimeout(() => {

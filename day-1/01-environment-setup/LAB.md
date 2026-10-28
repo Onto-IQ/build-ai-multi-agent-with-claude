@@ -1,0 +1,122 @@
+# Lab 0 — ตรวจเครื่อง
+
+> ⏱ machine ~3 นาที · Start state: clone สด (หรือ download ZIP + snapshot ตามหมายเหตุด้านล่าง)
+
+## Goal / เป้าหมาย
+
+`node scripts/verify-setup.mjs` ผ่าน ทั้งสอง repo พร้อม และ starter quality gate จบด้วย exit 2 — แล็บนี้ต้องจบก่อนแตะ claude ครั้งแรกของคอร์ส
+
+## สองโลกของคอร์สนี้
+
+งานทั้งหมดแบ่งอยู่สอง repo ที่แยกกัน:
+
+| Repo | มีอะไร | คุณทำอะไรที่นี่ |
+|---|---|---|
+| **course repo** (โฟลเดอร์บทเรียนที่ clone มา) | บทเรียน แล็บ สคริปต์ตรวจ | อ่านแล็บ รัน `verify-setup` / `catch-up` |
+| **workshop repo** (`D:\dev\multi-agent-workshop`) | แอป Registry Insight ล้วน | รัน `claude` ตลอดคอร์ส ผลงานทุกชิ้น (เอกสาร handoff, agents, โค้ดที่แก้) ปรากฏที่นี่ |
+
+ที่ course repo จงใจ**ไม่มีโค้ดแอป** — เมื่อคุณรัน claude ที่ workshop repo agent จะเห็นเฉพาะแอป ไม่เห็นเฉลยหรือเนื้อหาบทเรียน
+
+## Steps / ขั้นตอน
+
+1. เปิด PowerShell ที่ course repo (โฟลเดอร์บทเรียน ที่มี `day-1/`) แล้วตรวจรุ่น
+
+```powershell
+node --version
+git --version
+claude --version
+echo $env:ANTHROPIC_API_KEY
+```
+
+ผลที่คาดหวัง: Node เป็น 20 ขึ้นไป, Claude Code เป็น 2.1.296 ขึ้นไป, บรรทัดตัวแปรว่าง ถ้าคีย์โผล่ให้ปิดด้วย `Remove-Item Env:ANTHROPIC_API_KEY`
+
+> 📚 **รู้เพิ่ม:** ทำไมคีย์ต้องว่าง — ถ้ามี `ANTHROPIC_API_KEY` ค้างอยู่ Claude จะใช้คีย์นั้นแทนบัญชี Pro/Team ของคลาสทันที และค่าใช้จ่ายไปโผล่ที่บัญชีส่วนตัวแบบจ่ายตามการใช้ โดยไม่มีกล่องเตือนให้เห็น
+
+2. clone workshop repo — ใช้ URL ที่ผู้สอนแจ้ง
+
+```powershell
+git clone <URL-workshop-repo> D:\dev\multi-agent-workshop
+```
+
+ผลที่คาดหวัง: ได้โฟลเดอร์ `D:\dev\multi-agent-workshop` ที่มี `package.json`, `server.js`, `data/`, `web/`
+
+> 📚 **รู้เพิ่ม:** ทุกคำสั่งในแล็บถัด ๆ ไปเขียน path ตายตัวไว้ที่ `D:\dev\multi-agent-workshop` เพื่อให้ copy-paste ได้ทั้งคอร์ส ถ้าคุณเก็บแอปไว้ที่อื่น ให้ตั้ง `$env:WORKSHOP_DIR="path ของคุณ"` ทุกครั้งก่อนรันสคริปต์ตรวจ (แนะนำ path ตายตัว — ง่ายกว่า)
+
+> 📚 **clone หรือ ZIP (course repo):** คำสั่ง `git status` / `git diff` ในแล็บต้องอาศัยโฟลเดอร์ `.git` ซึ่งมีเฉพาะเมื่อ `git clone` — ถ้าคุณ download ZIP ของ course repo แทน ให้ทำ snapshot เริ่มต้นหนึ่งครั้งที่ course repo: `git init` → `git add -A` → `git commit -m "start from zip"` แล้วทุกแล็บเทียบ "แตะไฟล์บทเรียนหรือยัง" กับจุดเริ่มนี้ได้ทั้งคอร์ส (แนะนำ clone มากกว่า — อัปเดตคอร์สด้วย `git pull` ได้)
+
+3. ล็อกอินใน TUI
+
+```powershell
+claude
+```
+
+พิมพ์ `/status` แล้ว `/exit`
+
+ผลที่คาดหวัง: เห็นบัญชีของคลาส ไม่ใช่โหมด API key
+
+4. รันสคริปต์ตรวจ — ต้องอยู่ที่ course repo (โฟลเดอร์ที่มี `scripts/` และ `day-1/`)
+
+```powershell
+node scripts/verify-setup.mjs
+```
+
+ผลที่คาดหวัง: `verify-setup: passed` พร้อมบรรทัด `workshop project found` และบรรทัดว่า starter quality gate เป็น exit 2
+
+5. เปิดแอปคนละเทอร์มินัล — **ใน workshop project**
+
+```powershell
+cd D:\dev\multi-agent-workshop
+npm start
+```
+
+เปิด `http://127.0.0.1:3000` แล้วกลับมาหยุดด้วย Ctrl+C
+
+ผลที่คาดหวัง: หน้าตาบอกว่าแดชบอร์ดยังไม่พร้อม
+
+6. รัน quality gate หลังปิดเซิร์ฟเวอร์แล้ว — ยังอยู่ใน workshop project
+
+```powershell
+npm run gate
+```
+
+ผลที่คาดหวัง: exit 2, แดง **0/6** — `FAIL | data-quality`, `FAIL | bad-json-does-not-crash`, `FAIL | summary-matches-valid-rows`, `FAIL | health-no-secrets`, `FAIL | notes-validation`, `FAIL | notes-persists`
+
+> 📚 **รู้เพิ่ม:** exit 2 วันนี้ไม่ใช่ความพังของเครื่อง — ข้อมูลใน `data/dataset.csv` กับตัวรับ `POST /api/notes` และ `/api/health` ถูกปลูกปัญหาไว้ตั้งแต่โครงเริ่ม เพื่อให้ Workshop 3 กับ Workshop 4 มีงานแก้จริง คุณจะได้เห็น gate เปลี่ยนจากแดง 0/6 เป็นเขียว 6/6 ด้วยตัวเองตั้งแต่วันที่ 1
+
+## ✅ Checkpoint
+
+- [ ] `claude --version` ≥ 2.1.296
+- [ ] `echo $env:ANTHROPIC_API_KEY` ว่าง
+- [ ] `D:\dev\multi-agent-workshop` มี `package.json` และ `server.js`
+- [ ] `node scripts/verify-setup.mjs` ผ่าน (รันที่ course repo)
+- [ ] หน้า `http://127.0.0.1:3000` เปิดได้และปิดเซิร์ฟเวอร์แล้ว
+- [ ] quality gate เป็น exit 2 โดยไม่ได้แก้ไฟล์
+
+## 🛠 Troubleshooting
+
+| อาการ | สาเหตุ | แก้ |
+|---|---|---|
+| `claude` ไม่พบ หรือชี้ไฟล์เก่า | PATH หรือ alias | ดู SETUP.md ขั้นที่ 2 |
+| `fatal: not a git repository` ตอนรัน git ที่ course repo | โฟลเดอร์มาจาก download ZIP (ไม่มี `.git`) | ทำ snapshot ตามหมายเหตุขั้นที่ 1 หรือ `git clone` ใหม่ |
+| `verify-setup` FAIL ว่า workshop project not found | ยังไม่ได้ clone workshop repo หรือ clone ไว้คนละ path | clone ตามขั้นที่ 2 หรือตั้ง `$env:WORKSHOP_DIR` ชี้โฟลเดอร์ที่ clone ไว้แล้วรันใหม่ |
+| `Cannot find module .../verify-setup.mjs` | รันจากผิดโฟลเดอร์ (เช่นอยู่ใน workshop repo) หรือ clone จากสำเนาเก่า | กลับไป course repo (โฟลเดอร์ที่มี `day-1/`) แล้วรันใหม่ ถ้าไม่มีไฟล์จริงให้ `git pull` หรือ clone ใหม่จาก main |
+| port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `$env:PORT=3001; npm start` (ใน workshop repo) |
+| quality gate แสดง port busy | ยังไม่ปิดเซิร์ฟเวอร์ | ปิดก่อนรัน `npm run gate` |
+| `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้วปิดคีย์ (`Remove-Item Env:ANTHROPIC_API_KEY`) |
+| คำสั่ง bash จากบทความอื่น (`export`, `echo $VAR`) | แล็บนี้ใช้ PowerShell | `$env:VAR` แทน `export` · `echo $env:VAR` |
+| `claude --version` ต่างกันในแต่ละเทอร์มินัล | ติดตั้งซ้ำสองที่ (native + npm) อัปเดตไม่พร้อมกัน | เก็บตัวเดียว: `npm uninstall -g @anthropic-ai/claude-code` แล้วอัปเดตตัว native ด้วย `claude update` |
+| อยากให้ quality gate exit 0 ภายในวันนี้ | ยังไม่ถึง Workshop 3–4 | ปล่อยให้แดง 0/6 ไว้ |
+
+อย่าใช้ `--max-turns` สั้น ๆ กับการบ้านที่ต้องเขียนไฟล์ รอบจะหมดก่อนมีผลงาน และอย่าใช้ `taskkill /IM node.exe` (ฆ่า Node ทั้งเครื่อง) หรือ `taskkill //IM node.exe` (รูปแบบ Git Bash)
+
+## 🆘 Behind? Catch up
+
+ไม่มีไฟล์ของแล็บนี้ให้คัดลอก ถ้าสคริปต์ตรวจไม่ผ่านให้เรียกผู้สอนก่อน Workshop 1
+
+## Stretch / ต่อยอด
+
+รัน `node scripts/check-solutions.mjs` (ที่ course repo) ดูว่าคำตอบอ้างอิงทั้งเก้าแล็บผ่าน ขณะที่ quality gate ใน workshop repo ยังแดง 0/6
+
+## Solution → solutions/w1/
+
+Lab 0 ไม่มีโฟลเดอร์คำตอบ งานแรกที่ส่งคือ Workshop 1

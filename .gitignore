@@ -11,8 +11,9 @@ Desktop.ini
 node_modules/
 npm-debug.log*
 
-# ZCode workspace artifacts (แผนงาน session ภายใน)
-.zcode/
+# ZCode (agent ฝั่งผู้สอน — coach) — track เฉพาะ agent definitions, ของ session อื่นไม่ track
+.zcode/*
+!.zcode/agents/
 
 # เอกสารภายใน (ประวัติการตรวจทาน — เก็บไว้ในเครื่องเท่านั้น)
 vibe-code-l2-course-outline-internal.md
@@ -23,11 +24,8 @@ instructor/
 # เครื่องมือ authoring ภายใน
 scripts/apply-keyphrase-style.mjs
 
-# Local Claude Code settings (permission ที่ grant ไว้ต่อเครื่อง)
-.claude/settings.local.json
-
-# Agent worktrees (สร้างโดย isolation: worktree — ดู Module 4)
-.claude/worktrees/
+# Claude Code ใช้ที่ workshop repo เท่านั้น (anchor ที่ราก — ห้ามกลืน solutions/*/drop-in/.claude/)
+/.claude/
 
 # Deck แจกจ่ายนอก repo (ไม่ track ไฟล์งานนำเสนอ)
 *.pptx

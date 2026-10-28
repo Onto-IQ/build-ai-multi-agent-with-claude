@@ -6,7 +6,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const workshops = ['w1', 'w2', 'w3', 'w4', 'w5', 'w6'];
+// The app lives in its own workshop repo; the starter gate runs there.
+const workshop = process.env.WORKSHOP_DIR
+  ? path.resolve(process.env.WORKSHOP_DIR)
+  : 'D:\\dev\\multi-agent-workshop';
+const workshops = ['w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9'];
 
 function freePort() {
   return new Promise((resolve, reject) => {
@@ -36,8 +40,8 @@ function run(script, args, options) {
 
 async function main() {
   const port = await freePort();
-  const gate = await run(path.join(repo, 'scripts', 'quality-gate.js'), [], {
-    cwd: repo,
+  const gate = await run(path.join(workshop, 'scripts', 'quality-gate.js'), [], {
+    cwd: workshop,
     env: { ...process.env, PORT: String(port) },
   });
   const starterOk =
@@ -62,7 +66,7 @@ async function main() {
       process.exit(result.code || 1);
     }
   }
-  console.log('PASS | solutions w1-w6');
+  console.log('PASS | solutions w1-w9');
 }
 
 main().catch((err) => {

@@ -4,7 +4,7 @@
 
 ## Key idea / แนวคิดหลัก — เล่าเป็นเรื่อง
 
-วันจริงของแอป Sales Insight จะมีคำถามสามกลุ่มที่ตอบไม่จบ: โครงสร้างโปรเจกต์เดินอย่างไร ข้อมูลใน CSV สะอาดแค่ไหน และโค้ดส่วนไหนมีพฤติกรรมเสี่ยง ถ้าให้บทสนทนาหลักอ่านทุกไฟล์เองตามลำดับ คำตอบที่ยาวจะท่วมบทสนทนาทีละนิด จนถึงจุดหนึ่ง Claude เริ่มลืมสิ่งที่คุยกันไปแล้วด้านบน
+วันจริงของแอป Registry Insight จะมีคำถามสามกลุ่มที่ตอบไม่จบ: โครงสร้างโปรเจกต์เดินอย่างไร ข้อมูลใน CSV สะอาดแค่ไหน และโค้ดส่วนไหนมีพฤติกรรมเสี่ยง ถ้าให้บทสนทนาหลักอ่านทุกไฟล์เองตามลำดับ คำตอบที่ยาวจะท่วมบทสนทนาทีละนิด จนถึงจุดหนึ่ง Claude เริ่มลืมสิ่งที่คุยกันไปแล้วด้านบน
 
 Swarm คือทางออกของปัญหานี้ — คุณสั่ง leader เพียงครั้งเดียว มันแตกงานเป็นเอเจนต์ย่อยสามตัวที่อ่านคนละส่วนพร้อมกัน แต่ละตัวเปิดไฟล์เองในโลกของตัวเอง แล้วส่งกลับมาแค่บทสรุป สิ่งที่ leader (และคุณ) เห็นจึงเป็นรายงานสามหัวข้อ ไม่ใช่เนื้อไฟล์เต็ม ๆ สิบฉบับ — บทสนทนาหลักจึงเบาพอจะคุยงานต่อได้อีกนาน
 
@@ -56,9 +56,9 @@ git status
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Dispatch 3 parallel Explore subagents on this Sales Insight app.
+Dispatch 3 parallel Explore subagents on this Registry Insight app.
 1) Map the runtime files and how to start the server.
-2) Read data/README.md and the failure text from node scripts/quality-gate.js. Do not fix anything.
+2) Read data/README.md and the failure text from npm run gate. Do not fix anything.
 3) Trace GET /api/summary and POST /api/notes far enough to name the risky behavior.
 Do not modify files. Return one report under 300 words with headings: structure, data quality, risks.
 ```
@@ -66,9 +66,9 @@ Do not modify files. Return one report under 300 words with headings: structure,
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Sales Insight
+ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Registry Insight
 1) แผนที่ไฟล์ที่ใช้รัน และวิธียกเซิร์ฟเวอร์
-2) อ่าน data/README.md และข้อความ FAIL จาก node scripts/quality-gate.js ห้ามแก้
+2) อ่าน data/README.md และข้อความ FAIL จาก npm run gate ห้ามแก้
 3) ไล่ GET /api/summary กับ POST /api/notes พอให้ชี้พฤติกรรมที่เสี่ยง
 ห้ามแก้ไขไฟล์ ส่งรายงานเดียวไม่เกิน 300 คำ มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง
 ```

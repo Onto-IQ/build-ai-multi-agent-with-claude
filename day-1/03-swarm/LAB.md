@@ -1,6 +1,6 @@
 # Workshop 1 — สำรวจแอปแบบขนาน
 
-> ⏱ 35 นาที · Start state: starter quality gate ยัง exit 2
+> ⏱ machine ~4 นาที · Start state: starter quality gate ยัง exit 2
 
 ## Goal / เป้าหมาย
 
@@ -8,7 +8,7 @@
 
 ## Steps / ขั้นตอน
 
-1. เข้าโฟลเดอร์แอปแล้วเปิด TUI
+1. เข้า workshop repo `D:\dev\multi-agent-workshop` แล้วเปิด TUI
 
 ```bash
 claude
@@ -19,9 +19,9 @@ claude
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Dispatch 3 parallel Explore subagents on this Sales Insight app.
+Dispatch 3 parallel Explore subagents on this Registry Insight app.
 1) Map the runtime files and how to start the server.
-2) Read data/README.md and the failure text from node scripts/quality-gate.js. Do not fix anything.
+2) Read data/README.md and the failure text from npm run gate. Do not fix anything.
 3) Trace GET /api/summary and POST /api/notes far enough to name the risky behavior.
 Do not modify files. Return one report under 300 words with headings: structure, data quality, risks.
 ```
@@ -29,29 +29,45 @@ Do not modify files. Return one report under 300 words with headings: structure,
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Sales Insight
+ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Registry Insight
 1) แผนที่ไฟล์ที่ใช้รัน และวิธียกเซิร์ฟเวอร์
-2) อ่าน data/README.md และข้อความ FAIL จาก node scripts/quality-gate.js ห้ามแก้
+2) อ่าน data/README.md และข้อความ FAIL จาก npm run gate ห้ามแก้
 3) ไล่ GET /api/summary กับ POST /api/notes พอให้ชี้พฤติกรรมที่เสี่ยง
 ห้ามแก้ไขไฟล์ ส่งรายงานเดียวไม่เกิน 300 คำ มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง
 ```
 
-ผลที่คาดหวัง: leader เรียกเอเจนต์ย่อยมากกว่าหนึ่งตัว แล้วตอบรายงานเดียวที่มีสามหัวข้อ ระบุ `server.js`, `data/sales.csv`, `scripts/quality-gate.js` และพูดถึง `POST /api/notes` กับ `GET /api/summary`
+ผลที่คาดหวัง: leader เรียกเอเจนต์ย่อยมากกว่าหนึ่งตัว แล้วตอบรายงานเดียวที่มีสามหัวข้อ ระบุ `server.js`, `data/dataset.csv`, `scripts/quality-gate.js` และพูดถึง `POST /api/notes` กับ `GET /api/summary`
+
+3. ให้รายงานกลายเป็นไฟล์ — วาง prompt (เลือกอย่างใดอย่างหนึ่ง): เพราะ Workshop 3 จะให้ planner อ่านไฟล์นี้ต่อ
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Write the final report to docs/EXPLORATION-REPORT.md with headings: structure, data quality, risks. Each risk must cite file:line.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+เขียนรายงานฉบับสุดท้ายลง docs/EXPLORATION-REPORT.md มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง ทุกจุดเสี่ยงต้องอ้าง file:line
+```
+
+📦 **Handoff ที่ 1 ของคอร์ส:** รายงานของทีมสำรวจ กลายเป็นไฟล์ที่ planner ใน Workshop 3 ต้องอ่านต่อ
 
 > 📚 **รู้เพิ่ม:** จุดของ prompt เดียวคือให้ leader แตกงานเอง — สามก้อนอ่านไฟล์คนละชุดจึงวิ่งขนานได้ และสิ่งที่กลับมาหาคุณเป็นแค่บทสรุป ไม่ใช่เนื้อไฟล์เต็ม บทสนทนาหลักจึงยังเบาพอคุยงานต่อ
 
-3. ออกจาก TUI แล้วตรวจว่าไม่มีอะไรเปลี่ยน — ต้องเป็น repo จาก `git clone` หรือผ่าน snapshot จาก Lab 0 แล้ว (โฟลเดอร์จาก ZIP ล้วนไม่มี `.git` ใช้ git ไม่ได้)
+3. ออกจาก TUI แล้วตรวจว่าไม่มีไฟล์แอปถูกแก้ — workshop repo เป็น repo จาก `git clone` จึงใช้ git ตรวจได้
 
 ```bash
 git status --short
 ```
 
-ผลที่คาดหวัง: ไม่มีไฟล์ของแอปถูกแก้จากการสำรวจ ไฟล์ที่คุณจดโน้ตเองไม่นับ
+ผลที่คาดหวัง: เห็นเฉพาะ `?? docs/EXPLORATION-REPORT.md` (ไฟล์ handoff ที่คุณสั่งเขียนในขั้นก่อน) — ไฟล์แอปอื่นทุกไฟล์ไม่ถูกแก้
 
 4. รัน quality gateเองในเทอร์มินัล อย่าให้เอเจนต์รันแทนในรอบนี้
 
 ```bash
-node scripts/quality-gate.js
+npm run gate
 ```
 
 ผลที่คาดหวัง: ยังเป็น exit 2
@@ -72,20 +88,20 @@ node scripts/quality-gate.js
 |---|---|---|
 | ได้แผน แต่ไม่ได้รายงาน | prompt ไม่ได้สั่งให้ทำตอนนี้ | เติมว่าให้ส่งเอเจนต์ย่อยจริง ไม่ใช่แค่เสนอแผน |
 | ไฟล์ถูกแก้ | ไม่มีประโยคห้ามแก้ | `git checkout -- .` ในแอปถ้าคุณยังไม่ต้องการของนั้น แล้วสั่งใหม่ |
-| `claude -p` ไม่ยอมรัน quality gate | headless ปิด Bash เป็นค่าเริ่มต้น | รัน `node scripts/quality-gate.js`เองใน Git Bash |
+| `claude -p` ไม่ยอมรัน quality gate | headless ปิด Bash เป็นค่าเริ่มต้น | รัน `npm run gate` เองในเทอร์มินัลที่ workshop repo |
 | หมดเทิร์น | `--max-turns` ต่ำไป | อยู่ใน TUI หรือใส่ `--max-turns 20` เฉพาะตอน headless |
-| สำรวจผิดโฟลเดอร์ | เปิด `claude` นอก `ราก repo` | ออกแล้วเปิดใหม่จากโฟลเดอร์แอป |
+| สำรวจผิดโฟลเดอร์ | เปิด `claude` นอก workshop repo | ออกแล้วเปิดใหม่ที่ `D:\dev\multi-agent-workshop` |
 | port busy ตอนรัน quality gate | เซิร์ฟเวอร์ค้าง | ปิดก่อน หรือตั้ง `PORT` |
 
 ## 🆘 Behind? Catch up
 
-จากราก repo:
+จาก course repo (สคริปต์จะ copy ผลลง workshop repo ให้):
 
 ```bash
 node scripts/catch-up.js w1
 ```
 
-แล้วอ่าน `docs/EXPLORATION-REPORT.md`
+แล้วอ่าน `docs/EXPLORATION-REPORT.md` ใน workshop repo
 
 ## Stretch / ต่อยอด
 
@@ -93,4 +109,4 @@ node scripts/catch-up.js w1
 
 ## Solution → solutions/w1/
 
-รายงานอ้างอิงอยู่ที่ `solutions/w1/drop-in/docs/EXPLORATION-REPORT.md` ตรวจด้วย `node solutions/w1/check.js`
+รายงานอ้างอิงอยู่ที่ `solutions/w1/drop-in/docs/EXPLORATION-REPORT.md` ตรวจด้วย `node solutions/w1/check.js` (จาก course repo)

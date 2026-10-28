@@ -1,50 +1,46 @@
-# Workshop 5 — Quality gate และ cost gate
+# Workshop 7 — Guardrails ครบ: hook + cost gate
 
-> ⏱ 40 นาที · Start state: มีตัวทำความสะอาดจาก Workshop 4 quality gate ยังไม่เขียวครบ (ตามออกแบบ)
+> ⏱ machine ~8 นาที · Start state: อยู่ใน workshop repo · quality gate 6/6 exit 0 จาก Workshop 4 · แอปใช้งานได้ครบ
 
 ## Goal / เป้าหมาย
 
-`node scripts/quality-gate.js` จบด้วย exit 0 และมี hook กับcost gateที่ทดสอบได้โดยไม่ต้องเปิด Claude
+มี hook ที่บล็อกคำสั่งอันตราย (exit 2) และ cost gate ที่ทดสอบได้โดยไม่ต้องเปิด Claude — พร้อมยืนยันว่า gate ยังเขียวครบ 6/6 ก่อนเริ่ม feature ใน Workshop 8
+
+## สังเกต handoff
+
+| จาก | ไฟล์ | ถึง |
+|---|---|---|
+| Workshop 4 (QA-REPORT finding ที่ 2) | รายงานความเสี่ยง | hook ที่สร้างวันนี้บังคับซ้ำ |
+| hook (`block-dangerous-bash.js`) | exit 2 + เหตุผลบน stderr | Claude Code อ่านแล้วบล็อกก่อนคำสั่งรัน |
+| `usage.json` | ตัวเลขจริงจากห้อง | cost gate ตัดสินผ่าน/ไม่ผ่าน |
 
 ## Steps / ขั้นตอน
 
-1. ใน Git Bash ให้เห็นของแดงก่อนลงมือ
+1. ยืนยันเริ่มงานว่า gate ยังเขียวครบ
 
-```bash
-node scripts/quality-gate.js
+```powershell
+npm run gate
 ```
 
-ผลที่คาดหวัง: exit 2 และสามบรรทัด FAIL
+ผลที่คาดหวัง: `quality gate: 6/6 passed` exit 0
 
-> 📚 **รู้เพิ่ม:** ดูหน้าตาของ "แดง" ก่อนแก้เสมอ — ถ้าไม่รู้ว่าเคสไหนแดงอย่างไร คุณจะไม่มีทางรู้ว่าการแก้ของคุณเปลี่ยนอะไร รายงานรอบนี้คือ baseline ที่ขั้นถัดไปจะเทียบด้วย
-
-2. เปิด TUI แล้ววาง prompt (เลือกอย่างใดอย่างหนึ่ง) กดอนุญาตเมื่อจะเขียน `server.js` หรือทับ CSV:
+2. สร้าง hook ใน TUI (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาตเมื่อเขียน `.claude/`
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-scripts/quality-gate.js currently FAILS. Replace data/sales.csv with a cleaned file and change server.js only enough that all three cases pass. Do not edit scripts/quality-gate.js. Then show me the command output.
+Create .claude/hooks/block-dangerous-bash.js: a Node script that reads a JSON payload from stdin with fields tool_name and tool_input.command. If the command contains rm -rf, taskkill, or Remove-Item -Recurse, print "blocked dangerous command: <command>" to stderr and exit with code 2. Otherwise exit 0 silently. Then bind it in .claude/settings.json as a PreToolUse hook matcher for the Bash tool.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data/sales.csv ด้วยไฟล์ที่สะอาด และแก้ server.js น้อยที่สุดจน quality gate สามเคสผ่าน ห้ามแก้ scripts/quality-gate.js แล้วแสดงผลคำสั่งให้ดู
+สร้าง .claude/hooks/block-dangerous-bash.js: สคริปต์ Node อ่าน JSON จาก stdin มีฟิลด์ tool_name กับ tool_input.command ถ้าคำสั่งมี rm -rf, taskkill หรือ Remove-Item -Recurse ให้พิมพ์ "blocked dangerous command: <command>" ลง stderr แล้ว exit code 2 ถ้าไม่ใช่ exit 0 เงียบ ๆ จากนั้นผูกใน .claude/settings.json เป็น PreToolUse hook matcher ของเครื่องมือ Bash
 ```
 
-ผลที่คาดหวัง: `data/sales.csv` เป็นชุดที่สะอาด และ `POST /api/notes` ไม่ทำให้โปรเซสตาย
+> 📚 **รู้เพิ่ม:** exit code 2 คือการบล็อก — exit อื่นไม่บล็อก และเหตุผลของการบล็อกต้องเขียนที่ stderr เพราะ stdout ของ hook ถูกอ่านต่อเป็นคำสั่ง
 
-3. ปิดเซิร์ฟเวอร์ที่ค้าง แล้วรัน quality gateเอง
-
-```bash
-node scripts/quality-gate.js
-```
-
-ผลที่คาดหวัง: `quality gate: 3/3 passed` และ exit 0
-
-> 📚 **รู้เพิ่ม:** นี่คือกฎการเชื่อของบทบาท qa ที่ Capstone จะใช้ต่อ — คำว่า "ผ่าน" ของเอเจนต์ไม่ใช่หลักฐาน exit code จากเทอร์มินัลของคุณเท่านั้นที่นับ
-
-4. ให้ Claude เพิ่ม hook ใน TUI ตามแบบในบทเรียน หรือคัดลอกจากคำตอบอ้างอิงหลังคุณเขียนเองไม่ทัน แล้วลองด้วยมือ — เขียน payload เป็นไฟล์แล้วป้อนเข้า stdin (PowerShell 5.1 ส่งข้อความผ่าน pipe ไป native process ได้ไม่ตรง):
+3. ทดสอบ hook ด้วยมือคุณเอง — เขียน payload เป็นไฟล์แล้วป้อนเข้า stdin (PowerShell 5.1 ส่งข้อความผ่าน pipe ไป native process ได้ไม่ตรง):
 
 ```powershell
 [IO.File]::WriteAllText("$pwd\payload-block.json", '{"tool_name":"Bash","tool_input":{"command":"rm -rf data"}}', (New-Object System.Text.UTF8Encoding($false)))
@@ -54,65 +50,75 @@ $proc.ExitCode
 
 ผลที่คาดหวัง: `blocked dangerous command: rm -rf data` และ exit 2
 
+> 📚 **รู้เพิ่ม (กับดัก PowerShell จริง):** `echo '...' | node hook.js` ใน PowerShell 5.1 ส่ง payload พัง (hook ขึ้น "malformed payload" แล้ว exit 0 — แปลว่า**ไม่ได้ทดสอบอะไรเลย**) และ `Set-Content -Encoding UTF8` ใส่ BOM นำหน้าไฟล์ ทำ `JSON.parse` ใน Node พัง — เขียนไฟล์แบบไม่มี BOM ด้วย `UTF8Encoding($false)` แล้วป้อนด้วย `Start-Process -RedirectStandardInput` จึงเชื่อถือได้
+
+4. ทดสอบฝั่งปล่อยผ่าน
+
 ```powershell
-[IO.File]::WriteAllText("$pwd\payload-allow.json", '{"tool_name":"Bash","tool_input":{"command":"node scripts/quality-gate.js"}}', (New-Object System.Text.UTF8Encoding($false)))
+[IO.File]::WriteAllText("$pwd\payload-allow.json", '{"tool_name":"Bash","tool_input":{"command":"npm run gate"}}', (New-Object System.Text.UTF8Encoding($false)))
 $proc = Start-Process node -ArgumentList ".claude/hooks/block-dangerous-bash.js" -RedirectStandardInput "payload-allow.json" -NoNewWindow -Wait -PassThru
 $proc.ExitCode
 ```
 
 ผลที่คาดหวัง: ไม่มีข้อความบล็อก และ exit 0
 
-> 📚 **รู้เพิ่ม (กับดัก PowerShell จริง):** `echo '...' | node hook.js` ใน PowerShell 5.1 ส่ง payload พัง (hook ขึ้น "malformed payload" แล้ว exit 0 — แปลว่า**ไม่ได้ทดสอบอะไรเลย**) และ `Set-Content -Encoding UTF8` ของ PowerShell ใส่ BOM นำหน้าไฟล์ ทำ `JSON.parse` ใน Node พัง — เขียนไฟล์แบบไม่มี BOM ด้วย `UTF8Encoding($false)` แล้วป้อนด้วย `Start-Process -RedirectStandardInput` จึงเชื่อถือได้
+5. cost gate — เขียน `usage.json` ด้วยตัวเลขฝึก (เขียนแบบไม่มี BOM) แล้วรัน
 
-> 📚 **รู้เพิ่ม:** exit code 2 คือการบล็อก — exit อื่นไม่บล็อก และเหตุผลของการบล็อกต้องเขียนที่ stderr เพราะ stdout ของ hook ถูกอ่านต่อเป็นคำสั่ง
-
-5. เขียน `usage.json` จาก `/cost` ใน TUI ถ้ามี หรือใส่ตัวเลขฝึก — เขียนด้วย PowerShell แบบไม่มี BOM:
-`[IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))` แล้วรัน
-
-> 📚 **เช็คก่อนรัน:** `scripts/cost-gate.js` ยังไม่อยู่ใน starter — ได้มาหลังรัน `node scripts/catch-up.js w5` หรือคัดลอกจาก `solutions/w5/drop-in/scripts/cost-gate.js` (ตรวจจริง: ถ้ายังไม่มีไฟล์ `node scripts/cost-gate.js` จะขึ้น `MODULE_NOT_FOUND`)
-
-```bash
+```powershell
+[IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))
 node scripts/cost-gate.js usage.json
 ```
 
-ผลที่คาดหวัง: exit 0 เมื่อต่ำกว่า 2 USD และต่ำกว่า 20000 output token ไฟล์ที่ตั้ง `total_cost_usd` เป็น 3 ต้องได้ exit 2
+ผลที่คาดหวัง: `PASS | cost-gate` และ exit 0 เมื่อต่ำกว่า 2 USD และต่ำกว่า 20000 output token
 
-บน Git Bash `echo $?` ใช้ได้ ถ้าอยู่ใน PowerShell ให้กลับไป Git Bash
+6. ทดสอบฝั่งเกินงบ — ตั้ง `total_cost_usd` เป็น 3
+
+```powershell
+[IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":3,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))
+node scripts/cost-gate.js usage.json
+```
+
+ผลที่คาดหวัง: `FAIL | cost-gate | total_cost_usd 3 > 2` และ exit 2
+
+> 📚 **เช็คก่อนรัน:** `scripts/cost-gate.js` ยังไม่อยู่ใน starter — ได้มาหลังรัน `node scripts/catch-up.js w7` หรือคัดลอกจาก `solutions/w7/drop-in/scripts/cost-gate.js` (ตรวจจริง: ถ้ายังไม่มีไฟล์ `node scripts/cost-gate.js` จะขึ้น `MODULE_NOT_FOUND`)
+
+7. ยืนยันปิดท้าย: gate ยังเขียวครบ — พร้อมเข้า Workshop 8
+
+```powershell
+npm run gate
+```
 
 ## ✅ Checkpoint
 
-- [ ] quality gate exit 0 โดยไม่ได้แก้ `scripts/quality-gate.js`
-- [ ] `POST` ที่ไม่ใช่ JSON ไม่ทำให้เซิร์ฟเวอร์ตาย
-- [ ] hook บล็อก `rm -rf` และปล่อย `node scripts/quality-gate.js`
-- [ ] cost gate exit 2 เมื่อเกิน 2 USD
-- [ ] รู้ว่าเพดาน 2 USD ยังไม่ใช่ตัวเลขจากรัน TUI ของห้อง
+- [ ] `.claude/hooks/block-dangerous-bash.js` บล็อก `rm -rf` (exit 2) และปล่อย `npm run gate` (exit 0)
+- [ ] `.claude/settings.json` ผูก PreToolUse กับ Bash แล้ว
+- [ ] cost gate exit 0 เมื่อต่ำกว่าเพดาน และ exit 2 เมื่อเกิน
+- [ ] รู้ว่าเพดาน 2 USD เป็นค่าสอน — จดตัวเลขจริงของห้องแล้วปรับเองภายหลัง
 
 ## 🛠 Troubleshooting
 
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
-| port busy | เซิร์ฟเวอร์ยังฟัง 3000 | ปิดก่อน หรือ `PORT=3001 node scripts/quality-gate.js` |
-| quality gate exit 0เพราะแก้ไฟล์ `scripts/quality-gate.js` | แก้ตัวตรวจ | คืนไฟล์ `scripts/quality-gate.js`จาก git |
-| headless ไม่รัน quality gate | Bash ถูกปฏิเสธ | รัน `node scripts/quality-gate.js`เองหลัง TUI เขียนไฟล์ |
-| หมดเทิร์นก่อนมี try/catch | `--max-turns` ต่ำ | อยู่ใน TUI และสั่งว่าห้ามสำรวจซ้ำ |
-| `echo $?` ไม่ทำงาน | PowerShell | ใช้ Git Bash |
-| ฆ่า Node ไม่ได้แบบปลอดภัย | ใช้ taskkill ทั้งภาพ | ปิดเฉพาะหน้าต่างที่รันเซิร์ฟเวอร์ |
-| คีย์ API ทับบัญชี | `ANTHROPIC_API_KEY` | unset ก่อนเปิด TUI |
-
-การที่ hook จะถูก Claude เรียกเองต้องมีบล็อกใน `.claude/settings.json` สคริปต์อย่างเดียวยังไม่ทำงานใน TUI จนกว่าจะผูกเหตุการณ์ `PreToolUse` กับ `TaskCompleted` การผูกในของจริงยังต้องมีคนกดเดินใน TUI หนึ่งรอบ
+| hook ขึ้น malformed payload แล้ว exit 0 | payload พังจาก pipe ของ PowerShell 5.1 | ใช้ไฟล์ + `Start-Process -RedirectStandardInput` ตามขั้น 3 |
+| `JSON.parse` พังทั้งที่ JSON ถูก | BOM จาก `Set-Content -Encoding UTF8` | ใช้ `UTF8Encoding($false)` |
+| `Cannot find module .../cost-gate.js` | ยังไม่มีสคริปต์ | catch-up `w7` หรือคัดลอกจาก `solutions/w7/drop-in/scripts/` |
+| gate ไม่ 6/6 | ข้อมูลหรือเซิร์ฟเวอร์ไม่ใช่ชุด Workshop 3/4 | catch-up `w3` แล้ว `w4` |
+| ห้องไม่ได้ใช้ PowerShell | อยู่บน Git Bash | `echo '{"tool_name":...}' | node hook.js` ใช้ได้ตรง ๆ บน bash |
 
 ## 🆘 Behind? Catch up
 
+จาก course repo (ไฟล์ถูก copy ลง workshop repo):
+
 ```bash
-node scripts/catch-up.js w5
+node scripts/catch-up.js w7
 ```
 
-คำสั่งนี้ทับ `data/sales.csv` และ `server.js` ด้วยชุดที่ quality gate ผ่าน แล้วได้ hook กับ cost gate (`scripts/cost-gate.js`) (`scripts/cost-gate.js`)
+ได้ hook, settings.json, cost gate และ `data/dataset.csv` ชุดสะอาด
 
 ## Stretch / ต่อยอด
 
-เอา `sampleToken` ออกจาก `/api/health` ก่อนถึง Workshop 6 quality gate สามเคสไม่ได้บังคับข้อนี้
+เพิ่ม pattern บล็อกอันตรายอีกหนึ่งอย่างจากงานจริงของห้อง (เช่น `git push --force` หรือ `Remove-Item -Force`) ลงใน hook แล้วทดสอบด้วย payload ใหม่ให้เห็น exit 2 — และปรับเพดาน cost gate ตามตัวเลขจริงของห้อง
 
-## Solution → solutions/w5/
+## Solution → solutions/w7/
 
-`node solutions/w5/check.js`
+ตรวจด้วย `node solutions/w7/check.js` (จาก course repo)

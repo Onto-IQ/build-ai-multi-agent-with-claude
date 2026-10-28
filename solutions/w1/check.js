@@ -6,11 +6,11 @@ const path = require('path');
 const report = fs.readFileSync(path.join(__dirname, 'drop-in', 'docs', 'EXPLORATION-REPORT.md'), 'utf8');
 const required = [
   'server.js',
-  'data/sales.csv',
+  'data/dataset.csv',
   'scripts/quality-gate.js',
-  'mcp/echo-server.js',
-  'duplicate-order-id',
-  'bad-date',
+  'data/raw/dbd-2558.parquet',
+  'bad-seq',
+  'bad-reg-date',
   '/api/summary',
   '/api/notes',
   'ห้ามแก้ไฟล์',

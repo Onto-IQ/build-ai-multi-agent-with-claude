@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registry Insight — release</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Registry Insight · release · ข้อมูลจริงจาก data.go.th</p>
+    <h1>ธุรกิจจดทะเบียนใหม่ พ.ศ. 2558</h1>
+    <p class="lead">ตัวเลขจาก <code>/api/summary</code> ชุดเดียวกับ quality gate และหน้า production บน Vercel</p>
+    <section class="cards" id="cards">
+      <article><h2>กิจการจดทะเบียนใหม่</h2><p id="companies">…</p></article>
+      <article><h2>ทุนจดทะเบียนรวม (บาท)</h2><p id="capital">…</p></article>
+      <article><h2>จังหวัดที่ทุนสูงสุด</h2><p id="province">…</p></article>
+      <article><h2>ภาคที่ทุนสูงสุด</h2><p id="region">…</p></article>
+    </section>
+    <section>
+      <h2>ทุนจดทะเบียนตามภาค</h2>
+      <table>
+        <thead><tr><th>ภาค</th><th>ทุนรวม (บาท)</th></tr></thead>
+        <tbody id="regions"></tbody>
+      </table>
+    </section>
+    <p id="status" class="status">กำลังโหลด</p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

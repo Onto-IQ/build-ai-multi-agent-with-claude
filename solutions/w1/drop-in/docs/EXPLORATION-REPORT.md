@@ -1,16 +1,16 @@
-# รายงานสำรวจ Sales Insight (Workshop 1)
+# รายงานสำรวจ Registry Insight (Workshop 1)
 
 ## โครงสร้าง
 
-แอป Node ล้วน ไม่มี dependency จุดเข้าคือ `server.js` ข้อมูลอยู่ที่ `data/sales.csv` quality gate อยู่ที่ `scripts/quality-gate.js` MCP ตั้งต้นคือ `mcp/echo-server.js` มี tool เดียวชื่อ echo หน้าเว็บตั้งต้นอยู่ที่ `web/`
+แอป Node ล้วน ไม่มี dependency จุดเข้าคือ `server.js` ข้อมูลดิบจริงอยู่ที่ `data/raw/dbd-2558.parquet` ตารางแบนที่แอปอ่านคือ `data/dataset.csv` กฎคุณภาพและตัวคำนวณยอดอ้างอิงอยู่ที่ `lib/inspect-data.js` quality gate อยู่ที่ `scripts/quality-gate.js` หน้าเว็บตั้งต้นอยู่ที่ `web/` MCP ระดับโปรเจกต์ประกาศไว้ใน `.mcp.json` (DuckDB read-only)
 
 ## คุณภาพข้อมูล
 
-`scripts/quality-gate.js` ตรวจ `data/sales.csv` แล้วไม่ผ่าน รหัสที่ quality gate รายงานได้แก่ duplicate-order-id, bad-date, date-format, money-format, bad-qty, missing-province, missing-order-id, region-mismatch, channel-format, product-whitespace และ bad-price ไฟล์ปนวันที่ใช้ไม่ได้ วันที่คนละรูปแบบ ราคามีจุลภาคหรือสัญลักษณ์บาท และรหัสออเดอร์ซ้ำ
+`npm run gate` ตรวจ `data/dataset.csv` แล้วไม่ผ่าน ข้อมูลดิบยังมีแถวหัวตารางและชื่อไฟล์ปนมา 9 แถว (`bad-seq`) วันที่จดทะเบียนยังเป็น พ.ศ. รูปแบบ `12/1/2558` (`bad-reg-date` เมื่อเทียบสัญญา ISO) ทุนจดทะเบียนมีลูกน้ำและช่องว่าง (`bad-capital` เมื่อเทียบสัญญา) และจังหวัดฝังอยู่ในข้อความที่อยู่ ต้องดึงออกก่อนจึงจะรวมยอดต่อภาคได้
 
 ## จุดเสี่ยง
 
-- `GET /api/summary` ใช้ตัวแยกจุลภาคตรง ๆ แถวที่มีจุลภาคในราคาจึงเลื่อนคอลัมน์ ตัวเลขไม่ตรงกับแถวที่สมบูรณ์อยู่แล้ว
+- `GET /api/summary` ใช้ตัวแยกจุลภาคตรง ๆ แถวที่มีจุลภาคในเครื่องหมายคำพูด (วัตถุประสงค์ ที่อยู่) จึงเลื่อนคอลัมน์ ตัวเลขจึงไม่ตรงกับ `lib/inspect-data.js`
 - `POST /api/notes` เรียก `JSON.parse` โดยไม่มี try/catch บอดี้ที่ไม่ใช่ JSON ทำให้โปรเซสล่ม
 - `GET /api/health` ส่งค่าตัวอย่างที่ขึ้นต้นด้วย `sk-` ออกมาใน JSON
 
