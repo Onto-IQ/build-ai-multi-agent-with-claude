@@ -64,7 +64,7 @@
 
 ### course repo — `Onto-IQ/build-ai-multi-agent-with-claude` @ `92a0514` (origin/main)
 - [x] Two-repo split ครบ: ลบโค้ดแอปออก · verify-setup/catch-up/check-solutions retarget `WORKSHOP_DIR` (default `C:\dev\multi-agent-workshop`)
-- [x] verify-setup ตรวจ 6 อย่าง: day-1/day-2 · workshop+parquet+.mcp.json · node · git · **duckdb** · **uvx** · port · boot · gate exit 2 — **PASSED**
+- [x] verify-setup ตรวจ 6 อย่าง: Lessons/ · workshop+parquet+.mcp.json · node · git · **duckdb** · **uvx** · port · boot · gate exit 2 — **PASSED**
 - [x] renumber M1–M13 + W1–W9 · README/SETUP/instructor อัปเดต two-repo + ข้อมูลจริงทั้งหมด
 - [x] Lab 0 มีขั้น clone workshop + ตาราง "สองโลก" · M2 เพิ่มขั้น `/init` onboard · SETUP.md เพิ่มติดตั้ง DuckDB CLI + uv
 - [x] เฉลย w1–w9 สำหรับข้อมูลจริงครบ (w3 ส่ง `clean-export.sql` · w6 ส่ง `analysis.sql`+`ANALYSIS.md` · w4/w7/w9 server ฉบับแก้แล้ว) — **`node scripts/check-solutions.mjs` = PASS ทุกตัว**
@@ -117,7 +117,7 @@
 
 ### 4.4 Isolation check (หลังจบแล็บทุกตัว)
 ```bash
-grep -ril "EXPLORATION-REPORT เขียน\|solutions/\|day-1/\|day-2/\|LAB\.md\|workshop-coach" \
+grep -ril "EXPLORATION-REPORT เขียน\|solutions/\|Lessons/\|LAB\.md\|workshop-coach" \
   "$USERPROFILE/.claude/projects/C--dev-multi-agent-workshop/" | head
 ```
 - ผลที่ต้องได้: **ไม่มีไฟล์ transcript ของ workshop ตรงเงื่อนไข** (เอเจนต์ต้องไม่เคยเห็นบทเรียน/เฉลย) — ถ้าเจอ ให้ดูว่าเป็นคำจาก prompt ของผู้เรียนเองหรือรั่วจริง แล้วบันทึกหลักฐาน

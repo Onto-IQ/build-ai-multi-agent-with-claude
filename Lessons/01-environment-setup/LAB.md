@@ -19,7 +19,7 @@
 
 ## Steps / ขั้นตอน
 
-1. เปิด PowerShell ที่ course repo (โฟลเดอร์บทเรียน ที่มี `day-1/`) แล้วตรวจรุ่น
+1. เปิด PowerShell ที่ course repo (โฟลเดอร์บทเรียน ที่มี `Lessons/`) แล้วตรวจรุ่น
 
 ```powershell
 node --version
@@ -54,7 +54,7 @@ claude
 
 ผลที่คาดหวัง: เห็นบัญชีของคลาส ไม่ใช่โหมด API key
 
-4. รันสคริปต์ตรวจ — ต้องอยู่ที่ course repo (โฟลเดอร์ที่มี `scripts/` และ `day-1/`)
+4. รันสคริปต์ตรวจ — ต้องอยู่ที่ course repo (โฟลเดอร์ที่มี `scripts/` และ `Lessons/`)
 
 ```powershell
 node scripts/verify-setup.mjs
@@ -99,7 +99,7 @@ npm run gate
 | `claude` ไม่พบ หรือชี้ไฟล์เก่า | PATH หรือ alias | ดู SETUP.md ขั้นที่ 2 |
 | `fatal: not a git repository` ตอนรัน git ที่ course repo | โฟลเดอร์มาจาก download ZIP (ไม่มี `.git`) | ทำ snapshot ตามหมายเหตุขั้นที่ 1 หรือ `git clone` ใหม่ |
 | `verify-setup` FAIL ว่า workshop project not found | ยังไม่ได้ clone workshop repo หรือ clone ไว้คนละ path | clone ตามขั้นที่ 2 หรือตั้ง `$env:WORKSHOP_DIR` ชี้โฟลเดอร์ที่ clone ไว้แล้วรันใหม่ |
-| `Cannot find module .../verify-setup.mjs` | รันจากผิดโฟลเดอร์ (เช่นอยู่ใน workshop repo) หรือ clone จากสำเนาเก่า | กลับไป course repo (โฟลเดอร์ที่มี `day-1/`) แล้วรันใหม่ ถ้าไม่มีไฟล์จริงให้ `git pull` หรือ clone ใหม่จาก main |
+| `Cannot find module .../verify-setup.mjs` | รันจากผิดโฟลเดอร์ (เช่นอยู่ใน workshop repo) หรือ clone จากสำเนาเก่า | กลับไป course repo (โฟลเดอร์ที่มี `Lessons/`) แล้วรันใหม่ ถ้าไม่มีไฟล์จริงให้ `git pull` หรือ clone ใหม่จาก main |
 | port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `$env:PORT=3001; npm start` (ใน workshop repo) |
 | quality gate แสดง port busy | ยังไม่ปิดเซิร์ฟเวอร์ | ปิดก่อนรัน `npm run gate` |
 | `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้วปิดคีย์ (`Remove-Item Env:ANTHROPIC_API_KEY`) |

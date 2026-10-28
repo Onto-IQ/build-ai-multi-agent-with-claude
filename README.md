@@ -22,24 +22,24 @@
 
 | เวลา | โมดูล | แล็บ |
 |---|---|---|
-| เช้า | [01 ตั้งเครื่อง](day-1/01-environment-setup/README.md) | [Lab 0 — ตรวจเครื่อง](day-1/01-environment-setup/LAB.md) |
-| เช้า | [02 สถาปัตยกรรมเอเจนต์](day-1/02-agent-foundations/README.md) | [onboard /init + สาธิต](day-1/02-agent-foundations/LAB.md) |
-| เช้า | [03 Swarm](day-1/03-swarm/README.md) | [Workshop 1](day-1/03-swarm/LAB.md) |
-| บ่าย | [04 Specialty agent](day-1/04-specialty-agents/README.md) | [Workshop 2](day-1/04-specialty-agents/LAB.md) |
-| บ่าย | [05 Sequential pipeline](day-1/05-sequential-orchestration/README.md) | [Workshop 3](day-1/05-sequential-orchestration/LAB.md) — เว็บโชว์ยอดจริง |
-| บ่าย | [06 แก้สามปม + QA handoff](day-1/06-fix-and-qa/README.md) | [Workshop 4](day-1/06-fix-and-qa/LAB.md) — gate 6/6 |
-| บ่าย | [07 Skills](day-1/07-skills/README.md) | [Workshop 5](day-1/07-skills/LAB.md) — release-manager |
+| เช้า | [01 ตั้งเครื่อง](Lessons/01-environment-setup/README.md) | [Lab 0 — ตรวจเครื่อง](Lessons/01-environment-setup/LAB.md) |
+| เช้า | [02 สถาปัตยกรรมเอเจนต์](Lessons/02-agent-foundations/README.md) | [onboard /init + สาธิต](Lessons/02-agent-foundations/LAB.md) |
+| เช้า | [03 Swarm](Lessons/03-swarm/README.md) | [Workshop 1](Lessons/03-swarm/LAB.md) |
+| บ่าย | [04 Specialty agent](Lessons/04-specialty-agents/README.md) | [Workshop 2](Lessons/04-specialty-agents/LAB.md) |
+| บ่าย | [05 Sequential pipeline](Lessons/05-sequential-orchestration/README.md) | [Workshop 3](Lessons/05-sequential-orchestration/LAB.md) — เว็บโชว์ยอดจริง |
+| บ่าย | [06 แก้สามปม + QA handoff](Lessons/06-fix-and-qa/README.md) | [Workshop 4](Lessons/06-fix-and-qa/LAB.md) — gate 6/6 |
+| บ่าย | [07 Skills](Lessons/07-skills/README.md) | [Workshop 5](Lessons/07-skills/LAB.md) — release-manager |
 
 วันที่ 2 — งานทีละขั้น quality gate และ capstone
 
 | เวลา | โมดูล | แล็บ |
 |---|---|---|
-| เช้า | [08 MCP](day-2/08-mcp/README.md) | [Workshop 6](day-2/08-mcp/LAB.md) guided demo |
-| เช้า | [09 Guardrails และ hooks](day-2/09-guardrails-hooks/README.md) | [Workshop 7](day-2/09-guardrails-hooks/LAB.md) — gate ครบ + cost gate |
-| เช้า | [10 Context และ memory](day-2/10-context-memory/README.md) | [แล็บสั้น](day-2/10-context-memory/LAB.md) |
-| บ่าย | [11 Feature ของคุณ](day-2/11-feature/README.md) | [Workshop 8](day-2/11-feature/LAB.md) — vibe code |
-| บ่าย | [12 Capstone 6 บทบาท](day-2/12-capstone/README.md) | [Workshop 9](day-2/12-capstone/LAB.md) |
-| บ่าย | [13 Deploy และ preflight](day-2/13-deploy-preflight/README.md) | [แล็บส่งงาน](day-2/13-deploy-preflight/LAB.md) |
+| เช้า | [08 MCP](Lessons/08-mcp/README.md) | [Workshop 6](Lessons/08-mcp/LAB.md) guided demo |
+| เช้า | [09 Guardrails และ hooks](Lessons/09-guardrails-hooks/README.md) | [Workshop 7](Lessons/09-guardrails-hooks/LAB.md) — gate ครบ + cost gate |
+| เช้า | [10 Context และ memory](Lessons/10-context-memory/README.md) | [แล็บสั้น](Lessons/10-context-memory/LAB.md) |
+| บ่าย | [11 Feature ของคุณ](Lessons/11-feature/README.md) | [Workshop 8](Lessons/11-feature/LAB.md) — vibe code |
+| บ่าย | [12 Capstone 6 บทบาท](Lessons/12-capstone/README.md) | [Workshop 9](Lessons/12-capstone/LAB.md) |
+| บ่าย | [13 Deploy และ preflight](Lessons/13-deploy-preflight/README.md) | [แล็บส่งงาน](Lessons/13-deploy-preflight/LAB.md) |
 
 
 ## สอง repo ของคอร์ส
@@ -114,7 +114,7 @@ node scripts/check-solutions.mjs
 | Repo | ใช้ทำอะไร |
 |---|---|
 | **workshop repo** (`C:\dev\multi-agent-workshop`) | แอป Registry Insight ข้อมูลจดทะเบียนยังดิบ quality gate ต้องไม่ผ่านตอนเริ่ม — รัน `claude` ที่นี่ |
-| `day-1/` `day-2/` | บทเรียนและแล็บ |
+| `Lessons/` | บทเรียนและแล็บ (M1–M13) |
 | `solutions/w1` … `w9` | ผลอ้างอิงของแต่ละแล็บ พร้อม `check.js` |
 | `reference/` | ชีต frontmatter, คู่ prompt, failure modes, อภิธาน |
 | `SETUP.md` | ติดตั้งเครื่องและ clone สอง repo |

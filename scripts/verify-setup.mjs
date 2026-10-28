@@ -111,10 +111,10 @@ async function commandVersion(bin, args) {
 }
 
 async function main() {
-  if (existsSync(path.join(repo, 'day-1')) && existsSync(path.join(repo, 'day-2'))) {
-    note('course repo has day-1/ and day-2/ lesson folders');
+  if (existsSync(path.join(repo, 'Lessons'))) {
+    note('course repo has Lessons/ lesson folders');
   } else {
-    bad('course repo is missing day-1/ or day-2/ — re-clone the course repo');
+    bad('course repo is missing Lessons/ — re-clone the course repo');
   }
 
   if (existsSync(path.join(workshop, 'server.js')) && existsSync(path.join(workshop, 'package.json'))) {
