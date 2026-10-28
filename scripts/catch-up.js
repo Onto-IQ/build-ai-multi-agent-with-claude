@@ -15,7 +15,7 @@ const known = new Set(['w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9']);
 const root = path.join(__dirname, '..');
 const dest = process.env.WORKSHOP_DIR
   ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'D:\\dev\\multi-agent-workshop';
+  : 'C:\\dev\\multi-agent-workshop';
 
 if (!known.has(workshop)) {
   console.error('usage: node scripts/catch-up.js <w1|...|w9>');

@@ -46,11 +46,11 @@
 ### 8.5 เหลือทำ — Phase F เท่านั้น (§4.6)
 - เด็คอยู่ที่ repo root: `Build-AI-Multi-Agent-Claude-Code-9Expert-v2_updated.pptx`
 - **ระวัง: walkthrough รอบนี้เป็น headless ไม่มีภาพ TUI เลย** — ภาพประกอบเด็คต้องเก็บใหม่จาก: หน้าแดชบอร์ด (มี feature จังหวัด) บน walkthrough-wip, output ของ `npm run gate`, ไฟล์ docs (FEATURE-PLAN/QA-REPORT/EXECUTIVE-SUMMARY) หรือถ่าย TUI จริงตอนสอน
-- caption path ทั้งเด็คยังเป็น `D:\dev\multi-agent-workshop` → แก้เป็น path จริงเครื่องสอน (เครื่องนี้ C:\dev\multi-agent-workshop)
+- caption path ในเด็ค Phase F ใช้ `C:\dev\multi-agent-workshop` ให้ตรงกับค่าเริ่มต้น `WORKSHOP_DIR` ใน course repo
 
 ## 1. สถาปัตยกรรมที่ตกลงไว้ (ห้ามถามซ้ำ)
 
-- **สอง repo**: course repo (บทเรียน+เฉลย+สคริปต์ตรวจ ไม่มีโค้ดแอป) ↔ workshop repo `D:\dev\multi-agent-workshop` (แอป Registry Insight — ผู้เรียนรัน claude ที่นี่)
+- **สอง repo**: course repo (บทเรียน+เฉลย+สคริปต์ตรวจ ไม่มีโค้ดแอป) ↔ workshop repo `C:\dev\multi-agent-workshop` (แอป Registry Insight — ผู้เรียนรัน claude ที่นี่)
 - **ข้อมูลจริง**: นิติบุคคลจดทะเบียนใหม่ พ.ศ. 2558 (กรมพัฒนาธุรกิจการค้า) จาก data.go.th — 16,781 แถวดิบ → `data/raw/dbd-2558.parquet` + `data/warehouse.duckdb` + ตารางแบน `data/dataset.csv` (ดิบ)
 - **ตัวเลขอ้างอิงหลังสะอาด**: **16,772 กิจการ / ทุนรวม 45,341,868,784 บาท** · ภาคนำ กลาง (31,680,888,983) · จังหวัดนำ กรุงเทพมหานคร (23,529,709,183) · แถวดิบ 16,781 = สะอาด 16,772 + หัวตาราง 9
 - **MCP จริง**: `.mcp.json` ระดับโปรเจกต์ใน workshop repo → `uvx --python 3.12 mcp-server-motherduck --db-path data/warehouse.duckdb` (read-only by default · view `businesses_raw` ชี้ parquet)
@@ -63,7 +63,7 @@
 ## 2. สิ่งที่ทำเสร็จแล้ว (push แล้วทั้งสอง repo)
 
 ### course repo — `Onto-IQ/build-ai-multi-agent-with-claude` @ `92a0514` (origin/main)
-- [x] Two-repo split ครบ: ลบโค้ดแอปออก · verify-setup/catch-up/check-solutions retarget `WORKSHOP_DIR` (default `D:\dev\multi-agent-workshop`)
+- [x] Two-repo split ครบ: ลบโค้ดแอปออก · verify-setup/catch-up/check-solutions retarget `WORKSHOP_DIR` (default `C:\dev\multi-agent-workshop`)
 - [x] verify-setup ตรวจ 6 อย่าง: day-1/day-2 · workshop+parquet+.mcp.json · node · git · **duckdb** · **uvx** · port · boot · gate exit 2 — **PASSED**
 - [x] renumber M1–M13 + W1–W9 · README/SETUP/instructor อัปเดต two-repo + ข้อมูลจริงทั้งหมด
 - [x] Lab 0 มีขั้น clone workshop + ตาราง "สองโลก" · M2 เพิ่มขั้น `/init` onboard · SETUP.md เพิ่มติดตั้ง DuckDB CLI + uv
@@ -93,12 +93,12 @@
 
 ### 4.1 เตรียมเครื่องใหม่
 1. ติดตั้งตามตารางข้างบน (Node, Git, Claude Code + login, DuckDB CLI, uv, PowerShell)
-2. `git clone https://github.com/Onto-IQ/build-ai-multi-agent-with-claude` (course) และ `git clone https://github.com/Onto-IQ/multi-agent-workshop D:\dev\multi-agent-workshop`
+2. `git clone https://github.com/Onto-IQ/build-ai-multi-agent-with-claude` (course) และ `git clone https://github.com/Onto-IQ/multi-agent-workshop C:\dev\multi-agent-workshop`
 3. คัดลอก `%TEMP%\tui2\` จากเครื่องเดิมมาไว้ `%TEMP%\tui2\` เครื่องใหม่ (ลบ *.png ได้)
 4. ตรวจ: ที่ course repo รัน `node scripts/verify-setup.mjs --skip-claude` ต้องผ่านทุกบรรทัด · ที่ workshop รัน `npm run gate` ต้อง **แดง 0/6** บน main
 
 ### 4.2 Resume walkthrough (อยู่ที่ walkthrough-wip)
-1. `cd D:\dev\multi-agent-workshop && git checkout walkthrough-wip`
+1. `cd C:\dev\multi-agent-workshop && git checkout walkthrough-wip`
 2. เปิด TUI harness: `powershell -File $env:TEMP\tui2\tui2-run.ps1 -Action launch` → **กฎเหล็ก: ต้องมีหน้าต่าง claude เดียว** (เคยเจอ 2 หน้าต่างทำ focus/paste พลาด — kill ทิ้งเริ่มใหม่ และ lib มี guard FOCUS-FAILED แล้ว)
 3. shift+tab จน "manual mode on" ก่อนส่งทุก prompt
 4. เช็ค `.claude/agents/` มี 5 ตัว (data-researcher, planner, developer, qa, release-manager) — release-manager ถูกสร้างไว้แล้วใน branch นี้ แต่**ยังไม่ได้ invoke** (ขั้นแรกของ 4.3)
@@ -118,14 +118,14 @@
 ### 4.4 Isolation check (หลังจบแล็บทุกตัว)
 ```bash
 grep -ril "EXPLORATION-REPORT เขียน\|solutions/\|day-1/\|day-2/\|LAB\.md\|workshop-coach" \
-  "$USERPROFILE/.claude/projects/D--dev-multi-agent-workshop/" | head
+  "$USERPROFILE/.claude/projects/C--dev-multi-agent-workshop/" | head
 ```
 - ผลที่ต้องได้: **ไม่มีไฟล์ transcript ของ workshop ตรงเงื่อนไข** (เอเจนต์ต้องไม่เคยเห็นบทเรียน/เฉลย) — ถ้าเจอ ให้ดูว่าเป็นคำจาก prompt ของผู้เรียนเองหรือรั่วจริง แล้วบันทึกหลักฐาน
 - บันทึกเวลาเครื่องทุกแล็บลงตารางข้างบน (คอลัมน์ "เวลาเครื่อง") แล้วอัปเดต LAB.md ตามที่วัดจริง
 
 ### 4.5 Restore workshop กลับ starter (จบ walkthrough เท่านั้น)
 ```bash
-cd D:\dev\multi-agent-workshop
+cd C:\dev\multi-agent-workshop
 git checkout main
 git checkout walkthrough-wip -- .   # ห้าม! ใช้คำสั่งด้านล่างแทน
 ```
@@ -139,7 +139,7 @@ npm run gate              # ต้องแดง 0/6 อีกครั้ง
 
 ### 4.6 Phase F — Deck (หลัง walkthrough จบ)
 - เรียง M1–M13 + W1–W9 ตามผังโมดูลใหม่ · สไลด์ใหม่ W3 (lead split) / W4 (3 findings) / W5 / W7 / W8 + หน้า agents 6 ตัว + หน้า two-repo + หน้าข้อมูลจริง data.go.th
-- caption path → workshop repo (`D:\dev\multi-agent-workshop`) ทุกที่
+- caption path → workshop repo (`C:\dev\multi-agent-workshop`) ทุกที่
 - ภาพจาก walkthrough ใหม่ทั้งหมด (ภาพเด็คเก่าเป็น path เก่า Sales Insight — ทิ้ง)
 - QA render: LibreOffice→PDF→pymupdf + visual-judge agent ก่อนปิดงาน
 
@@ -193,5 +193,5 @@ powershell -File $env:TEMP\tui2\tui2-run.ps1 -Action restart -Arg2 <tag>
 powershell -File $env:TEMP\tui2\tui2-run.ps1 -Action shot -Arg1 <name.png>
 
 # กลับสู่ starter (จบ walkthrough)
-cd D:\dev\multi-agent-workshop && git checkout main && git clean -fd docs .claude scripts
+cd C:\dev\multi-agent-workshop && git checkout main && git clean -fd docs .claude scripts
 ```

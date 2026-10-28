@@ -8,7 +8,7 @@
 
 ## Steps / ขั้นตอน
 
-1. ใน TUI ที่ workshop repo `D:\dev\multi-agent-workshop` ให้เพิ่ม `memory: project` ใน frontmatter ของ data-researcher แล้วกดอนุญาต
+1. ใน TUI ที่ workshop repo `C:\dev\multi-agent-workshop` ให้เพิ่ม `memory: project` ใน frontmatter ของ data-researcher แล้วกดอนุญาต
 
 ผลที่คาดหวัง: เปิดไฟล์แล้วยังเป็น tools อ่านอย่างเดียว
 
@@ -47,7 +47,7 @@ Ask the data-researcher subagent to remember this project note: Registry Insight
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
 | แก้ frontmatter ไม่ได้ใน headless | `.claude/**` ถูกปฏิเสธ | ใช้ TUI |
-| เซสชันใหม่ไม่จำ | ฟิลด์ไม่ถูกโหลด หรือคนละโฟลเดอร์ | เปิดจาก workshop repo (`D:\dev\multi-agent-workshop`) แล้วอ่านไฟล์เอเจนต์ |
+| เซสชันใหม่ไม่จำ | ฟิลด์ไม่ถูกโหลด หรือคนละโฟลเดอร์ | เปิดจาก workshop repo (`C:\dev\multi-agent-workshop`) แล้วอ่านไฟล์เอเจนต์ |
 | หมดเทิร์น | `--max-turns` ต่ำ | อยู่ใน TUI |
 | เอเจนต์เสนอ Express อยู่ดี | งานความจำไม่เกิด | จดไว้ เป็นของที่ผู้สอนตามต่อ ไม่บล็อก Workshop 7 |
 

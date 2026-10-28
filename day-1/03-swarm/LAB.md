@@ -8,7 +8,7 @@
 
 ## Steps / ขั้นตอน
 
-1. เข้า workshop repo `D:\dev\multi-agent-workshop` แล้วเปิด TUI
+1. เข้า workshop repo `C:\dev\multi-agent-workshop` แล้วเปิด TUI
 
 ```bash
 claude
@@ -90,7 +90,7 @@ npm run gate
 | ไฟล์ถูกแก้ | ไม่มีประโยคห้ามแก้ | `git checkout -- .` ในแอปถ้าคุณยังไม่ต้องการของนั้น แล้วสั่งใหม่ |
 | `claude -p` ไม่ยอมรัน quality gate | headless ปิด Bash เป็นค่าเริ่มต้น | รัน `npm run gate` เองในเทอร์มินัลที่ workshop repo |
 | หมดเทิร์น | `--max-turns` ต่ำไป | อยู่ใน TUI หรือใส่ `--max-turns 20` เฉพาะตอน headless |
-| สำรวจผิดโฟลเดอร์ | เปิด `claude` นอก workshop repo | ออกแล้วเปิดใหม่ที่ `D:\dev\multi-agent-workshop` |
+| สำรวจผิดโฟลเดอร์ | เปิด `claude` นอก workshop repo | ออกแล้วเปิดใหม่ที่ `C:\dev\multi-agent-workshop` |
 | port busy ตอนรัน quality gate | เซิร์ฟเวอร์ค้าง | ปิดก่อน หรือตั้ง `PORT` |
 
 ## 🆘 Behind? Catch up

@@ -13,7 +13,7 @@
 | Repo | มีอะไร | คุณทำอะไรที่นี่ |
 |---|---|---|
 | **course repo** (โฟลเดอร์บทเรียนที่ clone มา) | บทเรียน แล็บ สคริปต์ตรวจ | อ่านแล็บ รัน `verify-setup` / `catch-up` |
-| **workshop repo** (`D:\dev\multi-agent-workshop`) | แอป Registry Insight ล้วน | รัน `claude` ตลอดคอร์ส ผลงานทุกชิ้น (เอกสาร handoff, agents, โค้ดที่แก้) ปรากฏที่นี่ |
+| **workshop repo** (`C:\dev\multi-agent-workshop`) | แอป Registry Insight ล้วน | รัน `claude` ตลอดคอร์ส ผลงานทุกชิ้น (เอกสาร handoff, agents, โค้ดที่แก้) ปรากฏที่นี่ |
 
 ที่ course repo จงใจ**ไม่มีโค้ดแอป** — เมื่อคุณรัน claude ที่ workshop repo agent จะเห็นเฉพาะแอป ไม่เห็นเฉลยหรือเนื้อหาบทเรียน
 
@@ -35,12 +35,12 @@ echo $env:ANTHROPIC_API_KEY
 2. clone workshop repo — ใช้ URL ที่ผู้สอนแจ้ง
 
 ```powershell
-git clone <URL-workshop-repo> D:\dev\multi-agent-workshop
+git clone <URL-workshop-repo> C:\dev\multi-agent-workshop
 ```
 
-ผลที่คาดหวัง: ได้โฟลเดอร์ `D:\dev\multi-agent-workshop` ที่มี `package.json`, `server.js`, `data/`, `web/`
+ผลที่คาดหวัง: ได้โฟลเดอร์ `C:\dev\multi-agent-workshop` ที่มี `package.json`, `server.js`, `data/`, `web/`
 
-> 📚 **รู้เพิ่ม:** ทุกคำสั่งในแล็บถัด ๆ ไปเขียน path ตายตัวไว้ที่ `D:\dev\multi-agent-workshop` เพื่อให้ copy-paste ได้ทั้งคอร์ส ถ้าคุณเก็บแอปไว้ที่อื่น ให้ตั้ง `$env:WORKSHOP_DIR="path ของคุณ"` ทุกครั้งก่อนรันสคริปต์ตรวจ (แนะนำ path ตายตัว — ง่ายกว่า)
+> 📚 **รู้เพิ่ม:** ทุกคำสั่งในแล็บถัด ๆ ไปเขียน path ตายตัวไว้ที่ `C:\dev\multi-agent-workshop` เพื่อให้ copy-paste ได้ทั้งคอร์ส ถ้าคุณเก็บแอปไว้ที่อื่น ให้ตั้ง `$env:WORKSHOP_DIR="path ของคุณ"` ทุกครั้งก่อนรันสคริปต์ตรวจ (แนะนำ path ตายตัว — ง่ายกว่า)
 
 > 📚 **clone หรือ ZIP (course repo):** คำสั่ง `git status` / `git diff` ในแล็บต้องอาศัยโฟลเดอร์ `.git` ซึ่งมีเฉพาะเมื่อ `git clone` — ถ้าคุณ download ZIP ของ course repo แทน ให้ทำ snapshot เริ่มต้นหนึ่งครั้งที่ course repo: `git init` → `git add -A` → `git commit -m "start from zip"` แล้วทุกแล็บเทียบ "แตะไฟล์บทเรียนหรือยัง" กับจุดเริ่มนี้ได้ทั้งคอร์ส (แนะนำ clone มากกว่า — อัปเดตคอร์สด้วย `git pull` ได้)
 
@@ -65,7 +65,7 @@ node scripts/verify-setup.mjs
 5. เปิดแอปคนละเทอร์มินัล — **ใน workshop project**
 
 ```powershell
-cd D:\dev\multi-agent-workshop
+cd C:\dev\multi-agent-workshop
 npm start
 ```
 
@@ -87,7 +87,7 @@ npm run gate
 
 - [ ] `claude --version` ≥ 2.1.296
 - [ ] `echo $env:ANTHROPIC_API_KEY` ว่าง
-- [ ] `D:\dev\multi-agent-workshop` มี `package.json` และ `server.js`
+- [ ] `C:\dev\multi-agent-workshop` มี `package.json` และ `server.js`
 - [ ] `node scripts/verify-setup.mjs` ผ่าน (รันที่ course repo)
 - [ ] หน้า `http://127.0.0.1:3000` เปิดได้และปิดเซิร์ฟเวอร์แล้ว
 - [ ] quality gate เป็น exit 2 โดยไม่ได้แก้ไฟล์

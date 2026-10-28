@@ -38,7 +38,7 @@
 
 ## ลงมือทำตามลำดับ
 
-ทุกขั้นพิมพ์ตามได้เลย — ขั้นตรวจเครื่องทำจาก **course repo** (repo บทเรียนนี้) ส่วนคำสั่งแอป `npm start` / `npm run gate` ทำจาก **workshop repo** `D:\dev\multi-agent-workshop`:
+ทุกขั้นพิมพ์ตามได้เลย — ขั้นตรวจเครื่องทำจาก **course repo** (repo บทเรียนนี้) ส่วนคำสั่งแอป `npm start` / `npm run gate` ทำจาก **workshop repo** `C:\dev\multi-agent-workshop`:
 
 1. ตรวจเวอร์ชัน:
 
@@ -56,7 +56,7 @@ echo $env:ANTHROPIC_API_KEY
 
    ควรได้บรรทัดว่าง — ถ้าไม่ว่าง ให้ปิดค่านี้ก่อนเริ่มแล็บอื่น
 
-3. เปิด TUI จาก workshop repo `D:\dev\multi-agent-workshop` แล้ววาง prompt จากหัวข้อถัดไป:
+3. เปิด TUI จาก workshop repo `C:\dev\multi-agent-workshop` แล้ววาง prompt จากหัวข้อถัดไป:
 
 ```powershell
 claude

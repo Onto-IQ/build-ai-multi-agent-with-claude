@@ -15,7 +15,7 @@ const path = require('path');
 // The app lives in its own workshop repo (override with WORKSHOP_DIR).
 const workshop = process.env.WORKSHOP_DIR
   ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'D:\\dev\\multi-agent-workshop';
+  : 'C:\\dev\\multi-agent-workshop';
 const dropIn = path.join(__dirname, 'drop-in');
 
 function fail(message) {

@@ -13,7 +13,7 @@ const path = require('path');
 
 const workshop = process.env.WORKSHOP_DIR
   ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'D:\\dev\\multi-agent-workshop';
+  : 'C:\\dev\\multi-agent-workshop';
 const dropIn = path.join(__dirname, 'drop-in');
 
 function fail(message) {

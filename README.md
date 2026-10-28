@@ -47,7 +47,7 @@
 คอร์สนี้แยก "บทเรียน" ออกจาก "แอป" เป็นสอง repo:
 
 - **course repo** (repo นี้) — บทเรียน แล็บ สคริปต์ตรวจ และเฉลยอ้างอิง ไม่มีโค้ดแอป
-- **workshop repo** (`D:\dev\multi-agent-workshop`) — แอป Registry Insight ล้วน คุณรัน `claude` จากโฟลเดอร์นี้ตลอดสองวัน ผลงานทุกชิ้น (เอกสาร handoff, agents, โค้ดที่แก้) ปรากฏที่นี่
+- **workshop repo** (`C:\dev\multi-agent-workshop`) — แอป Registry Insight ล้วน คุณรัน `claude` จากโฟลเดอร์นี้ตลอดสองวัน ผลงานทุกชิ้น (เอกสาร handoff, agents, โค้ดที่แก้) ปรากฏที่นี่
 
 การแยกนี้ทำให้ agent ของคุณเห็นเฉพาะแอป — ไม่เห็นเฉลยหรือเนื้อหาบทเรียน สั่งงานได้เต็มที่โดยไม่รั่วคำตอบ
 
@@ -77,7 +77,7 @@ node scripts/verify-setup.mjs
 เปิดแอป — ใน workshop repo:
 
 ```bash
-cd D:/dev/multi-agent-workshop
+cd C:/dev/multi-agent-workshop
 npm start
 ```
 
@@ -113,7 +113,7 @@ node scripts/check-solutions.mjs
 
 | Repo | ใช้ทำอะไร |
 |---|---|
-| **workshop repo** (`D:\dev\multi-agent-workshop`) | แอป Registry Insight ข้อมูลจดทะเบียนยังดิบ quality gate ต้องไม่ผ่านตอนเริ่ม — รัน `claude` ที่นี่ |
+| **workshop repo** (`C:\dev\multi-agent-workshop`) | แอป Registry Insight ข้อมูลจดทะเบียนยังดิบ quality gate ต้องไม่ผ่านตอนเริ่ม — รัน `claude` ที่นี่ |
 | `day-1/` `day-2/` | บทเรียนและแล็บ |
 | `solutions/w1` … `w9` | ผลอ้างอิงของแต่ละแล็บ พร้อม `check.js` |
 | `reference/` | ชีต frontmatter, คู่ prompt, failure modes, อภิธาน |
@@ -134,4 +134,4 @@ node scripts/check-solutions.mjs
 
 ## วิธีใช้ในห้อง
 
-เปิด Claude Code จาก **workshop repo** (`D:\dev\multi-agent-workshop`) ด้วยคำสั่ง `claude` แล็บออกแบบมาสำหรับโหมดโต้ตอบนี้ ใช้ `claude -p` เฉพาะขั้นที่แล็บเขียนธงและธงสิทธิ์ไว้ให้ครบ การเขียนไฟล์ใต้ `.claude/` ในโหมด headless ถูกปฏิเสธได้แม้ใส่ `--allowedTools` และ Bash ในโหมด headless ไม่ถูกเปิดให้เอง
+เปิด Claude Code จาก **workshop repo** (`C:\dev\multi-agent-workshop`) ด้วยคำสั่ง `claude` แล็บออกแบบมาสำหรับโหมดโต้ตอบนี้ ใช้ `claude -p` เฉพาะขั้นที่แล็บเขียนธงและธงสิทธิ์ไว้ให้ครบ การเขียนไฟล์ใต้ `.claude/` ในโหมด headless ถูกปฏิเสธได้แม้ใส่ `--allowedTools` และ Bash ในโหมด headless ไม่ถูกเปิดให้เอง

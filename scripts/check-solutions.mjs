@@ -9,7 +9,7 @@ const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // The app lives in its own workshop repo; the starter gate runs there.
 const workshop = process.env.WORKSHOP_DIR
   ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'D:\\dev\\multi-agent-workshop';
+  : 'C:\\dev\\multi-agent-workshop';
 const workshops = ['w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9'];
 
 function freePort() {

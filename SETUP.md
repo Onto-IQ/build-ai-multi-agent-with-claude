@@ -54,13 +54,13 @@ unset ANTHROPIC_API_KEY
 
 ```text
 <โฟลเดอร์ที่ clone course repo>   ← บทเรียน + สคริปต์ตรวจ (repo นี้)
-D:\dev\multi-agent-workshop       ← แอป Registry Insight (ข้อมูลจริงจาก data.go.th) — ที่ที่คุณรัน claude ตลอดคอร์ส
+C:\dev\multi-agent-workshop       ← แอป Registry Insight (ข้อมูลจริงจาก data.go.th) — ที่ที่คุณรัน claude ตลอดคอร์ส
 ```
 
 ```bash
 git clone <url-ของ-course-repo>
 cd build-ai-multi-agent-with-claude
-git clone <url-ของ-workshop-repo> D:/dev/multi-agent-workshop
+git clone <url-ของ-workshop-repo> C:/dev/multi-agent-workshop
 node scripts/verify-setup.mjs
 ```
 
@@ -76,7 +76,7 @@ git commit -m "start from zip"
 
    แนะนำ `git clone` มากกว่า เพราะอัปเดตของคอร์สภายหลังด้วย `git pull` ได้
 
-> 📚 **เก็บ workshop repo ไว้ที่อื่นได้:** ทุกสคริปต์ตรวจใช้ path เริ่มต้น `D:\dev\multi-agent-workshop` ถ้าคุณเก็บไว้ที่อื่น ให้ตั้ง `export WORKSHOP_DIR="/d/path/ของคุณ"` (Git Bash) หรือ `$env:WORKSHOP_DIR="D:\path\ของคุณ"` (PowerShell) ก่อนรันสคริปต์ทุกครั้ง — แนะนำ path เริ่มต้น เพราะคำสั่งในแล็บ copy-paste ได้ทั้งคอร์ส
+> 📚 **เก็บ workshop repo ไว้ที่อื่นได้:** ทุกสคริปต์ตรวจใช้ path เริ่มต้น `C:\dev\multi-agent-workshop` ถ้าคุณเก็บไว้ที่อื่น ให้ตั้ง `export WORKSHOP_DIR="/c/path/ของคุณ"` (Git Bash) หรือ `$env:WORKSHOP_DIR="C:\path\ของคุณ"` (PowerShell) ก่อนรันสคริปต์ทุกครั้ง — แนะนำ path เริ่มต้น เพราะคำสั่งในแล็บ copy-paste ได้ทั้งคอร์ส
 
 ถ้ายังไม่ล็อกอิน Claude:
 
@@ -97,7 +97,7 @@ claude -p "Reply with exactly: CLAUDE-OK"
 ## 4. เปิดแอป — ใน workshop repo
 
 ```bash
-cd D:/dev/multi-agent-workshop
+cd C:/dev/multi-agent-workshop
 npm start
 ```
 

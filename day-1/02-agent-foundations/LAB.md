@@ -8,7 +8,7 @@
 
 ## Steps / ขั้นตอน
 
-1. เปิดเทอร์มินัลแล้วเข้า workshop repo `D:\dev\multi-agent-workshop` — นี่คือครั้งแรกที่คุณแตะ claude (หลังตรวจเครื่องจบแล้ว)
+1. เปิดเทอร์มินัลแล้วเข้า workshop repo `C:\dev\multi-agent-workshop` — นี่คือครั้งแรกที่คุณแตะ claude (หลังตรวจเครื่องจบแล้ว)
 
 ```bash
 claude
@@ -56,7 +56,7 @@ For the remaining work, should we run it as a swarm or sequentially? Why?
 
 ## ✅ Checkpoint
 
-- [ ] เปิด `claude` จาก workshop repo (`D:\dev\multi-agent-workshop`) ไม่ใช่จากรากดิสก์
+- [ ] เปิด `claude` จาก workshop repo (`C:\dev\multi-agent-workshop`) ไม่ใช่จากรากดิสก์
 - [ ] รัน `/init` แล้ว `CLAUDE.md` ยังคงกติกาเดิมครบ
 - [ ] คำตอบชี้ไฟล์จริงและสั้นกว่า 80 คำ
 - [ ] พูดได้ว่าทำไมงานทำความสะอาดข้อมูลไม่ควรขนานกับการออกแบบ

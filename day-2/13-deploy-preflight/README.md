@@ -18,7 +18,7 @@
 
 | # | ข้อ | เหตุผล |
 |---|---|---|
-| 1 | เปิด Claude จาก workshop repo (`D:\dev\multi-agent-workshop`) | ขอบเขตของเอเจนต์ |
+| 1 | เปิด Claude จาก workshop repo (`C:\dev\multi-agent-workshop`) | ขอบเขตของเอเจนต์ |
 | 2 | quality gate exit 0 | ของเสียไม่ขึ้นของจริง |
 | 3 | ไม่มี `sk-` ใน `/api/health` | ไม่ส่งค่าตัวอย่างออกไป |
 | 4 | `ANTHROPIC_API_KEY` ว่าง | ไม่หลุดไปคิดเงินรายครั้ง |

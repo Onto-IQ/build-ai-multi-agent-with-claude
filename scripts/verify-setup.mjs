@@ -14,7 +14,7 @@ const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // The app lives in its own workshop repo; the course repo only ships lessons.
 const workshop = process.env.WORKSHOP_DIR
   ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'D:\\dev\\multi-agent-workshop';
+  : 'C:\\dev\\multi-agent-workshop';
 const skipClaude = process.argv.includes('--skip-claude');
 const skipPrompt = skipClaude || process.argv.includes('--skip-claude-prompt');
 
