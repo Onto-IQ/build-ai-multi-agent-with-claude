@@ -13,14 +13,16 @@
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the data-duckdb MCP execute_query tool to run: SELECT month, count(*) AS companies, sum(CAST(replace(capital_raw, ',', '') AS BIGINT)) AS capital_thb FROM businesses_raw GROUP BY month ORDER BY month. Report the table. Do not edit files.
+Use the data-duckdb MCP execute_query tool to run: SELECT month, count(*) AS companies, sum(TRY_CAST(replace(replace(capital_raw, ',', ''), ' ', '') AS BIGINT)) AS capital_thb FROM businesses_raw GROUP BY month ORDER BY month. Report the table. Do not edit files.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ใช้ tool execute_query ของ MCP data-duckdb รัน: SELECT month, count(*) AS companies, sum(CAST(replace(capital_raw, ',', '') AS BIGINT)) AS capital_thb FROM businesses_raw GROUP BY month ORDER BY month แล้วรายงานตาราง ห้ามแก้ไฟล์
+ใช้ tool execute_query ของ MCP data-duckdb รัน: SELECT month, count(*) AS companies, sum(TRY_CAST(replace(replace(capital_raw, ',', ''), ' ', '') AS BIGINT)) AS capital_thb FROM businesses_raw GROUP BY month ORDER BY month แล้วรายงานตาราง ห้ามแก้ไฟล์
 ```
+
+> 📚 **รู้เพิ่ม:** ใช้ `TRY_CAST` ไม่ใช่ `CAST` เพราะข้อมูลดิบมีแถวหัวตาราง 9 แถวปนอยู่ — `CAST` ล้มทั้ง query ทันทีที่เจอค่าที่แปลงไม่ได้ ส่วน `TRY_CAST` ให้ NULL แล้วข้าม (เลขเดือนที่ได้คือยอดจริงของแถวข้อมูล)
 
 ผลที่คาดหวัง: ตารางรายเดือนจากข้อมูลจริง — ม.ค. 18,620,752,814 · ก.พ. 14,815,712,210 · มิ.ย. 11,905,403,760 บาท
 

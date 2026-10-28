@@ -47,13 +47,13 @@ Use the planner subagent. We are adding a new feature: <FEATURE>. Read docs/PROD
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the developer subagent. Implement docs/FEATURE-PLAN.md exactly. Node only, no dependencies. Keep GET /api/summary and /api/breakdown contracts unchanged. After coding, run npm run gate yourself and report the exit code.
+Use the developer subagent. Implement docs/FEATURE-PLAN.md exactly. Node only, no dependencies. Keep GET /api/summary, /api/health and /api/notes contracts unchanged. After coding, run npm run gate yourself and report the exit code.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent developer ทำตาม docs/FEATURE-PLAN.md เป๊ะ Node ล้วน ไม่มี dependency คง contract ของ GET /api/summary กับ /api/breakdown เดิมไว้ หลังเขียนโค้ดเสร็จ รัน npm run gate เองแล้วรายงาน exit code
+ให้ subagent developer ทำตาม docs/FEATURE-PLAN.md เป๊ะ Node ล้วน ไม่มี dependency คง contract ของ GET /api/summary, /api/health และ /api/notes เดิมไว้ หลังเขียนโค้ดเสร็จ รัน npm run gate เองแล้วรายงาน exit code
 ```
 
 📦 **Handoff ที่ 2:** แผน → โค้ด + ผล gate ที่ developer รันเอง
