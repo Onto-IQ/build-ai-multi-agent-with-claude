@@ -1,10 +1,11 @@
-# Workshop 2 — สร้าง data-researcher พร้อม MCP จริง
+# Workshop 2 — สร้าง data-researcher (อ่านอย่างเดียว)
 
-> ⏱ machine ~8 นาที · Start state: หลัง Workshop 1 ยังไม่มี `.claude/agents/data-researcher.md`
+> ⏱ machine ~8 นาที · Start state: หลัง Workshop 1 ยังไม่มี `.claude/agents/data-researcher.md`  
+> หมายเหตุ: **ยังไม่แตะ MCP** ในวันแรก — ต่อ MCP ใน Workshop 6
 
 ## Goal / เป้าหมาย
 
-มีไฟล์เอเจนต์ที่ Claude เขียนให้ frontmatter ครบ ผูก MCP `data-duckdb` ไว้ใน frontmatter และเรียกแล้วดึงยอดจริงจาก tool ได้ พร้อมอธิบาย `POST /api/notes` พร้อมเลขบรรทัด
+มีไฟล์เอเจนต์ที่ Claude เขียนให้ frontmatter ครบ เรียกแล้วอธิบาย `POST /api/notes` พร้อมหลักฐาน `server.js:บรรทัด` โดยไม่แก้ไฟล์แอป
 
 ## Steps / ขั้นตอน
 
@@ -38,56 +39,36 @@ frontmatter ต้องตรงนี้: name เป็น data-researcher; d
 
 > 📚 **รู้เพิ่ม:** ทำไมระบบบังคับให้กดอนุญาตไฟล์ `.claude/` — เพราะไฟล์ในนี้คือคำสั่งประจำตัวที่เอเจนต์จะถือปฏิบัติ ถ้าให้เขียนอัตโนมัติทั้งโฟลเดอร์ ใครบางคนจะปลูกคำสั่งผ่านไฟล์ธรรมดาเข้ามาได้ จึงตั้งใจให้ต้องมีคนกดทุกครั้ง
 
-3. เปิดไฟล์ `.mcp.json` ที่ราก workshop repo ด้วยตา — starter แนบ MCP ระดับโปรเจกต์มาให้แล้ว: **DuckDB** (`mcp-server-motherduck` ตัว official ที่กำลังนิยม) แบบ read-only โดยไม่มีธง `--read-write` ชี้ไฟล์ `data/warehouse.duckdb` ที่มี view `businesses_raw` ที่ชี้ `data/raw/dbd-2558.parquet` ข้อมูลจริง 16,781 แถว
+3. **ปิด TUI แล้วเปิด `claude` ใหม่** — เอเจนต์ใหม่ถูกโหลดตอนเซสชันเริ่มเท่านั้น
 
-> 📚 **รู้เพิ่ม:** MCP แบบ project scope ประกาศใน `.mcp.json` ของโปรเจกต์ — ทั้งทีมได้คอนฟิกเดียวกันทันทีที่ clone ไม่ต้อง `claude mcp add` ใครคนใดคนหนึ่ง ครั้งแรกที่เรียกใช้ Claude Code จะถามอนุมัติเซิร์ฟเวอร์จากไฟล์นี้ กดอนุญาตเพื่อให้ทีมทั้งห้องใช้ชุดเดียวกัน
-
-4. เปิด TUI ใหม่ แล้วสั่งผูก MCP เข้ากับเอเจนต์ (เลือกอย่างหนึ่ง) แล้วกดอนุญาต:
+4. สั่งใช้เอเจนต์ (เลือกอย่างหนึ่ง):
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Add mcpServers: data-duckdb to the frontmatter of .claude/agents/data-researcher.md. Keep the tools line exactly as it is.
+Use the data-researcher subagent. Explain POST /api/notes citing server.js:line for every claim. Do not edit files.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-เพิ่ม mcpServers: data-duckdb ใน frontmatter ของ .claude/agents/data-researcher.md คงบรรทัด tools เดิมไว้
+ให้ subagent data-researcher อธิบายว่า POST /api/notes ทำอะไร โดยทุกข้ออ้างต้องระบุ server.js:บรรทัด ห้ามแก้ไฟล์
 ```
 
-5. **ปิด TUI แล้วเปิด `claude` ใหม่** — เอเจนต์ใหม่และ MCP ใหม่ถูกโหลดตอนเซสชันเริ่มเท่านั้น (กดอนุญาต `.mcp.json` เมื่อถาม)
+ผลที่คาดหวัง: คำตอบมีหลักฐานแบบ `server.js:` อย่างน้อยหนึ่งจุด
 
-6. สั่งใช้เอเจนต์กับ SQL จริงบนข้อมูลจริง (เลือกอย่างหนึ่ง):
+> 📚 **รู้เพิ่ม:** ทำไมต้องเปิดเซสชันใหม่ — Claude Code อ่านรายชื่อเอเจนต์จากไฟล์คอนฟิกตอนเซสชันเริ่มเท่านั้น (ตรวจจริงบน CLI 2.1.310) ถ้าสั่งเรียกในเซสชันเดิมทันทีที่สร้างไฟล์ จะขึ้น `Agent type 'data-researcher' not found` แม้ไฟล์จะโผล่แล้ว — ปิด TUI เปิดใหม่จึงจะเรียกได้
 
-**เวอร์ชันอังกฤษ (แนะนำ):**
-
-```text
-Use the data-researcher subagent with the data-duckdb MCP execute_query tool. Run: SELECT count(*) AS raw_rows, sum(try_cast(replace(capital_raw, ',', '') AS BIGINT)) AS capital_thb FROM businesses_raw. Report both numbers, then explain POST /api/notes citing server.js:line. Do not edit files.
-```
-
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
-
-```text
-ให้ subagent data-researcher ใช้ tool execute_query ของ MCP data-duckdb รัน: SELECT count(*) AS raw_rows, sum(try_cast(replace(capital_raw, ',', '') AS BIGINT)) AS capital_thb FROM businesses_raw แล้วรายงานสองตัวเลข จากนั้นอธิบาย POST /api/notes ทุกข้ออ้าง server.js:บรรทัด ห้ามแก้ไฟล์
-```
-
-ผลที่คาดหวัง: คำตอบมีตัวเลขจาก SQL จริง — **16,781 แถวดิบ / ทุนรวม 45,341,868,784 บาท** (แถวดิบยังรวมหัวตาราง ทำความสะอาดแล้วใน Workshop 3 จะเหลือ 16,772 กิจการ) และมีหลักฐานแบบ `server.js:` อย่างน้อยหนึ่งจุด
-
-> 📚 **รู้เพิ่ม:** ทำไมต้องเปิดเซสชันใหม่ — Claude Code อ่านรายชื่อเอเจนต์และ MCP จากไฟล์คอนฟิกตอนเซสชันเริ่มเท่านั้น (ตรวจจริงบน CLI 2.1.310) ถ้าสั่งเรียกในเซสชันเดิมทันทีที่สร้างไฟล์ จะขึ้น `Agent type 'data-researcher' not found` แม้ไฟล์จะโผล่แล้ว — ปิด TUI เปิดใหม่จึงจะเรียกได้
-
-> 📚 **รู้เพิ่ม:** เลขบรรทัดคือหลักฐานว่าเอเจนต์เปิดอ่านไฟล์จริง ไม่ใช่เดาจากชื่อ endpoint และตัวเลขจาก MCP คือหลักฐานว่า SQL วิ่งบนข้อมูลจริง ไม่ใช่ตัวเลขที่เอเจนต์เดาเอง
-
-7. ปิด TUI แล้วเปิดไฟล์ด้วยตาอีกครั้ง
+5. ปิด TUI แล้วเปิดไฟล์ด้วยตาอีกครั้ง
 
 ## ✅ Checkpoint
 
 - [ ] ไฟล์ถูกสร้างโดย Claude ใน TUI ไม่ใช่การก็อปจาก `solutions/`
 - [ ] `tools` มี Read, Grep, Glob และไม่มี Bash, Edit, Write
-- [ ] `model` เป็น `sonnet` และ frontmatter มี `mcpServers: data-duckdb`
-- [ ] `.mcp.json` มี `data-duckdb` และกดอนุญาตแล้ว
-- [ ] คำตอบมีตัวเลขจาก tool จริง (เริ่มต้น 16,781 แถวดิบ / ทุนรวม 45,341,868,784 บาท) และมี `server.js:` อย่างน้อยหนึ่งจุด
+- [ ] `model` เป็น `sonnet`
+- [ ] คำตอบมี `server.js:` อย่างน้อยหนึ่งจุด
 - [ ] `git diff` ไม่แตะ `server.js` หรือ CSV
+- [ ] **ยังไม่มี** `.mcp.json` ในราก workshop (MCP มาใน Workshop 6)
 
 ## 🛠 Troubleshooting
 
@@ -96,7 +77,6 @@ Use the data-researcher subagent with the data-duckdb MCP execute_query tool. Ru
 | ไม่มีไฟล์ ทั้งที่ข้อความบอกว่าเขียนแล้ว | ยังไม่กดอนุญาต หรือเขียนผิดโฟลเดอร์ | ดูกล่องใน TUI แล้วเปิดไฟล์ที่ตำแหน่งนั้นด้วยตา |
 | `claude -p` ปฏิเสธ `.claude/**` | headless กันการเขียนคอนฟิกที่รันได้ | กลับมาทำใน TUI |
 | สั่งใช้เอเจนต์แล้วขึ้น `Agent type 'data-researcher' not found` | สร้างไฟล์เอเจนต์ทับเซสชันเดิม — ระบบโหลดรายชื่อเอเจนต์ตอนเริ่มเซสชัน | ปิด TUI เปิด `claude` ใหม่แล้วสั่งอีกครั้ง |
-| เอเจนต์บอกว่าไม่มี tool `mcp__data-duckdb__*` | MCP หรือ frontmatter ยังไม่ถูกโหลด | เช็ค `.mcp.json` แล้วปิด TUI เปิดใหม่ (กดอนุญาต MCP รอบแรก) |
 | หมดเทิร์น ไม่มีไฟล์ | prompt กำกวมหรือ `--max-turns` ต่ำ | ใช้ prompt ในบทเรียน และอย่าตั้งเพดานสั้น |
 | เอเจนต์แก้ `server.js` | ไม่ได้ห้าม หรือ tools กว้างไป | คืนไฟล์ด้วย git แล้วสร้างใหม่ด้วย tools ที่อ่านอย่างเดียว |
 | frontmatter ภาษาไทยในชื่อฟิลด์ | แปล `name` หรือ `tools` | สั่งให้เขียนฟิลด์เป็นอังกฤษตามชีต |

@@ -2,7 +2,7 @@
 
 ## โครงสร้าง
 
-แอป Node ล้วน ไม่มี dependency จุดเข้าคือ `server.js` ข้อมูลดิบจริงอยู่ที่ `data/raw/dbd-2558.parquet` ตารางแบนที่แอปอ่านคือ `data/dataset.csv` กฎคุณภาพและตัวคำนวณยอดอ้างอิงอยู่ที่ `lib/inspect-data.js` quality gate อยู่ที่ `scripts/quality-gate.js` หน้าเว็บตั้งต้นอยู่ที่ `web/` MCP ระดับโปรเจกต์ประกาศไว้ใน `.mcp.json` (DuckDB read-only)
+แอป Node ล้วน ไม่มี dependency จุดเข้าคือ `server.js` ข้อมูลดิบจริงอยู่ที่ `data/raw/dbd-2558.parquet` ตารางแบนที่แอปอ่านคือ `data/dataset.csv` กฎคุณภาพและตัวคำนวณยอดอ้างอิงอยู่ที่ `lib/inspect-data.js` quality gate อยู่ที่ `scripts/quality-gate.js` หน้าเว็บตั้งต้นอยู่ที่ `web/` — ชุดเริ่มต้นยังไม่มี `.mcp.json` (ต่อ MCP ใน Workshop 6)
 
 ## คุณภาพข้อมูล
 

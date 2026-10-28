@@ -21,11 +21,19 @@ function fail(message) {
   process.exit(1);
 }
 
-const mcpConfig = JSON.parse(fs.readFileSync(path.join(workshop, '.mcp.json'), 'utf8'));
+// Canonical config ships in the w6 drop-in (learners create it in Workshop 6 — starter has none).
+const mcpPath = fs.existsSync(path.join(dropIn, '.mcp.json'))
+  ? path.join(dropIn, '.mcp.json')
+  : path.join(workshop, '.mcp.json');
+if (!fs.existsSync(mcpPath)) fail('.mcp.json missing (expected in solutions/w6/drop-in or workshop after W6)');
+const mcpConfig = JSON.parse(fs.readFileSync(mcpPath, 'utf8'));
 const servers = mcpConfig.mcpServers || {};
 const duck = Object.values(servers).find((s) => JSON.stringify(s).includes('mcp-server-motherduck'));
 if (!duck) fail('.mcp.json has no DuckDB (mcp-server-motherduck) server');
 if (JSON.stringify(duck).includes('--read-write')) fail('DuckDB MCP must stay read-only (no --read-write)');
+if (!JSON.stringify(duck).includes('--python') || !JSON.stringify(duck).includes('3.12')) {
+  fail('.mcp.json must pin uvx --python 3.12 (newer Python breaks cryptography build)');
+}
 console.log('PASS | .mcp.json registers the official read-only DuckDB MCP');
 
 const analysisSql = fs.readFileSync(path.join(dropIn, 'scripts', 'analysis.sql'), 'utf8');

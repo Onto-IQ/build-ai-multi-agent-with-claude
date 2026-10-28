@@ -119,10 +119,13 @@ async function main() {
 
   if (existsSync(path.join(workshop, 'server.js')) && existsSync(path.join(workshop, 'package.json'))) {
     note(`workshop project found at ${workshop}`);
-    if (existsSync(path.join(workshop, 'data', 'raw', 'dbd-2558.parquet')) && existsSync(path.join(workshop, '.mcp.json'))) {
-      note('workshop has the real dataset (dbd-2558.parquet) and the project .mcp.json');
+    if (existsSync(path.join(workshop, 'data', 'raw', 'dbd-2558.parquet')) && existsSync(path.join(workshop, 'data', 'warehouse.duckdb'))) {
+      note('workshop has the real dataset (dbd-2558.parquet + warehouse.duckdb)');
     } else {
-      bad('workshop data is incomplete: expected data/raw/dbd-2558.parquet and .mcp.json — re-clone or git pull the workshop repo');
+      bad('workshop data is incomplete: expected data/raw/dbd-2558.parquet and data/warehouse.duckdb — re-clone or git pull the workshop repo');
+    }
+    if (existsSync(path.join(workshop, '.mcp.json'))) {
+      warn('workshop already has .mcp.json — starter should not; learners add it in Workshop 6 (MCP). Remove it if you are resetting to day-1 state.');
     }
   } else {
     bad(`workshop project not found at ${workshop}. Clone the workshop repo your instructor shared into that path (or set WORKSHOP_DIR to your copy), then re-run this script.`);
