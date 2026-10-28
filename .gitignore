@@ -11,9 +11,8 @@ Desktop.ini
 node_modules/
 npm-debug.log*
 
-# ZCode (agent ฝั่งผู้สอน — coach) — track เฉพาะ agent definitions, ของ session อื่นไม่ track
-.zcode/*
-!.zcode/agents/
+# ZCode (agent ฝั่งผู้สอน — เก็บเฉพาะในเครื่อง ไม่ push ขึ้น GitHub)
+.zcode/
 
 # เอกสารภายใน (ประวัติการตรวจทาน — เก็บไว้ในเครื่องเท่านั้น)
 vibe-code-l2-course-outline-internal.md
