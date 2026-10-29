@@ -150,7 +150,7 @@ Enable an agent team (not Explore subagents). Spawn exactly 3 named teammates:
 - data-scout — verifies data-quality claims against data/README.md and gate FAIL text
 - devil-advocate — challenges every risk; looks for overstated or missing risks
 
-Use a shared task list. Teammates must message each other at least once before the lead synthesizes.
+Use a shared task list. Teammates must message each other at least 5 times before the lead synthesizes.
 Do not modify application files.
 Write docs/TEAMS-REVIEW.md with headings: agreement, disputed, next sequential step.
 Keep the whole file under 250 words. Cite file:line for disputed items.
@@ -165,7 +165,7 @@ When finished, ask all teammates to shut down.
 - data-scout — ตรวจข้ออ้างคุณภาพข้อมูลกับ data/README.md และข้อความ FAIL ของ gate
 - devil-advocate — ท้าทายทุกจุดเสี่ยง หาข้อที่พูดเกินหรือขาด
 
-ใช้รายการงานร่วม Teammate ต้องส่งข้อความหากันอย่างน้อยหนึ่งครั้งก่อนที่ lead จะสรุป
+ใช้รายการงานร่วม Teammate ต้องส่งข้อความหากันอย่างน้อย 5 ครั้งก่อนที่ lead จะสรุป
 ห้ามแก้ไฟล์แอป
 เขียน docs/TEAMS-REVIEW.md มีหัวข้อ: agreement, disputed, next sequential step
 ทั้งไฟล์ไม่เกิน 250 คำ ข้อ disputed ต้องอ้าง file:line

@@ -18,8 +18,8 @@ TH: จง dispatch Explore subagent แบบขนาน 3 ตัว ห้า
 ```
 
 ```text
-EN: Enable an agent team (not Explore). Spawn 3 named teammates with a shared task list. They must message each other once. Write docs/TEAMS-REVIEW.md under 250 words. Then shut down teammates.
-TH: ใช้ Agent Teams (ไม่ใช่ Explore) สร้าง teammate ชื่อชัด 3 ตัวพร้อมรายการงานร่วม ต้องส่งข้อความหากันหนึ่งครั้ง เขียน docs/TEAMS-REVIEW.md ไม่เกิน 250 คำ แล้วให้ shut down
+EN: Enable an agent team (not Explore). Spawn 3 named teammates with a shared task list. They must message each other at least 5 times. Write docs/TEAMS-REVIEW.md under 250 words. Then shut down teammates.
+TH: ใช้ Agent Teams (ไม่ใช่ Explore) สร้าง teammate ชื่อชัด 3 ตัวพร้อมรายการงานร่วม ต้องส่งข้อความหากันอย่างน้อย 5 ครั้ง เขียน docs/TEAMS-REVIEW.md ไม่เกิน 250 คำ แล้วให้ shut down
 ```
 
 ```text
