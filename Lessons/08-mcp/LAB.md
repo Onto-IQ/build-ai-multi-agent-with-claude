@@ -152,7 +152,21 @@ duckdb -c ".read scripts/analysis.sql"
 
 ### 7) เขียน `docs/ANALYSIS.md`
 
-สั้น ๆ — ตาราง + ข้อสังเกตหนึ่งประโยคที่อ้างตัวเลขจากไฟล์เท่านั้น สั่ง claude ก็ได้เขียนเองก็ได้
+สั้น ๆ — ตารางจาก `docs/region-capital.csv` + ข้อสังเกตหนึ่งประโยคที่อ้างตัวเลขจากไฟล์เท่านั้น สั่งใน TUI (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาต:
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+@data-researcher Read docs/region-capital.csv only. Write docs/ANALYSIS.md in Thai with: (1) a short title and one sentence stating the source files (dataset.csv clean · analysis.sql · region-capital.csv), (2) a markdown table of all six regions with companies and capital_thb exactly as in the CSV, (3) one observation sentence that cites numbers from that table only. Do not invent totals or regions. Do not edit scripts/analysis.sql or .mcp.json.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+@data-researcher อ่านเฉพาะ docs/region-capital.csv แล้วเขียน docs/ANALYSIS.md เป็นภาษาไทย โดยมี (1) ชื่อเรื่องสั้น + ประโยคหนึ่งบอกแหล่งที่มา (dataset.csv สะอาด · analysis.sql · region-capital.csv) (2) ตาราง markdown ทั้ง 6 ภาค พร้อมจำนวนกิจการและทุน ตาม CSV เป๊ะ (3) ข้อสังเกตหนึ่งประโยคที่อ้างตัวเลขจากตารางนั้นเท่านั้น ห้ามเดายอดหรือภาคเพิ่ม ห้ามแก้ scripts/analysis.sql หรือ .mcp.json
+```
+
+ผลที่คาดหวัง: `docs/ANALYSIS.md` มีตาราง 6 ภาคตรง CSV (กลาง 10,068 / 31,680,888,983 เป็นต้น) และข้อสังเกตหนึ่งประโยคที่ไม่ invent ตัวเลข
 
 📦 **Handoff:** `docs/region-capital.csv` + `docs/ANALYSIS.md` = ชุดตัวเลขอ้างอิงของ writer ใน Workshop 9 — ห้ามเดาตัวเลขนอกไฟล์นี้
 
