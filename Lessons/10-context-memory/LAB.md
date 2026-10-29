@@ -8,11 +8,27 @@
 
 ## Steps / ขั้นตอน
 
-1. ใน TUI ที่ workshop repo `C:\dev\multi-agent-workshop` ให้เพิ่ม `memory: project` ใน frontmatter ของ data-researcher แล้วกดอนุญาต
+1. ใน TUI ที่ workshop repo `C:\dev\multi-agent-workshop` ให้เพิ่ม `memory: project` ใน frontmatter ของ data-researcher (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาตเมื่อแก้ `.claude/`
 
-ผลที่คาดหวัง: เปิดไฟล์แล้วยังเป็น tools อ่านอย่างเดียว
+**เวอร์ชันอังกฤษ (แนะนำ):**
 
-> 📚 **รู้เพิ่ม:** CLAUDE.md กับ memory คนละชั้น — กติกาห้าม Express มีอยู่แล้วใน CLAUDE.md ของ repo แล็บนี้ทดสอบชั้นที่สอง: ความจำที่เอเจนต์**จดเอง**แล้วพกข้ามเซสชัน
+```text
+Add memory: project to the frontmatter of .claude/agents/data-researcher.md. Keep name, description, tools, and any mcpServers line exactly as they are. Do not change the body.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+เพิ่ม memory: project ใน frontmatter ของ .claude/agents/data-researcher.md คง name, description, tools และบรรทัด mcpServers (ถ้ามี) ไว้เหมือนเดิม ห้ามแก้เนื้อหา body
+```
+
+ผลที่คาดหวัง: เปิดไฟล์แล้วยังเป็น tools อ่านอย่างเดียว และมีบรรทัดประมาณนี้ใน frontmatter:
+
+```yaml
+memory: project
+```
+
+> 📚 **รู้เพิ่ม:** CLAUDE.md กับ memory คนละชั้น — กติกาห้าม Express มีอยู่แล้วใน CLAUDE.md ของ repo แล็บนี้ทดสอบชั้นที่สอง: ความจำที่เอเจนต์**จดเอง**แล้วพกข้ามเซสชัน · หลังแก้ frontmatter **ปิด TUI แล้วเปิด `claude` ใหม่** ก่อนขั้นถัดไป (ฟิลด์โหลดตอนเซสชันเริ่ม)
 
 2. วาง prompt ให้เอเจนต์จดข้อตกลง (เลือกอย่างใดอย่างหนึ่ง):
 
@@ -49,11 +65,12 @@
 | แก้ frontmatter ไม่ได้ใน headless | `.claude/**` ถูกปฏิเสธ | ใช้ TUI |
 | เซสชันใหม่ไม่จำ | ฟิลด์ไม่ถูกโหลด หรือคนละโฟลเดอร์ | เปิดจาก workshop repo (`C:\dev\multi-agent-workshop`) แล้วอ่านไฟล์เอเจนต์ |
 | หมดเทิร์น | `--max-turns` ต่ำ | อยู่ใน TUI |
-| เอเจนต์เสนอ Express อยู่ดี | งานความจำไม่เกิด | จดไว้ เป็นของที่ผู้สอนตามต่อ ไม่บล็อก Workshop 7 |
+| เอเจนต์เสนอ Express อยู่ดี | งานความจำไม่เกิด | จดไว้ เป็นของที่ผู้สอนตามต่อ ไม่บล็อก Workshop 8 |
+| `Agent type not found` / ไม่จำหลังแก้ไฟล์ | ยังไม่รีสตาร์ท TUI | ปิดแล้วเปิด `claude` ใหม่จาก workshop repo |
 
 ## 🆘 Behind? Catch up
 
-ข้ามได้ เพิ่มบรรทัด `memory: project` ด้วยมือ แล้วเข้า Workshop 7
+ข้ามได้ เพิ่มบรรทัด `memory: project` ด้วยมือ แล้วไป Workshop 8
 
 ## Stretch / ต่อยอด
 

@@ -36,9 +36,9 @@
 claude
 ```
 
-1. เปิดไฟล์ `.claude/agents/data-researcher.md` แก้ผ่าน TUI โดยเพิ่มบรรทัด `memory: project` ใน frontmatter (อย่าลืมว่าการแก้ไฟล์ `.claude/**` ต้องกดอนุมัติใน TUI)
+1. เพิ่ม `memory: project` ใน frontmatter ของ `data-researcher` ผ่าน TUI (ข้อความคัดลอกอยู่ที่ [LAB.md](LAB.md)) แล้วรีสตาร์ทเซสชัน
 
-2. วาง prompt จากหัวข้อถัดไป — เอเจนต์ต้องจดข้อตกลงไว้ใน memory ของตัวเอง
+2. วาง prompt จดข้อตกลงจาก LAB — เอเจนต์ต้องจดไว้ใน memory ของตัวเอง
 
 3. ออกจากเซสชัน (`/exit`) แล้วเปิดใหม่ (`claude`) — ถามคำถามที่ลองข้อตกลง:
 
