@@ -1,83 +1,108 @@
 # Lab — จำข้อตกลงของโปรเจกต์ (Module 10: Context Engineering & Memory)
 
-> ⏱ machine ~4 นาที · Start state: มี data-researcher จาก Workshop 2 · มี agents ครบ 5 ตัว
+> ⏱ machine ~6 นาที · Start state: มี `data-researcher` + `qa` (และเอเจนต์อื่นครบจาก Workshop ก่อนหน้า)
 
 ## Goal / เป้าหมาย
 
-ใส่ `memory: project` แล้วทดลองถามข้ามเซสชันเรื่อง Express
+ใส่ `memory: project` ให้ **สองตัวที่ได้ประโยชน์ชัด** (`data-researcher` + `qa`) จดโน้ตคนละแบบ แล้วเปิดเซสชันใหม่พิสูจน์ว่าแต่ละตัวพกความจำของตัวเอง — เทียบกับ `@developer` ที่**ยังไม่มี** memory
 
 ## Steps / ขั้นตอน
 
-1. ใน TUI ที่ workshop repo `C:\dev\multi-agent-workshop` ให้เพิ่ม `memory: project` ใน frontmatter ของ data-researcher (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาตเมื่อแก้ `.claude/`
+1. ใน TUI ที่ workshop repo `C:\dev\multi-agent-workshop` เปิด memory ให้สองตัว (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาตเมื่อแก้ `.claude/`
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Add memory: project to the frontmatter of .claude/agents/data-researcher.md. Keep name, description, tools, and any mcpServers line exactly as they are. Do not change the body.
+Add memory: project to the frontmatter of both .claude/agents/data-researcher.md and .claude/agents/qa.md. Keep name, description, tools, and any mcpServers line on each file exactly as they are. Do not change the bodies. Do not add memory to developer, planner, or release-manager.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-เพิ่ม memory: project ใน frontmatter ของ .claude/agents/data-researcher.md คง name, description, tools และบรรทัด mcpServers (ถ้ามี) ไว้เหมือนเดิม ห้ามแก้เนื้อหา body
+เพิ่ม memory: project ใน frontmatter ของทั้ง .claude/agents/data-researcher.md และ .claude/agents/qa.md คง name, description, tools และบรรทัด mcpServers (ถ้ามี) ของแต่ละไฟล์ไว้เหมือนเดิม ห้ามแก้ body ห้ามใส่ memory ให้ developer, planner หรือ release-manager
 ```
 
-ผลที่คาดหวัง: เปิดไฟล์แล้วยังเป็น tools อ่านอย่างเดียว และมีบรรทัดประมาณนี้ใน frontmatter:
+ผลที่คาดหวัง: ทั้งสองไฟล์มีบรรทัดประมาณนี้ใน frontmatter และ `developer.md` **ยังไม่มี** `memory:`
 
 ```yaml
 memory: project
 ```
 
-> 📚 **รู้เพิ่ม:** CLAUDE.md กับ memory คนละชั้น — กติกาห้าม Express มีอยู่แล้วใน CLAUDE.md ของ repo แล็บนี้ทดสอบชั้นที่สอง: ความจำที่เอเจนต์**จดเอง**แล้วพกข้ามเซสชัน · หลังแก้ frontmatter **ปิด TUI แล้วเปิด `claude` ใหม่** ก่อนขั้นถัดไป (ฟิลด์โหลดตอนเซสชันเริ่ม)
+> 📚 **ทำไมสองตัวนี้:** `data-researcher` จำกติกาโดเมน/สแต็ก · `qa` จำวิธีพิสูจน์ (“รีโปรดิวส์ก่อนเขียนรายงาน”) — คนละประโยชน์ คนละโน้ต · `developer` / `writer` ไม่ใส่ เพราะต้องยึดแผนและตัวเลขล่าสุดบนดิสก์
 
-> 📚 **ทำไมแค่ตัวเดียว:** `memory` ผูกกับไฟล์เอเจนต์รายตัว ไม่ใช่สวิตช์ทั้งโปรเจกต์ · ใส่แค่ `data-researcher` เพื่อเทียบกับตัวที่ไม่มี memory ใน Stretch · กติกาที่ทุกตัวต้องรู้ให้อยู่ `CLAUDE.md` — อย่าเปิด memory ให้ทุกตัวในรอบนี้
+2. **ปิด TUI แล้วเปิด `claude` ใหม่** — frontmatter โหลดตอนเซสชันเริ่ม
 
-2. วาง prompt ให้เอเจนต์จดข้อตกลง (เลือกอย่างใดอย่างหนึ่ง):
+3. ให้แต่ละตัวจดโน้ตของบทบาทตัวเอง (วางทีละบล็อกหรือรวมในรอบเดียวก็ได้):
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
 @data-researcher Remember this project note: Registry Insight uses plain Node http and no dependencies. Do not suggest Express unless asked.
+
+@qa Remember this project note: Always reproduce bugs with a real HTTP request before writing docs/QA-REPORT.md. Never trust a developer claim that "it works" without your own reproduction. Do not edit server.js.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
 @data-researcher จดไว้ว่า Registry Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ
+
+@qa จดไว้ว่าต้องรีโปรดิวส์บั๊กด้วย HTTP request จริงก่อนเขียน docs/QA-REPORT.md ห้ามเชื่อคำบอกว่า "เวิร์กแล้ว" โดยไม่รีโปรดิวส์เอง ห้ามแก้ server.js
 ```
 
-3. `/exit` แล้วเปิด `claude` ใหม่จากโฟลเดอร์เดิม แล้วถามคำถามที่ลองข้อตกลง — อย่าเอ่ยคำว่า Express เอง สังเกตว่าคำตอบยึดข้อตกลงหรือไม่:
+4. `/exit` แล้วเปิด `claude` ใหม่จากโฟลเดอร์เดิม — ถาม**สามคำถาม**นี้ทีละข้อ (อย่าใบ้คำตอบใน prompt):
+
+**ก) ตัวที่มี memory ด้านสแต็ก**
 
 ```text
-ขอแนะนำวิธีทำแอปนี้ให้ดีขึ้นหน่อย
+@data-researcher ขอแนะนำวิธีทำแอปนี้ให้ดีขึ้นหน่อย
 ```
 
-ผลที่คาดหวังที่อยากเห็น: คำตอบอ้างข้อตกลงว่าไม่ใช้ Express ถ้าไม่ได้ขอ ถ้าไม่อ้าง ให้จดว่าความจำข้ามเซสชันไม่เกิดในรุ่นที่คุณใช้ แล้วไปต่อได้ รอบนี้ยังไม่ได้ล็อกผลไว้ในสคริปต์ของคอร์ส
+ผลที่อยากเห็น: อ้างว่าไม่ใช้ Express / ใช้ Node http ล้วน ถ้าไม่ได้ขอ
+
+**ข) ตัวที่มี memory ด้านวิธีพิสูจน์**
+
+```text
+@qa นักพัฒนาบอกว่าแก้ notes แล้วเวิร์ก คุณจะเริ่มตรวจยังไง สั้น ๆ
+```
+
+ผลที่อยากเห็น: พูดถึงรีโปรดิวส์ด้วย request จริง / ไม่เชื่อคำบอกก่อนมีหลักฐาน
+
+**ค) ตัวที่ไม่มี memory (ตัวเทียบ)**
+
+```text
+@developer ขอแนะนำวิธีทำแอปนี้ให้ดีขึ้นหน่อย
+```
+
+ผลที่อยากเห็น: มักไม่พกโน้ตเดียวกับ researcher (อาจพูดกว้างหรือชี้ไฟล์แผน) — จุดสอนคือ **memory ไม่แชร์ข้ามบทบาท** แม้เป็น `project`
+
+ถ้าก) หรือ ข) ไม่อ้างโน้ต ให้จดว่าความจำข้ามเซสชันไม่เกิดในรุ่นที่คุณใช้ แล้วไปต่อได้ — รอบนี้ยังไม่ได้ล็อกผลในสคริปต์ของคอร์ส
 
 ## ✅ Checkpoint
 
-- [ ] frontmatter มี `memory: project`
-- [ ] เปิดเซสชันใหม่หนึ่งครั้ง
-- [ ] จดผลว่าข้อตกลงถูกอ้างหรือไม่
+- [ ] `data-researcher.md` และ `qa.md` มี `memory: project`
+- [ ] `developer.md` **ไม่มี** `memory:`
+- [ ] เปิดเซสชันใหม่หลังจดโน้ตแล้วถามครบสามข้อ (researcher / qa / developer)
+- [ ] จดผลว่าใครอ้างโน้ตของตัวเองได้บ้าง
 
 ## 🛠 Troubleshooting
 
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
 | แก้ frontmatter ไม่ได้ใน headless | `.claude/**` ถูกปฏิเสธ | ใช้ TUI |
-| เซสชันใหม่ไม่จำ | ฟิลด์ไม่ถูกโหลด หรือคนละโฟลเดอร์ | เปิดจาก workshop repo (`C:\dev\multi-agent-workshop`) แล้วอ่านไฟล์เอเจนต์ |
+| เซสชันใหม่ไม่จำ | ยังไม่รีสตาร์ท หรือคนละโฟลเดอร์ | เปิดจาก workshop repo แล้วอ่านไฟล์เอเจนต์ |
+| `qa` ไม่มีไฟล์เอเจนต์ | ยังไม่ถึง/ข้าม Workshop 4 | สร้าง `qa.md` ตาม Workshop 4 หรือ catch-up `w4` |
+| ทั้ง researcher และ developer ตอบคล้ายกัน | โน้ตไปโผล่ใน CLAUDE.md หรือถามไม่ระบุ `@` | เรียกด้วย `@` ชัด · เทียบเฉพาะหลังรีสตาร์ท |
 | หมดเทิร์น | `--max-turns` ต่ำ | อยู่ใน TUI |
-| เอเจนต์เสนอ Express อยู่ดี | งานความจำไม่เกิด | จดไว้ เป็นของที่ผู้สอนตามต่อ ไม่บล็อก Workshop 8 |
-| `Agent type not found` / ไม่จำหลังแก้ไฟล์ | ยังไม่รีสตาร์ท TUI | ปิดแล้วเปิด `claude` ใหม่จาก workshop repo |
+| `Agent type not found` | ยังไม่รีสตาร์ทหลังสร้าง/แก้เอเจนต์ | ปิดแล้วเปิด `claude` ใหม่ |
 
 ## 🆘 Behind? Catch up
 
-ข้ามได้ เพิ่มบรรทัด `memory: project` ด้วยมือ แล้วไป Workshop 8
+เพิ่มบรรทัด `memory: project` ใน `data-researcher.md` และ `qa.md` ด้วยมือ แล้วไป Workshop 8
 
 ## Stretch / ต่อยอด
 
-1. ถามคำถามเดิมกับเอเจนต์ที่**ไม่ได้**ใส่ memory (เช่น `@developer`) แล้วเทียบกับ `@data-researcher` — memory ไม่แชร์อัตโนมัติข้ามบทบาท แม้ขอบเขตจะเป็น `project`
-2. เพิ่ม `memory: project` ให้ **`qa`** ด้วย (บทบาทที่สมควรมี persistent memory ในงานจริง — จำวิธีรีโปรดิวส์ / นิสัย “ไม่เชื่อคำบอก”) แล้วสั่ง `@qa` จดโน้ตสั้น ๆ ว่าต้องรีโปรดิวส์ด้วย request จริงก่อนเขียนรายงาน — **ยังไม่ใส่ให้ `developer` หรือ `writer`** (ดูตารางใน README)
+เพิ่ม `memory: project` ให้ `release-manager` (จำจุดพลาดตอนปล่อย เช่น port ค้าง) — **ยังไม่ใส่ `writer`** เพราะตัวเลขต้องมาจาก API/CSV ทุกครั้ง
 
 ## Solution → solutions/w2/
 
