@@ -44,18 +44,18 @@ In this folder, create two agent files.
 
 2. **ปิด TUI แล้วเปิด `claude` ใหม่** — เอเจนต์ใหม่ถูกโหลดตอนเซสชันเริ่มเท่านั้น (เหมือน Workshop 2)
 
-3. สั่ง planner ทำ handoff แรก — วาง prompt (เลือกอย่างใดอย่างหนึ่ง):
+3. สั่ง planner ทำ handoff แรก — `@` หน้าชื่อ = เรียกเอเจนต์ตัวนั้นโดยตรง (เหมือน Workshop 2):
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the planner subagent. Read docs/EXPLORATION-REPORT.md and data/README.md, then write docs/TASKS.md: the ordered tasks to clean data/dataset.csv and prove it, organized as three tracks (data, backend, frontend), who owns each file, and which task must never touch scripts/quality-gate.js.
+@planner Read docs/EXPLORATION-REPORT.md and data/README.md, then write docs/TASKS.md: the ordered tasks to clean data/dataset.csv and prove it, organized as three tracks (data, backend, frontend), who owns each file, and which task must never touch scripts/quality-gate.js.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent planner อ่าน docs/EXPLORATION-REPORT.md กับ data/README.md แล้วเขียน docs/TASKS.md: ลิสต์งานเรียงลำดับเพื่อทำความสะอาด data/dataset.csv และพิสูจน์ผล จัดเป็นสามสาย (data, backend, frontend) ใครเป็นเจ้าของไฟล์ไหน และงานไหนห้ามแตะ scripts/quality-gate.js
+@planner อ่าน docs/EXPLORATION-REPORT.md กับ data/README.md แล้วเขียน docs/TASKS.md: ลิสต์งานเรียงลำดับเพื่อทำความสะอาด data/dataset.csv และพิสูจน์ผล จัดเป็นสามสาย (data, backend, frontend) ใครเป็นเจ้าของไฟล์ไหน และงานไหนห้ามแตะ scripts/quality-gate.js
 ```
 
 📦 **Handoff ที่ 1 เกิดแล้ว:** เปิด `docs/TASKS.md` ด้วยตา — นี่คือของที่ planner ส่งต่อให้ developer
@@ -65,7 +65,7 @@ Use the planner subagent. Read docs/EXPLORATION-REPORT.md and data/README.md, th
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the developer subagent as a lead. Read docs/TASKS.md and dispatch three parallel subagents, one per track.
+@developer Act as lead. Read docs/TASKS.md and dispatch three parallel subagents, one per track.
 data: write docs/DESIGN.md (the cleaning contract: junk-row drop, พ.ศ. to ISO dates, comma capitals, province extraction) and scripts/clean-export.sql (DuckDB SQL reading data/raw/dbd-2558.parquet, exporting data/dataset.csv).
 backend: rewrite the summary computation in server.js to parse with lib/csv.js instead of the naive comma split, and count only rows the data dictionary accepts (13-digit reg_no, ISO reg_date, numeric capital).
 frontend: update web/app.js so the dashboard shows the order count and revenue from /api/summary plus a small line naming the data source.
@@ -75,7 +75,7 @@ Do not touch scripts/quality-gate.js. Cite which task numbers you completed.
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent developer ทำหน้าที่ lead อ่าน docs/TASKS.md แล้วแตกงานให้ subagent สามตัวทำขนานกัน สายละหนึ่ง
+@developer ทำหน้าที่ lead อ่าน docs/TASKS.md แล้วแตกงานให้ subagent สามตัวทำขนานกัน สายละหนึ่ง
 data: เขียน docs/DESIGN.md (สัญญาทำความสะอาด: แถวหัวตารางทิ้ง พ.ศ. เป็น ค.ศ. ทุนมีลูกน้ำ ดึงจังหวัดจากที่อยู่) และ scripts/clean-export.sql (DuckDB SQL อ่าน data/raw/dbd-2558.parquet ส่งออก data/dataset.csv)
 backend: เขียนส่วนคำนวณ summary ใน server.js ใหม่ด้วย lib/csv.js แทนการ split จุลภาคตรง ๆ และนับเฉพาะแถวที่ผ่านพจนานุกรมข้อมูล (reg_no 13 หลัก, reg_date ISO, capital เป็นตัวเลข)
 frontend: ปรับ web/app.js ให้แดชบอร์ดโชว์จำนวนกิจการกับทุนรวมจาก /api/summary พร้อมบรรทัดเล็กบอกที่มาของข้อมูล
@@ -111,13 +111,13 @@ npm run gate
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the developer subagent again. Compare scripts/clean-export.sql against docs/DESIGN.md and write docs/REVIEW.md with the differences. Fix nothing.
+@developer Compare scripts/clean-export.sql against docs/DESIGN.md and write docs/REVIEW.md with the differences. Fix nothing.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent developer รอบใหม่ เทียบ scripts/clean-export.sql กับ docs/DESIGN.md แล้วเขียน docs/REVIEW.md สรุปจุดต่าง ห้ามแก้ของ
+@developer เทียบ scripts/clean-export.sql กับ docs/DESIGN.md แล้วเขียน docs/REVIEW.md สรุปจุดต่าง ห้ามแก้ของ
 ```
 
 ## ✅ Checkpoint

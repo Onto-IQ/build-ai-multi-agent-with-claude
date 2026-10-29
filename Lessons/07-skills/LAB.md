@@ -81,13 +81,13 @@ frontmatter ต้องตรงนี้: name เป็น release-manager; d
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the release-manager subagent to run the release checklist now. Report PASS or FAIL for each check.
+@release-manager Run the release checklist now. Report PASS or FAIL for each check.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent release-manager รัน release checklist เลย รายงานผลข้อละ PASS หรือ FAIL
+@release-manager รัน release checklist เลย รายงานผลข้อละ PASS หรือ FAIL
 ```
 
 ผลที่คาดหวัง: release-manager เดินเช็กลิสต์สี่ขั้นเองโดยคุณไม่ต้องเอ่ยชื่อ skill กดอนุญาตคำสั่ง node ตามที่มันขอ

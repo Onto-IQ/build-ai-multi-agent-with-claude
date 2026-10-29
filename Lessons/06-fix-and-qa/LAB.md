@@ -49,13 +49,13 @@ frontmatter: name เป็น qa; description ว่า Use when implementation
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the qa subagent. Four quality gate cases still fail: bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists. Reproduce each with real requests, find the root causes in server.js, and write docs/QA-REPORT.md with three findings (crash, token leak, notes not validated or persisted), each citing server.js:line and the exact reproduction. Do not fix anything.
+@qa Four quality gate cases still fail: bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists. Reproduce each with real requests, find the root causes in server.js, and write docs/QA-REPORT.md with three findings (crash, token leak, notes not validated or persisted), each citing server.js:line and the exact reproduction. Do not fix anything.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent qa เคส quality gate ยังแดงสี่เคส: bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists รีโปรดิวส์ทีละเคสด้วย request จริง หา root cause ใน server.js แล้วเขียน docs/QA-REPORT.md สาม findings (crash, token รั่ว, โน้ตไม่ถูกตรวจและไม่ถูกเก็บ) ทุก finding อ้าง server.js:บรรทัด และวิธีรีโปรดิวส์ ห้ามแก้อะไร
+@qa เคส quality gate ยังแดงสี่เคส: bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists รีโปรดิวส์ทีละเคสด้วย request จริง หา root cause ใน server.js แล้วเขียน docs/QA-REPORT.md สาม findings (crash, token รั่ว, โน้ตไม่ถูกตรวจและไม่ถูกเก็บ) ทุก finding อ้าง server.js:บรรทัด และวิธีรีโปรดิวส์ ห้ามแก้อะไร
 ```
 
 📦 **Handoff ที่ 1:** `docs/QA-REPORT.md` สาม findings — ของที่ qa ส่งต่อให้ developer
@@ -65,13 +65,13 @@ Use the qa subagent. Four quality gate cases still fail: bad-json-does-not-crash
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the developer subagent. Read docs/QA-REPORT.md and fix exactly the three findings: make POST /api/notes answer 400 { error: 'INVALID_JSON' } for a non-JSON or non-object body, answer 400 { error: 'INVALID_TEXT' } when text is missing or empty, persist every note to data/notes.json and add GET /api/notes returning the stored notes, and make /api/health return { ok: true } with no token of any shape. Keep everything else unchanged. Do not touch scripts/quality-gate.js.
+@developer Read docs/QA-REPORT.md and fix exactly the three findings: make POST /api/notes answer 400 { error: 'INVALID_JSON' } for a non-JSON or non-object body, answer 400 { error: 'INVALID_TEXT' } when text is missing or empty, persist every note to data/notes.json and add GET /api/notes returning the stored notes, and make /api/health return { ok: true } with no token of any shape. Keep everything else unchanged. Do not touch scripts/quality-gate.js.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent developer อ่าน docs/QA-REPORT.md แล้วแก้เฉพาะสาม findings: POST /api/notes ด้วยของที่ไม่ใช่ JSON หรือไม่ใช่ object ต้องตอบ 400 { error: 'INVALID_JSON' }, ขาด text หรือ text ว่างต้องตอบ 400 { error: 'INVALID_TEXT' }, เก็บทุกโน้ตลง data/notes.json และเพิ่ม GET /api/notes คืนโน้ตที่เก็บไว้, และ /api/health ตอบ { ok: true } ไม่มี token รูปแบบใด อย่าเปลี่ยนอย่างอื่น ห้ามแตะ scripts/quality-gate.js
+@developer อ่าน docs/QA-REPORT.md แล้วแก้เฉพาะสาม findings: POST /api/notes ด้วยของที่ไม่ใช่ JSON หรือไม่ใช่ object ต้องตอบ 400 { error: 'INVALID_JSON' }, ขาด text หรือ text ว่างต้องตอบ 400 { error: 'INVALID_TEXT' }, เก็บทุกโน้ตลง data/notes.json และเพิ่ม GET /api/notes คืนโน้ตที่เก็บไว้, และ /api/health ตอบ { ok: true } ไม่มี token รูปแบบใด อย่าเปลี่ยนอย่างอื่น ห้ามแตะ scripts/quality-gate.js
 ```
 
 📦 **Handoff ที่ 2:** รายงาน → โค้ดที่แก้แล้ว
@@ -89,13 +89,13 @@ npm run gate
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the qa subagent again. Re-run the reproduction from docs/QA-REPORT.md against the fixed server and append the result to the report as "Evidence after fix".
+@qa Re-run the reproduction from docs/QA-REPORT.md against the fixed server and append the result to the report as "Evidence after fix".
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent qa รอบใหม่ รันรีโปรดิวส์ใน docs/QA-REPORT.md ซ้ำกับ server ตัวที่แก้แล้ว แล้ว append ผลเข้ารายงานในหัวข้อ Evidence after fix
+@qa รันรีโปรดิวส์ใน docs/QA-REPORT.md ซ้ำกับ server ตัวที่แก้แล้ว แล้ว append ผลเข้ารายงานในหัวข้อ Evidence after fix
 ```
 
 📦 **Handoff ปิดวงจร:** รายงานเดียวกันมีทั้ง finding และหลักฐานหลังแก้ — โยงไปหา Module 13 ตอน deploy

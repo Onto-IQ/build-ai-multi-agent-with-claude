@@ -48,27 +48,13 @@ claude
 
 4. ผลที่ต้องสังเกต: เอเจนต์ควรยึดข้อตกลง (ไม่เสนอ Express) — จดผลว่า "อ้างได้" หรือ "อ้างไม่ได้" ไว้ในบันทึกของคุณ
 
-## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
-
-**เวอร์ชันอังกฤษ (แนะนำ):**
-
-```text
-Ask the data-researcher subagent to remember this project note: Registry Insight uses plain Node http and no dependencies. Do not suggest Express unless asked.
-```
-
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
-
-```text
-ให้ subagent data-researcher จดไว้ว่า Registry Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ
-```
-
-> 📚 **ทำไมแนะนำ EN:** ข้อความที่จดจะถูกอ้างในเซสชันใหม่ — ภาษาอังกฤษสั้นกว่าและคงถ้อยคำเดียวกับกติกาเดิมใน CLAUDE.md TH ทำงานเหมือนกันทุกอย่าง
+## สิ่งที่ prompt ต้องมี (ทบทวน — ข้อความคัดลอกอยู่ที่ [LAB.md](LAB.md))
 
 | ส่วน | หน้าที่ |
 |---|---|
-| ชื่อเอเจนต์ | ไม่ให้ leader จดเองมั่ว |
+| `@data-researcher` | เรียกเอเจนต์ตรง ๆ ไม่ให้ leader จดเองมั่ว |
 | ประโยคห้าม Express | ของที่เอาไปถามซ้ำในเซสชันใหม่ |
-| project note | บอกว่านี่คือการจด memory ไม่ใช่ให้แก้โค้ด |
+| project note / จดไว้ว่า | บอกว่านี่คือการจด memory ไม่ใช่ให้แก้โค้ด |
 
 ## Common pitfalls / กับดัก
 

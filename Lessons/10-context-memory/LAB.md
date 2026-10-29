@@ -19,13 +19,13 @@
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Ask the data-researcher subagent to remember this project note: Registry Insight uses plain Node http and no dependencies. Do not suggest Express unless asked.
+@data-researcher Remember this project note: Registry Insight uses plain Node http and no dependencies. Do not suggest Express unless asked.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent data-researcher จดไว้ว่า Registry Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ
+@data-researcher จดไว้ว่า Registry Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ
 ```
 
 3. `/exit` แล้วเปิด `claude` ใหม่จากโฟลเดอร์เดิม แล้วถามคำถามที่ลองข้อตกลง — อย่าเอ่ยคำว่า Express เอง สังเกตว่าคำตอบยึดข้อตกลงหรือไม่:
