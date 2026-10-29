@@ -8,7 +8,7 @@
 
 1. ตั้งเครื่องและล็อกอิน Claude Code ให้พร้อมก่อนเริ่มงานกลุ่ม
 2. สร้าง specialty agent ด้วย Markdown + YAML frontmatter แล้วผูก skill กับ MCP
-3. เลือกได้ว่าเมื่องานควรวิ่งขนาน (swarm) หรือต่อคิว (sequential) และสั่ง leader ให้แตกงาน
+3. เลือกได้ว่าเมื่องานควรวิ่งขนาน (Explore swarm) ใช้ Agent Teams หรือต่อคิว (sequential) และสั่ง leader ให้แตกงาน
 4. วางขอบเขตสิทธิ์ hook และงบต้นทุนก่อนปล่อยเอเจนต์แก้ไฟล์
 5. ให้ทีม 6 บทบาททำความสะอาดข้อมูลจริง สรุปผู้บริหาร และทำแดชบอร์ดจากสัญญากลางชุดเดียวกัน
 
@@ -24,7 +24,7 @@
 |---|---|---|
 | เช้า | [01 ตั้งเครื่อง](Lessons/01-environment-setup/README.md) | [Lab 0 — ตรวจเครื่อง](Lessons/01-environment-setup/LAB.md) |
 | เช้า | [02 สถาปัตยกรรมเอเจนต์](Lessons/02-agent-foundations/README.md) | [onboard /init + สาธิต](Lessons/02-agent-foundations/LAB.md) |
-| เช้า | [03 Swarm](Lessons/03-swarm/README.md) | [Workshop 1](Lessons/03-swarm/LAB.md) |
+| เช้า | [03 Swarm + Agent Teams](Lessons/03-swarm/README.md) | [Workshop 1](Lessons/03-swarm/LAB.md) — Explore + Agent Teams |
 | บ่าย | [04 Specialty agent](Lessons/04-specialty-agents/README.md) | [Workshop 2](Lessons/04-specialty-agents/LAB.md) |
 | บ่าย | [05 Sequential pipeline](Lessons/05-sequential-orchestration/README.md) | [Workshop 3](Lessons/05-sequential-orchestration/LAB.md) — เว็บโชว์ยอดจริง |
 | บ่าย | [06 แก้สามปม + QA handoff](Lessons/06-fix-and-qa/README.md) | [Workshop 4](Lessons/06-fix-and-qa/LAB.md) — gate 6/6 |

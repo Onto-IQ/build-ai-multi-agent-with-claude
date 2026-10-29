@@ -10,7 +10,8 @@
 
 | จาก | ไฟล์ | ถึง |
 |---|---|---|
-| Workshop 1 (Explore agents) | `docs/EXPLORATION-REPORT.md` | planner อ่านก่อนวางแผน |
+| Workshop 1 Part A (Explore) | `docs/EXPLORATION-REPORT.md` | planner อ่านก่อนวางแผน |
+| Workshop 1 Part B (Agent Teams) | `docs/TEAMS-REVIEW.md` | อ่านคู่กันถ้ามี — disputed / next step |
 | planner | `docs/TASKS.md` | developer (lead) ทำตามแผน |
 | developer lead | แตกงาน 3 สายขนาน | data · backend · frontend |
 | data สาย | `docs/DESIGN.md` + `scripts/clean-export.sql` | คุณรัน SQL เอง |

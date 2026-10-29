@@ -30,7 +30,7 @@
 | `ANTHROPIC_API_KEY` | ใช้แทนการล็อกอินบัญชี Pro/Team — ต้องว่างตอนเรียน |
 | `PORT` | พอร์ตของ `server.js` และ quality gate — ค่าเริ่มต้น 3000 |
 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` | จำนวนเอเจนต์ย่อยที่ทำงานพร้อมกันได้สูงสุด ค่าว่างคือค่าเริ่มต้น |
-| `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | ตั้งเป็น `1` เฉพาะตอนสาธิตทีม |
+| `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | ตั้งเป็น `1` เฉพาะ Workshop 1 Part B (Agent Teams) แล้วปิดหลังจบ |
 
 การตั้งค่าผู้ใช้รายเครื่องอยู่ที่ `~/.claude/settings.json` — ไฟล์ `settings.local.json` เป็นของเครื่องนั้น ไม่ควรเข้า git ส่วน Windows แล็บทั้งหมดรันใน **PowerShell** — คำสั่งทุกอันในคอร์สเขียนสำหรับ PowerShell (`$env:VAR`, `$LASTEXITCODE`)
 

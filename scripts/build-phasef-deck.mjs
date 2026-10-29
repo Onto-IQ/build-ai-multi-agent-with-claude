@@ -271,7 +271,7 @@ async function main() {
       x: 0.55, y: 1.15, w: 12.2, h: 1.0, fontSize: 18, color: C.ink, margin: 0, isTextBox: true,
     });
     const steps = [
-      'W1 Explore → docs/EXPLORATION-REPORT.md',
+      'W1 Explore + Agent Teams → EXPLORATION-REPORT + TEAMS-REVIEW',
       'W2 data-researcher + citations',
       'W3 planner/developer → gate 2/6',
       'W4 qa → developer → gate 6/6',

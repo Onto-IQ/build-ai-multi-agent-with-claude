@@ -1,6 +1,9 @@
 # Workshop 1
 
-รายงานอ้างอิงอยู่ที่ `drop-in/docs/EXPLORATION-REPORT.md`
+อ้างอิงอยู่ที่ `drop-in/docs/`:
+
+- `EXPLORATION-REPORT.md` — Part A (Explore swarm)
+- `TEAMS-REVIEW.md` — Part B (Agent Teams)
 
 ```bash
 node solutions/w1/check.js

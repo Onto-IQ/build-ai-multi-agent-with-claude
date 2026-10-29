@@ -21,7 +21,9 @@
 |---|---|---|
 | Tool calling | การเรียกเครื่องมือ | โมเดลเลือกเครื่องมือ รันไทม์ทำให้ แล้วส่งผลกลับเข้า context |
 | Subagent | เอเจนต์ย่อย | context แยก สรุปผลกลับผู้เรียก |
-| Swarm | งานขนาน | งานย่อยไม่ต้องใช้ผลของกันและกัน |
+| Swarm | งานขนาน | งานย่อยไม่ต้องใช้ผลของกันและกัน (ในคอร์สนี้มักใช้ Explore subagents) |
+| Agent Teams | ทีมเอเจนต์ | experimental — teammate คนละ session มี mailbox + รายการงานร่วม เปิดด้วย `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` |
+| Teammate | เพื่อนทีม | สมาชิกใน Agent Teams ที่ lead สร้างด้วยชื่อ |
 | Sequential pipeline | งานทีละขั้น | ผลของขั้นก่อนหน้าเป็นอินพุตของขั้นถัดไป |
 | Leader | หัวหน้างาน | แตกงาน รวมผล ไม่ได้ลงมือทุกไฟล์เอง |
 | Shared contract | สเปกกลาง | สเปกที่ทุกบทบาทยึด เช่น `PRODUCT-SPEC.md` |
