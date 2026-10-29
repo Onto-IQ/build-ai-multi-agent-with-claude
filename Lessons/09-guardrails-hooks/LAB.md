@@ -24,6 +24,8 @@ npm run gate
 
 ผลที่คาดหวัง: `quality gate: 6/6 passed` exit 0
 
+> 📚 **`npm run gate` = กดปุ่มใน `package.json`:** เปิดไฟล์ที่ราก workshop จะเห็น `"gate": "node scripts/quality-gate.js"` — คุณไม่ได้พิมพ์ path ยาว แต่ระบบไปรันตัวตรวจให้ · ห้ามแก้ไฟล์นั้นเพื่อให้เขียว
+
 2. สร้าง hook ใน TUI (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาตเมื่อเขียน `.claude/`
 
 **เวอร์ชันอังกฤษ (แนะนำ):**

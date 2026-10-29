@@ -14,6 +14,27 @@
 
 > EN: Permissions and hooks enforce rules. Exit 2 blocks. Fix the app and the CSV, not the gate.
 
+### `npm run gate` มาจากไหน — เล่า `package.json` อีกครั้ง
+
+คนเรียนไม่ต้องเขียน Node ก็ใช้คำสั่งนี้ได้ เพราะมันไม่ได้ “เวทมนตร์” — มันอ่านจากไฟล์เมนูที่ราก workshop:
+
+```json
+"scripts": {
+  "start": "node server.js",
+  "gate": "node scripts/quality-gate.js",
+  "verify": "node scripts/verify-setup.mjs"
+}
+```
+
+| ที่พิมพ์ | ที่เครื่องทำจริง |
+|---|---|
+| `npm run gate` | รันไฟล์ `scripts/quality-gate.js` |
+| `npm run gate && echo GATE-GREEN` | รัน gate ก่อน · ถ้าสำเร็จ (exit 0) ค่อยพิมพ์คำว่า `GATE-GREEN` |
+
+ดังนั้นเมื่อห้ามแก้ gate แปลว่า**ห้ามแก้ไฟล์ที่เมนูชี้ไป** (`scripts/quality-gate.js`) — ไม่ใช่ห้ามแก้ `package.json` เพื่อเปลี่ยนชื่อปุ่ม · เป้าหมายคือให้ตัวตรวจนิ่ง เป็นข้อสอบชุดเดียวกันทั้งห้อง
+
+> 📚 **เปรียบ:** `package.json` = สารบัญปุ่มบนรีโมต · `npm run …` = กดปุ่ม · สคริปต์ใน `scripts/` = เครื่องในกล่องทีวี · วันนี้เราวัดภาพบนจอด้วยปุ่ม gate ไม่ได้แกะเครื่องไปปรับให้เขียวเอง
+
 ## Concept / เนื้อหา
 
 สามชั้นของการคุมเอเจนต์ เรียงจากบางไปหนา (แผ่นอ้างอิง):

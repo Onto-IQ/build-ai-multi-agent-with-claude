@@ -14,6 +14,8 @@
 | **headless** | `claude -p` | โหมดพิมพ์ครั้งเดียว (ใช้คู่กับ `-p` ได้) |
 | **TUI** | `claude` แบบโต้ตอบ | — |
 | **verify-setup** | `node scripts/verify-setup.mjs` | เครื่องติดตั้งพัง |
+| **package.json** | ไฟล์เมนู `scripts` ที่ราก workshop · `npm run <ชื่อ>` | แพ็กเกจเจสัน (อย่าแปลยาว) |
+| **npm run gate** | ชื่อเล่นใน `package.json` ที่ชี้ไป `node scripts/quality-gate.js` | รันเกต (กำกวม) |
 
 คอลัมน์ «ไทยในห้องนี้» ด้านล่าง = คำอธิบายสั้น ไม่จำเป็นต้องแทน keyphrase ในประโยก
 
@@ -34,6 +36,8 @@
 | MCP | MCP | JSON-RPC ให้**เอเจนต์**เรียกเครื่องมือภายนอก (Workshop 6) — คนละขั้นกับพิมพ์ `duckdb` เอง |
 | stdio | stdio | MCP บนเครื่องเดียวกัน — stdout มีได้แค่ JSON |
 | Hook | hook | สคริปต์ที่รันเองที่จุดเหตุการณ์ — hook exit 2 = บล็อก |
+| package.json | package.json | เมนูคำสั่งของโปรเจกต์ — หัวข้อ `"scripts"` ผูกชื่อเล่นกับคำสั่งจริง |
+| npm run | npm run | กดปุ่มชื่อในเมนู `package.json` เช่น `npm run gate` |
 | Quality gate | quality gate | `scripts/quality-gate.js` — exit 0 ผ่าน, exit 2 ไม่ผ่าน |
 | Cost gate | cost gate | `scripts/cost-gate.js` — หยุดเมื่อเกินเพดาน |
 | Human-in-the-loop | คนอยู่ในวง | หยุดให้คนอนุมัติก่อนเดินต่อ |

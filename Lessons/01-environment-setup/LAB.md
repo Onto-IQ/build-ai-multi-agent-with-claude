@@ -40,6 +40,8 @@ git clone <URL-workshop-repo> C:\dev\multi-agent-workshop
 
 ผลที่คาดหวัง: ได้โฟลเดอร์ `C:\dev\multi-agent-workshop` ที่มี `package.json`, `server.js`, `data/`, `web/`
 
+> 📚 **`package.json` คืออะไร (ไม่ต้องเป็น dev):** ไฟล์ชื่อเมนูคำสั่งของโปรเจกต์นี้ · เปิดดูจะเจอหัวข้อ `"scripts"` ซึ่งเป็น**ชื่อเล่น**ที่ผูกกับคำสั่งจริง เช่น `"start"` → `node server.js` · `"gate"` → `node scripts/quality-gate.js` · พอพิมพ์ `npm run gate` แปลว่า “เปิดเมนูแล้วกดรายการ gate” — คุณไม่ต้องจำ path ยาว ๆ ของสคริปต์ · **ห้ามแก้** `scripts/quality-gate.js` เพื่อให้ผ่าน (แอบแก้ข้อสอบ) แต่**อ่าน** `package.json` ได้เต็มที่
+
 > 📚 **รู้เพิ่ม:** ทุกคำสั่งในแล็บถัด ๆ ไปเขียน path ตายตัวไว้ที่ `C:\dev\multi-agent-workshop` เพื่อให้ copy-paste ได้ทั้งคอร์ส · `catch-up` / `verify-setup` (course) / `check-solutions` ชี้ path นี้เป็นค่าเริ่มต้น · ถ้าเก็บคนละที่ ให้ copy `.env.example` → `.env` แล้วแก้ `WORKSHOP_DIR` (หรือตั้ง `$env:WORKSHOP_DIR`) — แนะนำ path ตายตัว
 
 > 📚 **clone หรือ ZIP (course repo):** คำสั่ง `git status` / `git diff` ในแล็บต้องอาศัยโฟลเดอร์ `.git` ซึ่งมีเฉพาะเมื่อ `git clone` — ถ้าคุณ download ZIP ของ course repo แทน ให้ทำ snapshot เริ่มต้นหนึ่งครั้งที่ course repo: `git init` → `git add -A` → `git commit -m "start from zip"` แล้วทุกแล็บเทียบ "แตะไฟล์บทเรียนหรือยัง" กับจุดเริ่มนี้ได้ทั้งคอร์ส (แนะนำ clone มากกว่า — อัปเดตคอร์สด้วย `git pull` ได้)
