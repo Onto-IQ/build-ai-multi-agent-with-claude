@@ -1,107 +1,83 @@
-# Module 5 — สายงานต่อคิว / Sequential pipeline
+# Module 5 — สายงานต่อคิว + Teammate / Hybrid orchestration
 
-> ⏱ ~60 นาที · 🎯 สามขั้นต่อคิว: ออกแบบ → เขียนตัวทำความสะอาด → รีวิว ขั้นหลังอ่านไฟล์จากขั้นก่อน · Design, implement, then review a cleaner, each stage consuming the previous artifact.
+> ⏱ ~70 นาที · 🎯 Hybrid: ขั้นใหญ่ต่อคิวด้วยไฟล์ (แผน → ลงมือ → รีวิว) · ขั้นลงมือใช้ Teammate สามคน (data / backend / frontend) คุยกันอย่างน้อย 5 ครั้ง · เพดาน 30 รอบ
+
+แบบฝึกหัด (prompt / ไฟล์ตั้งค่าที่ต้องคัดลอก) อยู่ที่ **[LAB.md](LAB.md)** — หน้านี้สำหรับอ่านทบทวนแนวคิด
 
 ## Key idea / แนวคิดหลัก — เล่าเป็นเรื่อง
 
-เมื่อวานเราแตกงานเป็นสามก้อนที่วิ่งพร้อมกันได้เพราะไม่มีใครต้องรอใคร วันนี้โจทย์กลับด้าน: แอป Registry Insight มีข้อมูลจดทะเบียนดิบจาก data.go.th และการทำความสะอาดมันมีลำดับที่หักล้างไม่ได้ — ต้องตกลงก่อนว่าแถวไหนถึงจะทิ้ง วันที่ พ.ศ. แปลงอย่างไร จังหวัดดึงจากที่อยู่กฎไหน แล้วค่อยเขียน SQL ตามข้อตกลงนั้น แล้วค่อยมีคนตรวจ
+เมื่อวาน (Module 3) เราสำรวจขนานได้เพราะงานไม่ง้อกัน วันนี้โจทย์มี**ลำดับที่ข้ามไม่ได้**: ต้องมีแผนเป็นไฟล์ก่อน แล้วค่อยลงมือ แล้วค่อยรีวิว — ถ้าทำพร้อมกันตั้งแต่ต้น จะไม่มีสัญญาให้เทียบ
 
-จุดพลาดที่เจอบ่อยที่สุดของงานแบบนี้คือทุกอย่างอยู่ใน "แผนที่เล่าในแชท" — leader เล่าเรียงสามขั้นให้ฟังสวยงาม แต่ไม่มีอะไรถูกเขียนเป็นไฟล์จริงเลย ขั้นเขียนก็เดาข้อตกลงจากความจำ และขั้นตรวจก็ไม่มีตัวรื้อ ลางแล็บนี้จึงวัดผลด้วย**ไฟล์**: ขั้นถัดไปเริ่มได้เมื่อไฟล์ของขั้นก่อนหน้าอยู่บนเครื่องจริง
+แต่ตอน**ลงมือ** งานมีสามเจ้าของชัดเจน (ข้อมูล / เซิร์ฟเวอร์ / หน้าเว็บ) ที่ควรคุยกันเองได้ — เลยเปิดโหมดทีมเฉพาะขั้นนั้น ให้เพื่อนชื่อ `data`, `backend`, `frontend` เป็น Teammate มีรายการงานร่วม ส่งข้อความหากันได้อย่างน้อย 5 ครั้ง แล้วหัวหน้า (`developer`) ค่อยสรุป
 
-ข้อตกลงของรอบนี้มีชื่อไฟล์เฉพาะคือ `docs/DESIGN.md` — ไม่ใช่สิ่งที่จำจากบทสนทนา เมื่อข้อตกลงอยู่ในไฟล์ ขั้นเขียนเปิดอ่านได้เอง และขั้นตรวจก็มีตัวเทียบที่เป็นธรรม
+นี่คือ **hybrid**: โครงใหญ่เป็น sequential · ข้างในขั้นลงมือเป็น Agent Teams
 
-> EN: One prompt, three stages, files on disk between them. Review does not edit. The server crash is tomorrow's lab.
+> EN: Sequential file handoffs outside; three named teammates with ≥5 peer messages inside the build step. Max turns 30. Delete local settings before review.
 
 ## Concept / เนื้อหา
 
-สามขั้นของแล็บนี้แต่ละขั้นมีสิ่งที่ต้องผลิตและเส้นที่ห้ามข้าม:
-
-| ขั้น | เขียนอะไร | ห้ามทำ |
+| ชั้น | แบบไหน | ทำอะไร |
 |---|---|---|
-| Design | `docs/DESIGN.md` — แถวไหนทิ้ง แถวไหนซ่อม สูตรรายได้ | ห้ามเขียนสคริปต์ |
-| Build | `scripts/clean-export.sql` — SQL บน DuckDB ส่งออก CSV | ห้ามแก้ `scripts/quality-gate.js` |
-| Review | `docs/REVIEW.md` — อ้างไฟล์และพฤติกรรม | ห้ามแก้สคริปต์ในขั้นนี้ |
+| ขั้นใหญ่ | Sequential | planner → `TASKS.md` → ลงมือ → คุณรัน SQL/gate → รีวิว |
+| ขั้นลงมือ | Teammate | `data` / `backend` / `frontend` คุยกันเอง + รายการงานร่วม |
+| หลังลงมือ | ปิดโหมดทีม | ลบ `settings.local.json` แล้วค่อย `@developer` รีวิว |
 
-หัวใจของ DESIGN.md คือสูตรเดียว: `qty * unit_price_thb * (1 - discount_pct / 100)` ปัดเป็นสตางค์ทีละแถว — ดูเล็กแต่คือจุดที่สามขั้นจะคลาดกันถ้าไม่เขียนไว้เป็นตัวหนังสือ
+ของที่ต้องมีบนดิสก์ระหว่างขั้น:
 
-ระหว่างทำงาน leader ควรมี task list ที่สถานะเดินให้เห็น (รอทำ → กำลังทำ → เสร็จ) คุณจะได้เห็นพัฒนาการทีละขั้น ไม่ใช่รอเงียบ ๆ แล้วได้ผลทีเดียว และเช็คง่าย ๆ ว่างานเดินถูกทิศ: งานรีวิวต้องไม่เริ่มก่อนมีสคริปต์จริง
-
-สองเรื่องที่ตั้งใจ**ไม่**ใช้ในแล็บนี้: ทีมเอเจนต์ที่คุยกันด้วยข้อความยังเป็นฟีเจอร์ทดลอง จึงไม่ใช่ทางผ่านของงานส่ง และสคริปต์ workflow ที่ให้เอเจนต์สองตัวหาเรื่องแล้วหักล้างกัน เป็นสาธิตของผู้สอนหลังห้องเดินสามขั้นนี้ได้แล้ว — ไม่ใช่งานที่ผู้เรียนต้องส่งวันนี้
-
-## ลงมือทำตามลำดับ
-
-```bash
-claude
-```
-
-1. วาง prompt จากหัวข้อถัดไปลงใน TUI แล้วอย่าไปไหน — สังเกต task list เดินทีละขั้น และไฟล์โผล่ทีละชิ้น (`docs/DESIGN.md` ก่อน แล้ว `scripts/clean-export.sql` แล้ว `docs/REVIEW.md`)
-2. ระหว่างรอ ตรวจสามจุดที่มักผิด: ขั้น 2 ต้องอ้าง DESIGN.md (ไม่ใช่คิดสูตรเอง), สคริปต์ต้อง Node ล้วน (ไม่มี `npm install`), และขั้น 3 ต้องอ้างชื่อไฟล์ที่มันตรวจ
-3. ปิดแล็บด้วยการดูของจริง (ที่ workshop repo):
-
-```bash
-git status
-duckdb -c ".read scripts/clean-export.sql" && head -3 data/dataset.csv
-```
-
-   ถ้า quality gate ยังแดง (เช่นเรื่อง `JSON.parse` ใน server.js) ให้สบายใจได้ — รอบนี้ยังไม่ให้แก้ `server.js` นั่นคือของ Workshop 4 ที่ตามมาทันที
-
-หมายเหตุ headless: รันผ่าน `claude -p` จะชนการปฏิเสธ Bash ได้ง่าย และไฟล์ออกแบบอาจไม่ถูกเขียนจริง — แล็บนี้ทำใน TUI
-
-## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
-
-**เวอร์ชันอังกฤษ (แนะนำ):**
-
-```text
-Run three stages now, not as a plan.
-Stage 1: Write docs/DESIGN.md for cleaning data/dataset.csv. List fatal row drops and repairs. Include the revenue formula. Do not write code yet.
-Stage 2: Write scripts/clean-export.sql (DuckDB SQL) that implements DESIGN.md. Do not edit server.js.
-Stage 3: Write docs/REVIEW.md comparing the SQL to DESIGN.md. Cite clean-export.sql. Fix nothing.
-```
-
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
-
-```text
-เดินสามขั้นตอนนี้ อย่าหยุดที่แผน
-ขั้น 1: เขียน docs/DESIGN.md สำหรับทำความสะอาด data/dataset.csv ระบุแถวที่ทิ้งกับแถวที่ซ่อม และสูตรรายได้ ห้ามเขียนโค้ด
-ขั้น 2: เขียน scripts/clean-export.sql ด้วย DuckDB ตาม DESIGN.md ห้ามแก้ server.js
-ขั้น 3: เขียน docs/REVIEW.md เทียบ SQL กับ DESIGN.md ให้อ้าง clean-export.sql ห้ามแก้ของ
-```
-
-> 📚 **ทำไมแนะนำ EN:** ของส่งสามชิ้นนี้ (DESIGN / สคริปต์ / REVIEW) จะถูกขั้นถัดไปเปิดอ่านต่อ — สั่งเป็นอังกฤษให้ทุก artifact อยู่ภาษาเดียวกับชื่อไฟล์และสูตร ส่วน TH ผ่านการทดสอบกับงานสายผลิตแบบนี้มาแล้ว (แม้จับข้อขัดแย้งระหว่าง prompt กับสเปกได้)
-
-| ส่วน | หน้าที่ |
+| ของส่ง | บทบาท |
 |---|---|
-| now, not as a plan | กัน leader เล่าอย่างเดียว |
-| Do not write code yet | กันขั้น 1 ล้ำไปเขียนโค้ด |
-| Do not edit server.js | กันงานหลุดไป Workshop 4 |
-| Fix nothing | กันขั้นรีวิวลงมือแก้ของ |
+| `docs/TASKS.md` | แผนจาก planner — ต้องมาก่อน Teammate |
+| `docs/DESIGN.md` + `scripts/clean-export.sql` | ของจาก teammate `data` |
+| แก้ `server.js` / `web/app.js` | ของจาก `backend` / `frontend` |
+| `docs/REVIEW.md` | รีวิวหลังปิดโหมดทีม — ห้ามแก้ของ |
+
+ไฟล์ตั้งค่าขั้น Teammate (ข้อความเต็มอยู่ที่ LAB): เปิด `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` และตั้ง `CLAUDE_CODE_MAX_TURNS` เป็น **30**
+
+## ลำดับในห้อง (ภาพรวม)
+
+1. สร้าง `planner` + `developer` → `@planner` ได้ `TASKS.md`
+2. ใส่ `settings.local.json` (Teams + max 30) → เปิด `claude` ใหม่
+3. `@developer` สร้าง Teammate `data` / `backend` / `frontend` · คุยกัน ≥ 5 ครั้ง
+4. ลบ `settings.local.json`
+5. คุณรัน DuckDB + เปิดเว็บ + `npm run gate` (คาด 2/6)
+6. `@developer` เขียน `REVIEW.md` โดยห้ามแก้ของ
+
+## สิ่งที่ต้องจำ (ทบทวน)
+
+| จุด | ความหมาย |
+|---|---|
+| Hybrid | โครงใหญ่ต่อคิว · ขั้นลงมือเป็นทีม |
+| ≥ 5 ข้อความระหว่าง teammates | บังคับให้ใช้โหมดทีมจริง ไม่ใช่แค่แตกงานเงียบ ๆ |
+| MAX_TURNS 30 | เพดานรอบของขั้นลงมือ (ยาวกว่าสำรวจที่ใช้ 20) |
+| ลบ settings ก่อนรีวิว | กันโหมดทีมติดไป Workshop ถัดไป |
 
 ## Common pitfalls / กับดัก
 
-- ได้ความเรียงสามขั้นในแชท แต่ไม่มีไฟล์ — แก้ด้วยคำว่า "now, not as a plan" และวัดด้วยไฟล์จริงบนเครื่องเสมอ
-- ขั้น 2 ไม่เปิด DESIGN.md แล้วคิดสูตรเอง — ผลลัพธ์อาจวิ่งได้ แต่ขั้นรีวิวไม่มีตัวเทียบ งานทั้งสายจึงตรวจไม่ได้
-- รีวิวลงมือแก้สคริปต์ทั้งที่ถูกสั่งให้ห้าม — เมื่อผู้ตรวจเป็นผู้แก้ คุณจะสูญเสียชั้นตรวจไปหนึ่งชั้นโดยไม่รู้ตัว
-- ใช้ swarm สามตัวพร้อมกัน — งานสามขั้นนี้รอกันเป็นทอด ขนานเมื่อไหร่ไฟล์ชนเมื่อนั้น (เช็คด้วยสัญญาณจาก Module 3)
-- `claude -p` แล้ว Bash ถูกปฏิเสธ — ตัวรันสคริปต์จึงไม่เกิด ให้ทำใน TUI
-- `--max-turns` ต่ำ — หมดรอบตั้งแต่ขั้น 1 ยังไม่ทันไฟล์ที่สอง
+- เปิดโหมดทีมตั้งแต่รอบ planner — ขั้นวางแผนไม่ต้องใช้ Teammate
+- ลืมลบ `settings.local.json` ก่อนรีวิว / ก่อน Workshop 4
+- สั่ง Explore แทน agent team ในขั้นลงมือ
+- ใช้ `claude -p` ตอนมีโหมดทีม — จะไม่ได้ teammate
+- รีวิวลงมือแก้สคริปต์ทั้งที่สั่งห้าม
 
 ## Quick check / ทบทวน
 
 <details>
-<summary>1. ถ้าไม่มี DESIGN.md ขั้น 2 เสี่ยงอะไร</summary>
-สคริปต์จะเดาว่าแถวไหนเก็บ โดยไม่มีที่ให้ขั้นรีวิวเทียบ
+<summary>1. ส่วนไหนของแล็บนี้เป็น sequential</summary>
+แผนต้องมีไฟล์ก่อนลงมือ และรีวิวต้องมาหลังมี DESIGN/SQL — ต่อคิวด้วยไฟล์
 </details>
 
 <details>
-<summary>2. ทำไมยังไม่แก้ JSON.parse ในวันนี้</summary>
-เพราะรอบนี้ยังไม่ให้แก้ `server.js` — quality gate เคส crash ยังแดงจนถึง Workshop 4
+<summary>2. ส่วนไหนเป็น Teammate</summary>
+ขั้นที่ developer สร้างเพื่อนชื่อ data, backend, frontend ให้คุยกันอย่างน้อย 5 ครั้ง
 </details>
 
 <details>
-<summary>3. ขั้นรีวิวส่งอะไร</summary>
-ไฟล์ที่ชี้ว่าสคริปต์ตรง DESIGN หรือหลุดข้อไหน — ยังไม่แก้โค้ดในขั้นนี้
+<summary>3. ทำไม MAX_TURNS เป็น 30 ไม่ใช่ 20</summary>
+ขั้นลงมือสร้างไฟล์และแก้โค้ดยาวกว่าการสำรวจอ่านอย่างเดียวใน Workshop 1
 </details>
 
 ## Go deeper
 
+- [LAB.md](LAB.md) — แบบฝึกหัด Workshop 3
+- [Module 3 — Swarm + Agent Teams](../03-swarm/README.md)
 - [Failure modes](../../reference/failure-modes.md)

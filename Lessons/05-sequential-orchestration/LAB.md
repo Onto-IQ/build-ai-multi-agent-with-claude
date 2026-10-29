@@ -1,26 +1,32 @@
-# Workshop 3 — แผน → ทีมลงมือขนาน 3 สาย → เว็บโชว์ยอดจริง
+# Workshop 3 — Hybrid: ต่อคิว + Teammate → เว็บโชว์ยอดจริง
 
-> ⏱ machine ~14 นาที · Start state: มี `docs/EXPLORATION-REPORT.md` จาก Workshop 1 · quality gate ยัง 0/6
+> ⏱ machine ~18–20 นาที · Start state: มี `docs/EXPLORATION-REPORT.md` จาก Workshop 1 · quality gate ยัง 0/6
 
 ## Goal / เป้าหมาย
 
-หน้าเว็บโชว์ยอดจริง (gate ผ่านเคส data-quality และ summary = 2/6) จากงานที่ planner วางแผนเป็นไฟล์ และ developer ในบทบาท **lead** แตกงานให้ subagent สามสายทำขนานกัน: ข้อมูล, backend, frontend
+หน้าเว็บโชว์ยอดจริง (gate ผ่านเคส data-quality และ summary = 2/6) จากงานแบบ **hybrid**:
+
+1. **Sequential (ต่อคิวด้วยไฟล์)** — planner เขียนแผน → ได้ไฟล์แล้วค่อยลงมือ → รีวิวทีหลัง  
+2. **Teammate (โหมดทีม)** — ตอนลงมือ ให้ `data` / `backend` / `frontend` เป็นเพื่อนทีมสามคนที่คุยกันเองได้
 
 ## สังเกต handoff (หัวใจของแล็บนี้)
 
-| จาก | ไฟล์ | ถึง |
+| จาก | ไฟล์ / โหมด | ถึง |
 |---|---|---|
-| Workshop 1 Part A (Explore) | `docs/EXPLORATION-REPORT.md` | planner อ่านก่อนวางแผน |
-| Workshop 1 Part B (Agent Teams) | `docs/TEAMS-REVIEW.md` | อ่านคู่กันถ้ามี — disputed / next step |
-| planner | `docs/TASKS.md` | developer (lead) ทำตามแผน |
-| developer lead | แตกงาน 3 สายขนาน | data · backend · frontend |
-| data สาย | `docs/DESIGN.md` + `scripts/clean-export.sql` | คุณรัน SQL เอง |
-| สคริปต์ของคุณ | `data/dataset.csv` (แทนที่) | เว็บแดชบอร์ดโชว์ยอดจริง |
-| developer (รอบสอง) | `docs/REVIEW.md` | ตัวคุณ + Workshop 4 |
+| Workshop 1 Part A | `docs/EXPLORATION-REPORT.md` | planner อ่านก่อนวางแผน |
+| Workshop 1 Part B | `docs/TEAMS-REVIEW.md` | อ่านคู่กันถ้ามี |
+| planner (ต่อคิว) | `docs/TASKS.md` | developer อ่านแผน |
+| developer + **3 teammates** | `docs/DESIGN.md` + SQL + แก้ `server.js` / `web/` | คุณรัน SQL เอง |
+| สคริปต์ของคุณ | `data/dataset.csv` (แทนที่) | เว็บโชว์ยอดจริง |
+| developer (รอบรีวิว · **ปิดโหมดทีมแล้ว**) | `docs/REVIEW.md` | ตัวคุณ + Workshop 4 |
+
+> 📚 **hybrid คืออะไร:** ขั้นใหญ่ต่อคิวด้วยไฟล์ (แผนต้องมาก่อนลงมือ · รีวิวต้องมาหลังมีของจริง) · แต่**ในขั้นลงมือ** ใช้โหมดทีมให้เพื่อนชื่อ `data`, `backend`, `frontend` ประสานกันเอง — ไม่ใช่สำรวจแบบ Explore อย่างเดียวแบบ Module 3
 
 ## Steps / ขั้นตอน
 
-1. สร้างเอเจนต์ทั้งสองตัวใน TUI (คำสั่งเดียวจบ เขียนสองไฟล์) แล้วกดอนุญาตเมื่อถามสิทธิ์เขียน `.claude/`
+### A — สร้าง specialty agent + วางแผน (ต่อคิว · ยังไม่เปิดโหมดทีม)
+
+1. สร้างเอเจนต์ทั้งสองตัวใน TUI แล้วกดอนุญาตเมื่อถามสิทธิ์เขียน `.claude/`
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
@@ -42,9 +48,9 @@ In this folder, create two agent files.
 2) .claude/agents/developer.md — frontmatter: name เป็น developer; description ว่า Use proactively to implement one task from docs/TASKS.md; tools เป็น Read, Grep, Glob, Write, Edit, Bash; model เป็น sonnet เนื้อหา: คุณคือ developer ทำงานตาม task ที่ได้รับ อ้างหมายเลข task Node ล้วน ห้ามแตะ scripts/quality-gate.js
 ```
 
-2. **ปิด TUI แล้วเปิด `claude` ใหม่** — เอเจนต์ใหม่ถูกโหลดตอนเซสชันเริ่มเท่านั้น (เหมือน Workshop 2)
+2. **ปิด TUI แล้วเปิด `claude` ใหม่** — เอเจนต์ใหม่ถูกโหลดตอนเซสชันเริ่มเท่านั้น
 
-3. สั่ง planner ทำ handoff แรก — `@` หน้าชื่อ = เรียกเอเจนต์ตัวนั้นโดยตรง (เหมือน Workshop 2):
+3. สั่ง planner (เลือกอย่างใดอย่างหนึ่ง) — `@` = เรียกตรง:
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
@@ -55,58 +61,106 @@ In this folder, create two agent files.
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-@planner อ่าน docs/EXPLORATION-REPORT.md กับ data/README.md แล้วเขียน docs/TASKS.md: ลิสต์งานเรียงลำดับเพื่อทำความสะอาด data/dataset.csv และพิสูจน์ผล จัดเป็นสามสาย (data, backend, frontend) ใครเป็นเจ้าของไฟล์ไหน และงานไหนห้ามแตะ scripts/quality-gate.js
+@planner อ่าน docs/EXPLORATION-REPORT.md กับ data/README.md แล้วเขียน docs/TASKS.md: ลิสต์งานเรียงลำดับเพื่อทำความสะอาด data/dataset.csv และพิสูจน์ผล จัดเป็นสามส่วน (data, backend, frontend) ใครเป็นเจ้าของไฟล์ไหน และงานไหนห้ามแตะ scripts/quality-gate.js
 ```
 
-📦 **Handoff ที่ 1 เกิดแล้ว:** เปิด `docs/TASKS.md` ด้วยตา — นี่คือของที่ planner ส่งต่อให้ developer
+📦 **Handoff ที่ 1:** เปิด `docs/TASKS.md` ด้วยตา — ของที่ส่งต่อให้ขั้นลงมือ
 
-4. สั่ง developer ในบทบาท **lead** แตกงานขนานสามสาย (เลือกอย่างใดอย่างหนึ่ง):
+4. **ปิด `claude`** ก่อนเปิดโหมดทีม
+
+### B — เปิดโหมดทีม แล้วให้ developer สร้าง Teammate สามคน
+
+5. สร้างไฟล์ตั้งค่าบนเครื่องคุณ (เหมือน Workshop 1 Part B แต่เพดานรอบเป็น **30**):
+
+ชื่อไฟล์เป๊ะ ๆ: `.claude/settings.local.json` ในโฟลเดอร์ `C:\dev\multi-agent-workshop`
+
+**คัดลอกทั้งก้อนนี้** ไปวาง แล้ว Save:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_MAX_TURNS": "30"
+  }
+}
+```
+
+> 📚 **Note:**  
+> - `...AGENT_TEAMS` = `"1"` → เปิดโหมดทีม (Teammate)  
+> - `...MAX_TURNS` = `"30"` → เพดานไม่เกิน 30 รอบ (งานลงมือยาวกว่าสำรวจใน Workshop 1)  
+> - ไฟล์นี้เป็นของเครื่องคุณคนเดียว · **ไม่หายเอง** เมื่อปิดหน้าต่าง · ต้องลบเองหลังขั้นนี้
+
+6. เปิด `claude` ใหม่ (หลัง Save แล้วเท่านั้น):
+
+```powershell
+cd C:\dev\multi-agent-workshop
+claude
+```
+
+> ใช้หน้าจอ `claude` ธรรมดา — **อย่า** ใช้ `claude -p` เพราะโหมดทีมจะไม่ทำงาน
+
+7. สั่ง developer ให้เป็นหัวหน้าทีม สร้าง Teammate ชื่อ **data**, **backend**, **frontend** (เลือกอย่างใดอย่างหนึ่ง):
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-@developer Act as lead. Read docs/TASKS.md and dispatch three parallel subagents, one per track.
-data: write docs/DESIGN.md (the cleaning contract: junk-row drop, พ.ศ. to ISO dates, comma capitals, province extraction) and scripts/clean-export.sql (DuckDB SQL reading data/raw/dbd-2558.parquet, exporting data/dataset.csv).
-backend: rewrite the summary computation in server.js to parse with lib/csv.js instead of the naive comma split, and count only rows the data dictionary accepts (13-digit reg_no, ISO reg_date, numeric capital).
-frontend: update web/app.js so the dashboard shows the order count and revenue from /api/summary plus a small line naming the data source.
+@developer Act as team lead. Read docs/TASKS.md.
+Enable an agent team (not Explore subagents). Spawn exactly 3 named teammates:
+- data — write docs/DESIGN.md (cleaning contract: junk-row drop, พ.ศ. to ISO dates, comma capitals, province extraction) and scripts/clean-export.sql (DuckDB SQL reading data/raw/dbd-2558.parquet, exporting data/dataset.csv)
+- backend — rewrite summary computation in server.js to parse with lib/csv.js instead of naive comma split; count only rows the data dictionary accepts (13-digit reg_no, ISO reg_date, numeric capital)
+- frontend — update web/app.js so the dashboard shows order count and revenue from /api/summary plus a small line naming the data source
+
+Use a shared task list. The three teammates data, backend, and frontend must message each other at least 5 times before you synthesize.
 Do not touch scripts/quality-gate.js. Cite which task numbers you completed.
+When finished, ask all teammates to shut down.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-@developer ทำหน้าที่ lead อ่าน docs/TASKS.md แล้วแตกงานให้ subagent สามตัวทำขนานกัน สายละหนึ่ง
-data: เขียน docs/DESIGN.md (สัญญาทำความสะอาด: แถวหัวตารางทิ้ง พ.ศ. เป็น ค.ศ. ทุนมีลูกน้ำ ดึงจังหวัดจากที่อยู่) และ scripts/clean-export.sql (DuckDB SQL อ่าน data/raw/dbd-2558.parquet ส่งออก data/dataset.csv)
-backend: เขียนส่วนคำนวณ summary ใน server.js ใหม่ด้วย lib/csv.js แทนการ split จุลภาคตรง ๆ และนับเฉพาะแถวที่ผ่านพจนานุกรมข้อมูล (reg_no 13 หลัก, reg_date ISO, capital เป็นตัวเลข)
-frontend: ปรับ web/app.js ให้แดชบอร์ดโชว์จำนวนกิจการกับทุนรวมจาก /api/summary พร้อมบรรทัดเล็กบอกที่มาของข้อมูล
+@developer ทำหน้าที่หัวหน้าทีม อ่าน docs/TASKS.md
+ใช้ Agent Teams (ไม่ใช่ Explore) สร้าง teammate ชื่อชัดเจน 3 ตัว:
+- data — เขียน docs/DESIGN.md (สัญญาทำความสะอาด: แถวหัวตารางทิ้ง พ.ศ. เป็น ค.ศ. ทุนมีลูกน้ำ ดึงจังหวัดจากที่อยู่) และ scripts/clean-export.sql (DuckDB SQL อ่าน data/raw/dbd-2558.parquet ส่งออก data/dataset.csv)
+- backend — เขียนส่วนคำนวณ summary ใน server.js ใหม่ด้วย lib/csv.js แทนการ split จุลภาคตรง ๆ และนับเฉพาะแถวที่ผ่านพจนานุกรมข้อมูล (reg_no 13 หลัก, reg_date ISO, capital เป็นตัวเลข)
+- frontend — ปรับ web/app.js ให้แดชบอร์ดโชว์จำนวนกิจการกับทุนรวมจาก /api/summary พร้อมบรรทัดเล็กบอกที่มาของข้อมูล
+
+ใช้รายการงานร่วม เพื่อนทีม data, backend, frontend ต้องส่งข้อความหากันอย่างน้อย 5 ครั้งก่อนที่คุณจะสรุป
 ห้ามแตะ scripts/quality-gate.js รายงานว่าทำ task เลขอะไรครบบ้าง
+จบแล้วให้ teammate ทุกตัว shut down
 ```
 
-📦 **Handoff ที่ 2:** `docs/TASKS.md` → SQL ทำความสะอาดจริงใน `scripts/clean-export.sql`
+ผลที่คาดหวัง: แผงเอเจนต์มีชื่อ `data` / `backend` / `frontend` · มีรายการงานร่วม · ได้ DESIGN + SQL + การแก้ backend/frontend
 
-5. **รัน SQL ทำความสะอาดด้วยมือคุณเอง** — หลักฐานต้องมาจากเทอร์มินัลของคุณ (ที่ workshop repo) SQL เขียนทับ `data/dataset.csv` เป็นฉบับสะอาดให้เลย
+📦 **Handoff ที่ 2:** `docs/TASKS.md` → ของที่เพื่อนทีมลงมือ
+
+8. ออกจาก `claude` แล้ว **ลบทั้งไฟล์** `.claude/settings.local.json` (คลิกขวา → Delete) — ต้องทำก่อนรอบรีวิว ไม่งั้น Workshop ถัดไปยังเป็นโหมดทีม
+
+### C — คุณรันของจริง + รีวิว (ต่อคิว · โหมดทีมปิดแล้ว)
+
+9. รัน SQL ด้วยมือคุณเอง (workshop repo):
 
 ```powershell
 duckdb -c ".read scripts/clean-export.sql"
 ```
 
-ผลที่คาดหวัง: ได้ `data/dataset.csv` ฉบับสะอาด 16,772 แถว (วันที่ ISO ทุนไม่มีลูกน้ำ มีคอลัมน์ province)
+ผลที่คาดหวัง: `data/dataset.csv` สะอาด 16,772 แถว (วันที่ ISO ทุนไม่มีลูกน้ำ มีคอลัมน์ province)
 
-> 📚 **รู้เพิ่ม (จากการรันจริง):** agent ที่เขียน SQL อาจเลือกวิธีดึงจังหวัดต่างจากด้านบน — เคสที่ต้องเช็คคือที่อยู่ที่พูดถึงจังหวัดอื่นกลางประโยค (เช่น ถนนบางนา-ตราด ซึ่งอยู่ในกรุงเทพฯ) ถ้า gate รายงาน `unknown-province` ให้ชี้ `lib/inspect-data.js` แล้วสั่ง developer แก้กฎการดึงจังหวัดต่อ
+> 📚 **รู้เพิ่ม:** ถ้า gate รายงาน `unknown-province` ให้ชี้ `lib/inspect-data.js` แล้วสั่ง developer แก้กฎดึงจังหวัดต่อ (เปิด `claude` ใหม่หลังลบ settings แล้ว)
 
-6. เปิด `http://127.0.0.1:3000` (รัน `npm start` ในเทอร์มินัลลูก) — **หน้าเว็บโชว์ยอดจริงแล้ว: 16,772 กิจการ, ทุนรวม 45,341,868,784 บาท**
+10. เปิด `http://127.0.0.1:3000` (`npm start` ในเทอร์มินัลลูก) — **16,772 กิจการ, ทุนรวม 45,341,868,784 บาท**
 
-📦 **Handoff ที่ 3:** สคริปต์ที่สาย data เขียน → ข้อมูลสะอาด → เว็บที่ผู้ใช้เห็น (ที่สาย frontend จัดหน้าให้)
+📦 **Handoff ที่ 3:** SQL → CSV สะอาด → เว็บที่ผู้ใช้เห็น
 
-7. รัน quality gate ด้วยมือคุณเอง
+11. รัน quality gate:
 
 ```powershell
 npm run gate
+echo $LASTEXITCODE
 ```
 
-ผลที่คาดหวัง: **2/6 passed** — `data-quality` และ `summary-matches-valid-rows` เขียว อีกสี่เคสยังแดง (`bad-json-does-not-crash`, `health-no-secrets`, `notes-validation`, `notes-persists`) ไปแก้ใน Workshop 4
+ผลที่คาดหวัง: **2/6 passed** และ `$LASTEXITCODE` เป็น `2` — อีกสี่เคสยังแดง ไปแก้ใน Workshop 4
 
-8. สั่ง developer รอบสอง: รีวิวงานตัวเอง (เลือกอย่างใดอย่างหนึ่ง):
+12. เปิด `claude` ใหม่ (**ไม่มี** `settings.local.json` แล้ว) แล้วสั่งรีวิว:
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
@@ -122,28 +176,28 @@ npm run gate
 
 ## ✅ Checkpoint
 
-- [ ] `.claude/agents/` มี planner.md และ developer.md ที่ Claude เขียนใน TUI
-- [ ] `docs/TASKS.md`, `docs/DESIGN.md`, `docs/REVIEW.md` เกิดจริงและอ้างกันและกัน
-- [ ] รายงานของ developer lead อ้างงานครบสามสาย (data, backend, frontend)
-- [ ] หน้าเว็บโชว์ยอดจริง (16,772 กิจการ / 45,341,868,784 บาท ตรงกับไฟล์สะอาด)
-- [ ] quality gate 2/6 — อีกสี่เคสยังแดงตามที่วางไว้
-- [ ] `git diff -- scripts/quality-gate.js` ว่าง (ตัวตรวจไม่มีใครแตะ)
+- [ ] มี `planner.md` และ `developer.md` จาก TUI
+- [ ] `docs/TASKS.md` มาก่อนขั้น Teammate — เห็นลำดับต่อคิวด้วยไฟล์
+- [ ] มี `.claude/settings.local.json` ตอนขั้น B (Teams = 1, MAX_TURNS = 30) แล้ว**ลบแล้ว**ก่อนรีวิว
+- [ ] เพื่อนทีมชื่อ `data`, `backend`, `frontend` และ prompt บังคับคุยกันอย่างน้อย 5 ครั้ง
+- [ ] มี `docs/DESIGN.md`, `docs/REVIEW.md`, `scripts/clean-export.sql`
+- [ ] หน้าเว็บโชว์ยอดจริง (16,772 / 45,341,868,784)
+- [ ] quality gate 2/6
+- [ ] `git diff -- scripts/quality-gate.js` ว่าง
 
 ## 🛠 Troubleshooting
 
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
-| สั่งใช้ planner แล้วขึ้น `Agent type not found` | ยังไม่ได้รีสตาร์ท TUI หลังสร้างไฟล์ | ปิดแล้วเปิด `claude` ใหม่ |
-| ได้แผน แต่ไม่ได้ไฟล์ | planner ถูกสั่งให้เขียนโค้ด | planner มีแค่ Write — ตรวจว่าสั่งเขียน `docs/TASKS.md` เท่านั้น |
-| หน้าเว็บยังโชว์ของเดิม | ยังไม่ได้รัน SQL ส่งออกไฟล์สะอาด | รัน `duckdb -c ".read scripts/clean-export.sql"` ในขั้น 5 ซ้ำ |
-| gate ยัง 1/6 | แทนที่ CSV แล้วแต่ไฟล์สะอาดยังมี violation | ดูรายงาน FAIL แล้วสั่ง developer แก้สคริปต์ตาม รอบนี้แก้ได้ |
-| สาย backend แก้ summary แล้วยอดยังเพี้ยน | ยังอ่านราคาแบบตัดลูกน้ำขาด | ชี้ `lib/inspect-sales.js` ให้เทียบวิธีอ่านเงิน แล้วสั่งแก้ต่อ |
-| สคริปต์ไปแก้ `scripts/quality-gate.js` | ไม่มีข้อห้ามใน TASKS.md | คืนไฟล์จาก git แล้วเติมข้อห้ามใน TASKS.md สั่งใหม่ |
+| `Agent type not found` | ยังไม่รีสตาร์ทหลังสร้างไฟล์เอเจนต์ | ปิดแล้วเปิด `claude` ใหม่ |
+| ได้แค่ Explore ไม่มี teammate ชื่อ | ยังไม่มี settings หรือเปิด `claude` ก่อน Save | ตรวจไฟล์ → เปิดใหม่ → สั่งชัดว่า agent team |
+| ใช้ `claude -p` แล้วไม่มีทีม | โหมดทีมต้องใช้หน้าจอโต้ตอบ | ใช้ `claude` อย่างเดียว |
+| หมดรอบกลางคัน | งานลงมือยาว | ตรวจว่า MAX_TURNS เป็น `"30"` · Save แล้วเปิดใหม่ |
+| หน้าเว็บยังของเดิม | ยังไม่รัน SQL | รันขั้น 9 ซ้ำ |
+| แล็บหลังยังเป็นทีมใหญ่เอง | ลืมลบ `settings.local.json` | ลบไฟล์แล้วเปิด `claude` ใหม่ |
 | port busy | เซิร์ฟเวอร์ค้าง | ปิดก่อนรัน gate หรือตั้ง `PORT` |
 
 ## 🆘 Behind? Catch up
-
-จาก course repo (ไฟล์ถูก copy ลง workshop repo):
 
 ```bash
 node scripts/catch-up.js w3
@@ -153,7 +207,7 @@ node scripts/catch-up.js w3
 
 ## Stretch / ต่อยอด
 
-สั่ง planner เพิ่ม task "ตรวจว่า clean-export.sql ทนกับไฟล์ CSV ที่มี BOM" แล้วให้ developer ทำตาม — ซ้อม handoff รอบที่สาม
+หลังลบ settings แล้ว สั่ง planner เพิ่ม task เรื่อง BOM ใน CSV แล้วให้ `@developer` ทำตาม — ซ้อม handoff ต่อคิวโดยไม่เปิดโหมดทีม
 
 ## Solution → solutions/w3/
 

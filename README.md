@@ -26,7 +26,7 @@
 | เช้า | [02 สถาปัตยกรรมเอเจนต์](Lessons/02-agent-foundations/README.md) | [onboard /init + สาธิต](Lessons/02-agent-foundations/LAB.md) |
 | เช้า | [03 Swarm + Agent Teams](Lessons/03-swarm/README.md) | [Workshop 1](Lessons/03-swarm/LAB.md) — Explore + Agent Teams |
 | บ่าย | [04 Specialty agent](Lessons/04-specialty-agents/README.md) | [Workshop 2](Lessons/04-specialty-agents/LAB.md) |
-| บ่าย | [05 Sequential pipeline](Lessons/05-sequential-orchestration/README.md) | [Workshop 3](Lessons/05-sequential-orchestration/LAB.md) — เว็บโชว์ยอดจริง |
+| บ่าย | [05 Hybrid: sequential + Teammate](Lessons/05-sequential-orchestration/README.md) | [Workshop 3](Lessons/05-sequential-orchestration/LAB.md) — แผน→ทีม data/backend/frontend→รีวิว |
 | บ่าย | [06 แก้สามปม + QA handoff](Lessons/06-fix-and-qa/README.md) | [Workshop 4](Lessons/06-fix-and-qa/LAB.md) — gate 6/6 |
 | บ่าย | [07 Skills](Lessons/07-skills/README.md) | [Workshop 5](Lessons/07-skills/LAB.md) — release-manager |
 

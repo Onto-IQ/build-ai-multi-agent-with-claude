@@ -31,7 +31,7 @@
 | `PORT` | พอร์ตของ `server.js` และ quality gate — ค่าเริ่มต้น 3000 |
 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` | จำนวนเอเจนต์ย่อยที่ทำงานพร้อมกันได้สูงสุด ค่าว่างคือค่าเริ่มต้น |
 | `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | เปิดโหมดทีมเอเจนต์ — ใส่ใน `.claude/settings.local.json` ตอน Workshop 1 Part B แล้ว**ลบไฟล์นั้น**หลังจบ |
-| `CLAUDE_CODE_MAX_TURNS` | เพดานจำนวนรอบทำงาน — ใน Part B ใส่ `"20"` คู่กับโหมดทีมในไฟล์เดียวกัน |
+| `CLAUDE_CODE_MAX_TURNS` | เพดานจำนวนรอบทำงาน — Workshop 1 Part B ใช้ `"20"` · Workshop 3 ขั้น Teammate ใช้ `"30"` |
 
 ไฟล์ตั้งค่าของ Claude อยู่ใต้โฟลเดอร์ `.claude/` · ชื่อมีคำว่า **`local`** = ของเครื่องคุณคนเดียว อย่าอัปโหลดขึ้น git · Module 3 จะให้สร้างและลบไฟล์นี้เป็นขั้นเรียน ส่วน Windows แล็บทั้งหมดรันใน **PowerShell** — คำสั่งในคอร์สใช้แบบ PowerShell (`$env:VAR`, `$LASTEXITCODE`)
 

@@ -10,7 +10,7 @@ quality gate **6/6 exit 0** และ `POST /api/notes` บันทึกข้
 
 | จาก | ไฟล์/หลักฐาน | ถึง |
 |---|---|---|
-| Workshop 3 (สาย backend ยังไม่จบ) | `server.js` ที่ยัง crash รั่ว token เก็บโน้ตในหน่วยความจำ | qa สืบสวน |
+| Workshop 3 (backend ยังไม่จบครบ) | `server.js` ที่ยัง crash รั่ว token เก็บโน้ตในหน่วยความจำ | qa สืบสวน |
 | qa | `docs/QA-REPORT.md` (3 findings) | developer แก้ตามรายงาน |
 | developer (แก้) | `server.js` ใหม่ | qa ตรวจซ้ำ + คุณรัน gate |
 
