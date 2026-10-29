@@ -20,8 +20,8 @@
 |---|---|---|
 | 1 | เปิด Claude จาก workshop repo (`C:\dev\multi-agent-workshop`) | ขอบเขตของเอเจนต์ |
 | 2 | quality gate exit 0 | ของเสียไม่ขึ้นของจริง |
-| 3 | ไม่มี `sk-` ใน `/api/health` | ไม่ส่งค่าตัวอย่างออกไป |
-| 4 | `ANTHROPIC_API_KEY` ว่าง | ไม่หลุดไปคิดเงินรายครั้ง |
+| 3 | ไม่มี `sk-` ใน `/api/health` (PowerShell: `$env:PORT=3001; npm start` แล้ว `Invoke-RestMethod …/api/health`) | ไม่ส่งค่าตัวอย่างออกไป |
+| 4 | `ANTHROPIC_API_KEY` ว่าง (`echo $env:ANTHROPIC_API_KEY`) | ไม่หลุดไปคิดเงินรายครั้ง |
 | 5 | เซิร์ฟเวอร์ในเครื่องถูกปิดแล้ว | quality gate ไม่เจอ port busy |
 | 6 | รู้ว่าจะหยุดเมื่อเอเจนต์วน | มีคนดูอยู่ |
 | 7 | บัญชี Vercel ล็อกอินแล้ว | ไม่ไปสมัครกลางแล็บ |

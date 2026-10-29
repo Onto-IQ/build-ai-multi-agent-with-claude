@@ -126,9 +126,11 @@ npm run gate
 
 ถ้าขึ้น `port 3000 is already in use` แปลว่าเซิร์ฟเวอร์เก่ายังรันอยู่ ปิดมัน หรือรันใหม่ด้วยพอร์ตอื่น:
 
-```bash
-PORT=3001 npm start
+```powershell
+$env:PORT = 3001; npm start
 ```
+
+(Git Bash / macOS / Linux: `PORT=3001 npm start`)
 
 บน Windows อย่าใช้ `taskkill //IM node.exe` เพราะจะฆ่าทุกโปรเซส Node รวมถึงงานอื่น หา PID ของพอร์ตนั้นแล้วปิดเฉพาะตัว
 
