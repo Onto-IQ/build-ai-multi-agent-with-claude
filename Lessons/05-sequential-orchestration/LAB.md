@@ -107,11 +107,12 @@ claude
 @developer Act as team lead. Read docs/TASKS.md.
 Enable an agent team (not Explore subagents). Spawn exactly 3 named teammates:
 - data — write docs/DESIGN.md (cleaning contract: junk-row drop, พ.ศ. to ISO dates, comma capitals, province extraction) and scripts/clean-export.sql (DuckDB SQL reading data/raw/dbd-2558.parquet, exporting data/dataset.csv)
-- backend — rewrite summary computation in server.js to parse with lib/csv.js instead of naive comma split; count only rows the data dictionary accepts (13-digit reg_no, ISO reg_date, numeric capital)
+- backend — rewrite ONLY the summary computation in server.js to parse with lib/csv.js instead of naive comma split; count only rows the data dictionary accepts (13-digit reg_no, ISO reg_date, numeric capital). Do not change /api/notes, /api/health, or any try/catch around JSON.parse. Leave those bugs for Workshop 4.
 - frontend — update web/app.js so the dashboard shows order count and revenue from /api/summary plus a small line naming the data source
 
 Use a shared task list. The three teammates data, backend, and frontend must message each other at least 5 times before you synthesize.
-Do not touch scripts/quality-gate.js. Cite which task numbers you completed.
+Do not touch scripts/quality-gate.js. Do not "helpfully" fix notes validation, notes persistence, health token leaks, or bad-JSON crashes — Workshop 4 owns those four gate cases.
+Cite which task numbers you completed.
 When finished, ask each teammate by name to shut down (message data, then backend, then frontend). Do not call Stop Task using the names data/backend/frontend — those are teammate names, not task IDs.
 ```
 
@@ -121,11 +122,12 @@ When finished, ask each teammate by name to shut down (message data, then backen
 @developer ทำหน้าที่หัวหน้าทีม อ่าน docs/TASKS.md
 ใช้ Agent Teams (ไม่ใช่ Explore) สร้าง teammate ชื่อชัดเจน 3 ตัว:
 - data — เขียน docs/DESIGN.md (สัญญาทำความสะอาด: แถวหัวตารางทิ้ง พ.ศ. เป็น ค.ศ. ทุนมีลูกน้ำ ดึงจังหวัดจากที่อยู่) และ scripts/clean-export.sql (DuckDB SQL อ่าน data/raw/dbd-2558.parquet ส่งออก data/dataset.csv)
-- backend — เขียนส่วนคำนวณ summary ใน server.js ใหม่ด้วย lib/csv.js แทนการ split จุลภาคตรง ๆ และนับเฉพาะแถวที่ผ่านพจนานุกรมข้อมูล (reg_no 13 หลัก, reg_date ISO, capital เป็นตัวเลข)
+- backend — แก้เฉพาะส่วนคำนวณ summary ใน server.js ด้วย lib/csv.js แทนการ split จุลภาคตรง ๆ และนับเฉพาะแถวที่ผ่านพจนานุกรมข้อมูล (reg_no 13 หลัก, reg_date ISO, capital เป็นตัวเลข) ห้ามแตะ /api/notes /api/health และห้ามใส่ try/catch รอบ JSON.parse — บั๊กพวกนั้นเก็บไว้ Workshop 4
 - frontend — ปรับ web/app.js ให้แดชบอร์ดโชว์จำนวนกิจการกับทุนรวมจาก /api/summary พร้อมบรรทัดเล็กบอกที่มาของข้อมูล
 
 ใช้รายการงานร่วม เพื่อนทีม data, backend, frontend ต้องส่งข้อความหากันอย่างน้อย 5 ครั้งก่อนที่คุณจะสรุป
-ห้ามแตะ scripts/quality-gate.js รายงานว่าทำ task เลขอะไรครบบ้าง
+ห้ามแตะ scripts/quality-gate.js ห้าม "ช่วยแก้" notes / health / JSON พัง — สี่เคสนั้นเป็นของ Workshop 4
+รายงานว่าทำ task เลขอะไรครบบ้าง
 จบแล้วให้สั่ง teammate ทีละชื่อให้ shut down (ส่งข้อความหา data แล้ว backend แล้ว frontend) ห้ามใช้ Stop Task โดยใส่ชื่อ data/backend/frontend เป็นรหัสงาน — นั่นคือชื่อเพื่อนทีม ไม่ใช่รหัสในรายการงาน
 ```
 
@@ -162,18 +164,30 @@ Get-Content data\dataset.csv -TotalCount 3
 
 > 📚 **รู้เพิ่ม:** ถ้า gate รายงาน `unknown-province` ให้ชี้ `lib/inspect-data.js` แล้วสั่ง developer แก้กฎดึงจังหวัดต่อ (เปิด `claude` ใหม่หลังลบ settings แล้ว)
 
-10. เปิด `http://127.0.0.1:3000` (`npm start` ในเทอร์มินัลลูก) — **16,772 กิจการ, ทุนรวม 45,341,868,784 บาท**
+10. เปิดเทอร์มินัล**ลูก** (อีกหน้าต่าง) ให้แน่ใจว่าอยู่ใน `C:\dev\multi-agent-workshop` แล้วรันเซิร์ฟเวอร์:
+
+```powershell
+npm start
+```
+
+เปิดเบราว์เซอร์ที่ `http://127.0.0.1:3000` — ควรเห็น **16,772 กิจการ, ทุนรวม 45,341,868,784 บาท**
 
 📦 **Handoff ที่ 3:** SQL → CSV สะอาด → เว็บที่ผู้ใช้เห็น
 
-11. รัน quality gate:
+11. **ปิดเซิร์ฟเวอร์ก่อนรัน gate** — ในหน้าต่างที่รัน `npm start` กด `Ctrl+C` ให้หยุด (quality gate จะยกเซิร์ฟเวอร์ชั่วคราวเองบนพอร์ต 3000 ถ้าพอร์ตยังถูกจอง เคส HTTP จะแดงหมดทั้งที่ข้อมูลสะอาดแล้ว)
+
+แล้วในเทอร์มินัลหลัก (workshop repo) รัน:
 
 ```powershell
 npm run gate
 echo $LASTEXITCODE
 ```
 
-ผลที่คาดหวัง: **2/6 passed** และ `$LASTEXITCODE` เป็น `2` — อีกสี่เคสยังแดง ไปแก้ใน Workshop 4
+ผลที่คาดหวังเมื่อพอร์ตว่างและทีมไม่แก้เกินสเปก: **2/6 passed** คือ `data-quality` และ `summary-matches-valid-rows` เขียว · อีกสี่เคสยังแดงตามดีไซน์ · `$LASTEXITCODE` เป็น `2`
+
+ถ้าเห็นข้อความ `port 3000 is already in use` แถวละหลายเคส — **ยังไม่ใช่ผล 2/6 จริง** ให้กลับไป `Ctrl+C` ปิด `npm start` แล้วรัน `npm run gate` ใหม่
+
+ถ้าได้ **6/6** ทั้งที่ยังไม่ถึง Workshop 4 — ทีมช่วยแก้ notes/health/JSON เกินงาน · แอปคุณพร้อมก่อนกำหนด ไป Workshop 4 ได้แต่รอบสืบสวนจะสั้นลง · ห้องที่ต้องการซ้อม 2/6 → 6/6 ใช้ `node scripts/catch-up.js w3` จาก course repo เพื่อดึง `server.js` ฉบับที่ยังเหลือสี่เคสแดง
 
 12. เปิด `claude` ใหม่ (**ไม่มี** `settings.local.json` แล้ว) แล้วสั่งรีวิว:
 
@@ -212,7 +226,8 @@ echo $LASTEXITCODE
 | หน้าเว็บยังของเดิม | ยังไม่รัน SQL | รันขั้น 9 ซ้ำ |
 | รัน `duckdb` แล้วเงียบ ไม่รู้สำเร็จไหม | DuckDB สำเร็จมักไม่พิมพ์อะไร | ดู `$LASTEXITCODE` เป็น `0` แล้วรันนับบรรทัด / ดู 3 แถวแรกตามขั้น 9 |
 | แล็บหลังยังเป็นทีมใหญ่เอง | ลืมลบ `settings.local.json` | ลบไฟล์แล้วเปิด `claude` ใหม่ |
-| port busy | เซิร์ฟเวอร์ค้าง | ปิดก่อนรัน gate หรือตั้ง `PORT` |
+| `port 3000 is already in use` หลายเคส (แม้ `data-quality` เขียว) | ยังเปิด `npm start` ค้างอยู่ · gate ยกเซิร์ฟเวอร์เองไม่ได้ | ในหน้าต่างเซิร์ฟเวอร์กด `Ctrl+C` แล้วรัน `npm run gate` ใหม่ — อย่าเพิ่งสรุปว่า backend พัง |
+| ได้ 6/6 ตั้งแต่ Workshop 3 | teammate แก้ notes/health/JSON เกินสเปก | รอบคุณไปต่อได้ · ห้องถัดไปย้ำใน prompt ว่าห้ามแตะสี่เคสของ Workshop 4 · อยากซ้อมเส้นทาง 2/6 ใช้ catch-up `w3` |
 
 ## 🆘 Behind? Catch up
 
