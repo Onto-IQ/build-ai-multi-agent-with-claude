@@ -167,3 +167,9 @@ node scripts/check-solutions.mjs
 ## วิธีใช้ในห้อง
 
 เปิด Claude Code จาก **workshop repo** (`C:\dev\multi-agent-workshop`) ด้วยคำสั่ง `claude` แล็บออกแบบมาสำหรับโหมดโต้ตอบนี้ ใช้ `claude -p` เฉพาะขั้นที่แล็บเขียนธงและธงสิทธิ์ไว้ให้ครบ การเขียนไฟล์ใต้ `.claude/` ในโหมด headless ถูกปฏิเสธได้แม้ใส่ `--allowedTools` และ Bash ในโหมด headless ไม่ถูกเปิดให้เอง
+
+## License
+
+เนื้อหาบทเรียน แล็บ เฉลย และสไลด์ใน repo นี้เผยแพร่ภายใต้ [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](LICENSE) — แชร์และปรับใช้ได้เสรีพร้อมระบุที่มา แต่ห้ามใช้เชิงพาณิชย์ ดูข้อกำหนดฉบับเต็มที่ [creativecommons.org/licenses/by-nc/4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+Copyright (c) 2026 Onto-IQ
