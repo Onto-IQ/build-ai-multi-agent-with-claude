@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Implements the Sales Insight API and dashboard from PRODUCT-SPEC. Use when the spec is already written.
+description: Implements the Registry Insight API and dashboard from PRODUCT-SPEC. Use when the spec is already written.
 tools: Read, Grep, Glob, Edit, Write, Bash
 model: sonnet
 ---

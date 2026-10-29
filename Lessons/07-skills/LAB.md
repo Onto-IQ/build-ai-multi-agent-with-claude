@@ -43,7 +43,7 @@ frontmatter: name เป็น release-checklist และ description เป็
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-I want to release the sales insight app now. Walk me through it.
+I want to release the Registry Insight app now. Walk me through it.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**

@@ -1,6 +1,6 @@
 ---
 name: writer
-description: Writes the Thai executive summary and on-screen copy for Sales Insight. Use after the revenue figures exist.
+description: Writes the Thai executive summary and on-screen copy for Registry Insight. Use after the company and capital figures exist.
 tools: Read, Write, Edit
 model: haiku
 ---

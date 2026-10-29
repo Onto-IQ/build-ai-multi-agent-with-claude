@@ -33,12 +33,17 @@ if (!fs.existsSync(path.join(dest, 'server.js'))) {
 
 const src = path.join(root, 'solutions', workshop, 'drop-in');
 if (!fs.existsSync(src)) {
+  if (workshop === 'w8') {
+    console.log('catch-up: w8 has no drop-in (feature is learner-chosen).');
+    console.log('See solutions/w8/FEATURE-CRITERIA.md for the acceptance criteria.');
+    process.exit(0);
+  }
   console.error(`catch-up: missing solutions/${workshop}/drop-in`);
   process.exit(1);
 }
 
 fs.cpSync(src, dest, { recursive: true });
 console.log(`catch-up: copied solutions/${workshop}/drop-in → ${dest}`);
-if (['w3', 'w4', 'w7', 'w9'].includes(workshop)) {
+if (['w7', 'w9'].includes(workshop)) {
   console.log('data/dataset.csv is now the cleaned file.');
 }

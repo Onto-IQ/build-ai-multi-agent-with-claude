@@ -1,6 +1,6 @@
 ---
 name: qa
-description: Reviews the Sales Insight app against PRODUCT-SPEC and the quality gate. Use when implementation claims to be done.
+description: Reviews the Registry Insight app against PRODUCT-SPEC and the quality gate. Use when implementation claims to be done.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
