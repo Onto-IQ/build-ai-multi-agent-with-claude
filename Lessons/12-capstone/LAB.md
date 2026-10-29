@@ -35,19 +35,25 @@ npm run gate
 
 ```text
 In this folder, create .claude/agents/writer.md.
-Frontmatter: name writer; description "Use when figures must become a Thai executive summary"; tools Read, Grep, Glob, Write; model sonnet.
-Body: you are the writer. You write docs/EXECUTIVE-SUMMARY.md in Thai using only figures from the API or from another agent's report. You never invent a number. Keep file names and endpoint names in English.
+Frontmatter: name writer; description "Use when figures must become a Thai executive summary"; tools Read, Grep, Glob, Write, Bash; model sonnet.
+Body: you are the writer. You write docs/EXECUTIVE-SUMMARY.md in Thai. Prefer figures from handoff files written by other agents (docs/QA-REPORT.md, docs/region-capital.csv, data-researcher notes, or a short figures file from qa / release-manager). Do not invent numbers. If you must re-check a live endpoint and the machine is Windows, use PowerShell via Bash tool, for example: powershell -NoProfile -Command "Invoke-RestMethod http://127.0.0.1:3000/api/summary | ConvertTo-Json -Compress" — only when the server is already running; do not start long-lived servers yourself. Keep file names and endpoint names in English. Never edit server.js, web/, or scripts/quality-gate.js.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
 ในโฟลเดอร์นี้ สร้าง .claude/agents/writer.md
-frontmatter: name เป็น writer; description ว่า Use when figures must become a Thai executive summary; tools เป็น Read, Grep, Glob, Write; model เป็น sonnet
-เนื้อหา: คุณคือ writer เขียน docs/EXECUTIVE-SUMMARY.md เป็นไทยโดยใช้ตัวเลขจาก API หรือจากรายงานของเอเจนต์อีกตัวเท่านั้น ห้ามเดาตัวเลข ชื่อไฟล์กับ endpoint คงภาษาอังกฤษ
+frontmatter: name เป็น writer; description ว่า Use when figures must become a Thai executive summary; tools เป็น Read, Grep, Glob, Write, Bash; model เป็น sonnet
+เนื้อหา: คุณคือ writer เขียน docs/EXECUTIVE-SUMMARY.md เป็นไทย ยึดตัวเลขจากไฟล์ handoff ของเอเจนต์อื่นก่อน (docs/QA-REPORT.md, docs/region-capital.csv, โน้ต data-researcher หรือไฟล์ยอดสั้นจาก qa / release-manager) ห้ามเดาตัวเลข ถ้าต้องเช็ก endpoint สดและเครื่องเป็น Windows ให้ใช้ PowerShell ผ่านเครื่องมือ Bash เช่น powershell -NoProfile -Command "Invoke-RestMethod http://127.0.0.1:3000/api/summary | ConvertTo-Json -Compress" — เฉพาะเมื่อเซิร์ฟเวอร์เปิดอยู่แล้ว ห้ามสตาร์ทเซิร์ฟเวอร์ค้างเอง ชื่อไฟล์กับ endpoint คงภาษาอังกฤษ ห้ามแก้ server.js, web/, หรือ scripts/quality-gate.js
 ```
 
-3. **ปิด TUI แล้วเปิด `claude` ใหม่** — คราวนี้ `.claude/agents/` ครบ 6 ตัวโหลดพร้อมกัน: planner, data-researcher, developer, qa, release-manager, writer
+> 📚 **รู้เพิ่ม:** เดิมถ้า writer ไม่มี Bash จะเรียก API เองไม่ได้ ตัวเลขต้องมาจากรายงาน/ไฟล์ที่ qa · data-researcher · release-manager ส่งต่อเท่านั้น — รอบนี้ใส่ **Bash** แล้วให้ใช้ PowerShell บน Windows เมื่อจำเป็น แต่**ยังให้ยึดไฟล์ handoff เป็นค่าเริ่ม** เพื่อไม่ให้สรุปคนละชุดกับของที่ทีมตรวจแล้ว
+
+3. **โหลดเอเจนต์ใหม่** — ทำอย่างใดอย่างหนึ่งแล้วค่อยเรียก `@writer`:
+   - ปิด TUI แล้วเปิด `claude` ใหม่จาก workshop repo หรือ
+   - ในเซสชันเดิมเปิดเมนู `/agents` ให้ระบบเห็นไฟล์ใหม่
+
+   คราวนี้ `.claude/agents/` ควรครบ 6 ตัว: planner, data-researcher, developer, qa, release-manager, writer
 
 4. วาง prompt ทีมเต็มวง (เลือกอย่างใดอย่างหนึ่ง) — กดอนุญาตตามที่ทีมขอ:
 
@@ -58,7 +64,7 @@ Build the final Registry Insight release with your existing agent team: planner,
 planner first: verify docs/PRODUCT-SPEC.md still matches the app, and update docs/TASKS.md to include the Workshop 8 feature as a task that must survive the release.
 data-researcher: report company count and total capital from data/dataset.csv (or via the data-duckdb MCP).
 developer and qa may run only after planner finishes. developer builds the release dashboard exactly as docs/PRODUCT-SPEC.md describes: 4 KPI cards, an SVG monthly capital chart from a new GET /api/monthly with a bar/line toggle, region bars, the Workshop 8 provinces table with search, sortable columns and a 10/20/all row selector, and a notes panel over the notes API. qa runs npm run gate and checks /api/health has no sk-.
-writer last: creates docs/EXECUTIVE-SUMMARY.md in Thai using only figures from the API or docs/region-capital.csv, and mentions the Workshop 8 feature.
+writer last: creates docs/EXECUTIVE-SUMMARY.md in Thai using figures from handoff files first (QA-REPORT, region-capital.csv, researcher/qa notes); if needed on Windows, re-check /api/summary with PowerShell via Bash. Mentions the Workshop 8 feature. Never invent numbers.
 Agents that need another agent's output must NOT run before it.
 Report under 400 words and name each deliverable.
 ```
@@ -70,7 +76,7 @@ Report under 400 words and name each deliverable.
 planner เริ่มก่อน: ตรวจว่า docs/PRODUCT-SPEC.md ยังตรงกับแอป และอัปเดต docs/TASKS.md ให้มี feature จาก Workshop 8 เป็นงานที่ต้องรอดถึง release
 data-researcher: รายงานจำนวนกิจการและทุนรวมจาก data/dataset.csv (หรือผ่าน MCP data-duckdb)
 developer กับ qa ทำงานได้หลัง planner เสร็จเท่านั้น developer สร้างแดชบอร์ดฉบับ release ตาม docs/PRODUCT-SPEC.md เป๊ะ: การ์ด KPI 4 ใบ กราฟแท่งทุนรายเดือน SVG จาก GET /api/monthly ใหม่ที่สลับแท่ง/เส้นได้ แท่งรายภาค ตารางจังหวัดจาก feature Workshop 8 ที่ค้นหา จัดเรียง และเลือกจำนวนแถวได้ และแผงโน้ตบน notes API qa รัน npm run gate และตรวจว่า /api/health ไม่มี sk-
-writer ปิดท้าย: เขียน docs/EXECUTIVE-SUMMARY.md เป็นไทย ใช้ตัวเลขจาก API หรือ docs/region-capital.csv เท่านั้น และพูดถึง feature จาก Workshop 8
+writer ปิดท้าย: เขียน docs/EXECUTIVE-SUMMARY.md เป็นไทย ใช้ตัวเลขจากไฟล์ handoff ก่อน (QA-REPORT, region-capital.csv, โน้ต researcher/qa) ถ้าจำเป็นบน Windows ค่อยเช็ก /api/summary ด้วย PowerShell ผ่าน Bash พูดถึง feature จาก Workshop 8 ห้ามเดาตัวเลข
 งานที่ต้องใช้ผลของอีกตัว ห้ามรันก่อนตัวนั้นเสร็จ
 รายงานรวมไม่เกิน 400 คำ และระบุของส่งของแต่ละบทบาท
 ```
@@ -105,7 +111,8 @@ npm run gate
 | ทีมจบแต่ไฟล์ไม่เกิด | เป็นแผน ไม่ได้สั่งให้ทำ | เติม Execute, do not only plan |
 | หมดเทิร์นกลางสเปก | งานยาว | อยู่ใน TUI และสั่งว่าห้ามสำรวจซ้ำ |
 | feature หายจากหน้าเว็บหลังทีมทำงาน | ไม่ได้ใส่ไว้ใน TASKS | สั่ง developer "restore the Workshop 8 feature per docs/FEATURE-PLAN.md" |
-| ยอดในสรุปไม่ตรง API | writer ไม่ได้อ่าน JSON | สั่ง qa ส่งยอดจาก `/api/summary` กลับไปให้ writer แก้ |
+| ยอดในสรุปไม่ตรง API | writer ไม่ได้อ่าน handoff / ไม่เทียบ JSON | สั่ง qa เขียนยอดจาก `/api/summary` ลงไฟล์สั้น ๆ แล้วให้ writer อ่านไฟล์นั้น (หรือให้ writer รัน PowerShell Invoke-RestMethod แล้วเทียบ) |
+| `Agent type not found: writer` | ยังไม่โหลดเอเจนต์ใหม่ | รีสตาร์ท `claude` หรือเปิด `/agents` แล้วเรียกใหม่ |
 | งบ Pro หมด | ห้าตัวแพงประมาณ 15 เท่าของแชท | ยุบเหลือ planner, developer, qa |
 | คิดเงินรายครั้ง | `ANTHROPIC_API_KEY` | unset ก่อนเปิด TUI |
 
