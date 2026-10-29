@@ -2,6 +2,8 @@
 
 > ⏱ ~80 นาที · 🎯 Part A: สั่งครั้งเดียวให้ Explore สามตัวสำรวจแล้วรวมรายงาน · Part B: เปิดโหมดทีมให้เพื่อนทีมท้าทายรายงาน มีรายการงานร่วม · ทั้งสองรอบห้ามแก้ไฟล์แอป
 
+แบบฝึกหัด (prompt / ไฟล์ตั้งค่าที่ต้องคัดลอก) อยู่ที่ **[LAB.md](LAB.md)** — หน้านี้สำหรับอ่านทบทวนแนวคิด
+
 ## Key idea / แนวคิดหลัก — เล่าเป็นเรื่อง
 
 วันจริงของแอป Registry Insight จะมีคำถามสามกลุ่มที่ตอบไม่จบ: โครงสร้างโปรเจกต์เดินอย่างไร ข้อมูลใน CSV สะอาดแค่ไหน และโค้ดส่วนไหนมีพฤติกรรมเสี่ยง ถ้าให้บทสนทนาหลักอ่านทุกไฟล์เองตามลำดับ คำตอบที่ยาวจะท่วมบทสนทนาทีละนิด จนถึงจุดหนึ่ง Claude เริ่มลืมสิ่งที่คุยกันไปแล้วด้านบน
@@ -47,116 +49,39 @@
 | ค่าใช้จ่าย | ถูกกว่าในสองรอบของบทนี้ | แพงกว่ามาก (~15 เท่าของแชทคนเดียว) |
 | `claude -p` | ใช้ได้ถ้าจำเป็น | **ใช้ไม่ได้กับโหมดทีม** — ต้องเปิดหน้าจอ `claude` |
 
-หลัง Part B ต้อง **ลบไฟล์ `settings.local.json`** ก่อนไป Workshop 2 — ไม่งั้น Claude อาจยังเปิดโหมดทีมอยู่โดยที่คุณไม่ได้ขอ (ไฟล์นี้ไม่หายเองเมื่อปิดหน้าต่าง)
+ใน Part B ไฟล์ตั้งค่าเปิดโหมดทีมและจำกัดไม่เกิน 20 รอบ — **ข้อความเต็มที่ต้องคัดลอกอยู่ที่ LAB** · หลังจบต้องลบไฟล์ `settings.local.json` ก่อนไป Workshop 2 (ไฟล์นี้ไม่หายเองเมื่อปิดหน้าต่าง)
 
-## ลงมือทำตามลำดับ
+## ลำดับในห้อง (ภาพรวม)
 
-ทำตาม [LAB.md](LAB.md) — สรุปลำดับห้อง:
+ทำทีละขั้นใน [LAB.md](LAB.md):
 
-1. Part A ใน `claude` ด้วย prompt Explore สามตัว → เขียน `docs/EXPLORATION-REPORT.md`
-2. `git status` + `npm run gate` (พิมพ์ `echo $LASTEXITCODE` ได้ `2`)
-3. ปิด `claude` → สร้าง `.claude/settings.local.json` ตาม LAB → เปิด `claude` ใหม่
-4. Part B ด้วย prompt Agent Teams สามชื่อ → เขียน `docs/TEAMS-REVIEW.md` → สั่งเพื่อนทีมปิดงาน
-5. ปิด `claude` → **ลบ** `settings.local.json` (เป็นขั้นเรียน ไม่ใช่แค่เก็บกวาด)
+1. Part A — Explore สามตัว → `docs/EXPLORATION-REPORT.md`
+2. ตรวจ `git status` + `npm run gate` (exit code เป็น `2`)
+3. Part B — เปิดโหมดทีมตาม LAB → `docs/TEAMS-REVIEW.md`
+4. ลบ `settings.local.json` แล้วตรวจว่าไฟล์แอปไม่ถูกแก้
 
-## Prompt pattern — Part A (Explore)
+## สิ่งที่ prompt ต้องมี (ทบทวน — ไม่ใช่ข้อความคัดลอก)
 
-**เวอร์ชันอังกฤษ (แนะนำ):**
+ข้อความเต็มอยู่ที่ LAB · ตรงนี้จำแค่หน้าที่ของแต่ละส่วน:
 
-```text
-Dispatch 3 parallel Explore subagents on this Registry Insight app.
-1) Map the runtime files and how to start the server.
-2) Read data/README.md and the failure text from npm run gate. Do not fix anything.
-3) Trace GET /api/summary and POST /api/notes far enough to name the risky behavior.
-Do not modify files. Return one report under 300 words with headings: structure, data quality, risks.
-```
-
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
-
-```text
-ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Registry Insight
-1) แผนที่ไฟล์ที่ใช้รัน และวิธียกเซิร์ฟเวอร์
-2) อ่าน data/README.md และข้อความ FAIL จาก npm run gate ห้ามแก้
-3) ไล่ GET /api/summary กับ POST /api/notes พอให้ชี้พฤติกรรมที่เสี่ยง
-ห้ามแก้ไขไฟล์ ส่งรายงานเดียวไม่เกิน 300 คำ มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง
-```
-
-| ส่วน | หน้าที่ |
+| ส่วนใน prompt | หน้าที่ |
 |---|---|
-| Dispatch 3 parallel Explore | บังคับชนิดและจำนวน |
-| เลข 1–3 | ก้อนงานคนละบริบท |
-| Do not modify / ห้ามแก้ไข | กันเอเจนต์ลงมือแก้ |
-| under 300 words | กันสรุปยาวจน leader อ่านไม่ไหว |
-
-## เปิดโหมดทีม — คัดลอกใส่ไฟล์
-
-ก่อน Part B ให้สร้างไฟล์ชื่อ `.claude/settings.local.json` ในโฟลเดอร์แอป แล้ว**คัดลอกทั้งก้อนนี้**ไปวาง บันทึก (Save) แล้วค่อยเปิด `claude` ใหม่:
-
-```json
-{
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_MAX_TURNS": "20"
-  }
-}
-```
-
-- `...AGENT_TEAMS` = `"1"` → เปิดโหมดทีม  
-- `...MAX_TURNS` = `"20"` → เพดานไม่เกิน 20 รอบ  
-
-จบ Part B แล้ว **ลบทั้งไฟล์** นี้ทิ้ง (คลิกขวา → Delete) — ไม่งั้นรอบถัดไปยังเป็นโหมดทีมอยู่
-
-## Prompt pattern — Part B (Agent Teams)
-
-**เวอร์ชันอังกฤษ (แนะนำ):**
-
-```text
-Enable an agent team (not Explore subagents). Spawn exactly 3 named teammates:
-- structure-scout — verifies runtime layout claims in docs/EXPLORATION-REPORT.md
-- data-scout — verifies data-quality claims against data/README.md and gate FAIL text
-- devil-advocate — challenges every risk; looks for overstated or missing risks
-
-Use a shared task list. Teammates must message each other at least once before the lead synthesizes.
-Do not modify application files.
-Write docs/TEAMS-REVIEW.md with headings: agreement, disputed, next sequential step.
-Keep the whole file under 250 words. Cite file:line for disputed items.
-When finished, ask all teammates to shut down.
-```
-
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
-
-```text
-ใช้ Agent Teams (ไม่ใช่ Explore subagent) สร้าง teammate ชื่อชัดเจน 3 ตัว:
-- structure-scout — ตรวจข้ออ้างเรื่องโครงสร้างใน docs/EXPLORATION-REPORT.md
-- data-scout — ตรวจข้ออ้างคุณภาพข้อมูลกับ data/README.md และข้อความ FAIL ของ gate
-- devil-advocate — ท้าทายทุกจุดเสี่ยง หาข้อที่พูดเกินหรือขาด
-
-ใช้รายการงานร่วม Teammate ต้องส่งข้อความหากันอย่างน้อยหนึ่งครั้งก่อนที่ lead จะสรุป
-ห้ามแก้ไฟล์แอป
-เขียน docs/TEAMS-REVIEW.md มีหัวข้อ: agreement, disputed, next sequential step
-ทั้งไฟล์ไม่เกิน 250 คำ ข้อ disputed ต้องอ้าง file:line
-จบแล้วให้ teammate ทุกตัว shut down
-```
-
-| ส่วน | หน้าที่ |
-|---|---|
-| agent team / ไม่ใช่ Explore | บังคับโหมด Teams ไม่ให้ถอยกลับไป subagent |
-| ชื่อ teammate ชัดเจน | ให้แผงเอเจนต์และ mailbox แยกตัวได้ |
-| shared task list | ใช้ coordination ของ Teams จริง |
-| message each other | บังคับ peer messaging ไม่ใช่แค่รายงานกลับ lead |
-| shut down | ปิด teammate หลังงานจบ |
-
-> 📚 **ทำไมแนะนำ EN:** ภาษาของ prompt เป็นตัวกำหนดภาษาของรายงาน — คอร์สทดสอบคู่กันไว้แล้ว รายงานฉบับนี้ถูกอ้างต่อใน Workshop ถัด ๆ ไป ซึ่งของที่ถูกอ้างเป็นอังกฤษทั้งหมด รายงานอังกฤษจึงต่อกันเนียนที่สุด TH ใช้ได้เต็มสิทธิ์ — ชื่อไฟล์และ endpoint ยังถูกพิมพ์ถูกต้องเสมอ
+| ระบุ Explore หรือ Agent Teams ชัดเจน | ไม่ให้ Claude เลือกโหมดผิด |
+| ก้อนงาน / ชื่อเพื่อนทีมเป็นข้อ ๆ | คนละบริบท วิ่งพร้อมกันได้ |
+| ห้ามแก้ไฟล์ | กัน “ช่วยแก้” ระหว่างสำรวจ |
+| เพดานความยาวรายงาน | กันสรุปยาวจนอ่านต่อไม่ไหว |
+| (Part B) รายการงานร่วม + คุยกันอย่างน้อยหนึ่งครั้ง | ให้ใช้ความสามารถของโหมดทีมจริง |
+| (Part B) สั่งปิดเพื่อนทีมเมื่อจบ | ไม่ให้ค้างรันต่อ |
 
 ## Common pitfalls / กับดัก
 
 - สั่ง "หาทุกอย่าง" โดยไม่จำกัดคำ — ได้รายงานยาวกลืนบทสนทนาหลัก
 - ลืมประโยคห้ามแก้ไฟล์ — เอเจนต์ย่อยที่เจอบั๊กมัก "ช่วยแก้"
 - แตกงานที่ต้องใช้ผลกันให้ขนาน — ก้อนที่รอกันจะสรุปคนละสมมติฐาน
-- เปิด Teams แล้วใช้ `claude -p` — ไม่ได้ teammate
+- เปิด Teams แล้วใช้ `claude -p` — ไม่ได้เพื่อนทีม
 - prompt Part B ไม่พูดว่า agent team — ได้ Explore ธรรมดาแล้วคิดว่าจบแล็บแล้ว
 - ลืมลบไฟล์ `settings.local.json` — Workshop ถัดไปอาจยังเป็นโหมดทีมโดยไม่ตั้งใจ
-- Part B ไม่ใส่ `CLAUDE_CODE_MAX_TURNS` หรือใส่ต่ำเกินไป — ทีมยังไม่ทันสรุปก็หมดรอบ (ในคอร์สใช้ `"20"`)
+- Part B ไม่จำกัดจำนวนรอบ — ทีมวิ่งยาวเกินโดยไม่จำเป็น (ใน LAB ใส่เพดาน 20)
 
 ## Quick check / ทบทวน
 
@@ -167,7 +92,7 @@ When finished, ask all teammates to shut down.
 
 <details>
 <summary>2. ทำไม Part B ถึงเปิด Agent Teams</summary>
-ต้องการให้ teammate ท้าทายและประสานผ่านรายการงานร่วม/ข้อความ — ไม่ใช่แค่สรุปกลับ lead
+ต้องการให้เพื่อนทีมท้าทายและประสานผ่านรายการงานร่วม/ข้อความ — ไม่ใช่แค่สรุปกลับหัวหน้า
 </details>
 
 <details>
@@ -182,5 +107,6 @@ When finished, ask all teammates to shut down.
 
 ## Go deeper
 
+- [LAB.md](LAB.md) — แบบฝึกหัด Workshop 1
 - [คู่ prompt](../../reference/prompt-pairs-th-en.md)
 - [Claude Code — Agent teams](https://code.claude.com/docs/en/agent-teams)
