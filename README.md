@@ -53,14 +53,14 @@
 
 ## สิ่งที่ต้องมีก่อนวันเรียน
 
-- Windows 10/11, macOS หรือ Linux บน Windows ใช้ **Git Bash** หรือ WSL คำสั่งในแล็บเป็น bash
+- Windows 10/11, macOS หรือ Linux — **Windows ใช้ PowerShell เป็นหลัก** (แล็บ M1 / M9 / M13 และคำสั่ง `$env:…`) · Git Bash / macOS Terminal เป็นทางเลือก สำรองเขียนคู่ไว้ใน LAB เมื่อจำเป็น
 - [Node.js 20 LTS ขึ้นไป](https://nodejs.org/) ตรวจบน Node 24.19.0
 - Git
 - บัญชี Claude Pro หรือ Team ที่ผู้จัดส่งให้ระหว่างอบรม
 - Claude Code CLI รุ่น **2.1.296 ขึ้นไป** (`npm install -g @anthropic-ai/claude-code` แล้ว `claude update` ถ้าต่ำกว่า)
 - VS Code หรือ Cursor
 - บัญชี [Vercel](https://vercel.com/) สำหรับโมดูล 13 สมัครฟรีก่อนวันเรียน
-- ปิดตัวแปร `ANTHROPIC_API_KEY` ระหว่างเรียน ถ้าเครื่องตั้งค่านี้ไว้ การล็อกอินของคลาสจะถูกคีย์นี้ทับ และค่าใช้จ่ายจะคิดแบบจ่ายตามการใช้
+- ปิดตัวแปร `ANTHROPIC_API_KEY` ระหว่างเรียน ถ้าเครื่องตั้งค่านี้ไว้ การล็อกอินของคลาสจะถูกคีย์นี้ทับ และค่าใช้จ่ายจะคิดแบบจ่ายตามการใช้ — บน PowerShell ใช้ `echo $env:ANTHROPIC_API_KEY` แล้ว `Remove-Item Env:ANTHROPIC_API_KEY`
 
 รายการติดตั้งทีละขั้นอยู่ที่ [SETUP.md](SETUP.md)
 
@@ -129,6 +129,28 @@ node scripts/check-solutions.mjs
 | `reference/` | ชีต frontmatter, คู่ prompt, failure modes, อภิธาน |
 | `SETUP.md` | ติดตั้งเครื่องและ clone สอง repo |
 
+## แผนที่ `solutions/wN` ↔ โมดูล / Workshop
+
+เลขโฟลเดอร์ `wN` คือลำดับ**workshop ที่ส่งงาน** ไม่ใช่เลข Module ใน `Lessons/`
+
+| catch-up | โมดูล | Workshop / แล็บ | โฟลเดอร์บท |
+|---|---|---|---|
+| — | M1 | Lab 0 ตั้งเครื่อง | `01-environment-setup` |
+| — | M2 | onboard /init | `02-agent-foundations` |
+| `w1` | M3 | Workshop 1 — Swarm + Teams | `03-swarm` |
+| `w2` | M4 | Workshop 2 — Specialty agent | `04-specialty-agents` |
+| `w3` | M5 | Workshop 3 — Sequential + Teammate | `05-sequential-orchestration` |
+| `w4` | M6 | Workshop 4 — Fix + QA | `06-fix-and-qa` |
+| `w5` | M7 | Workshop 5 — Skills | `07-skills` |
+| `w6` | M8 | Workshop 6 — MCP | `08-mcp` |
+| `w7` | M9 | Workshop 7 — Guardrails / hooks | `09-guardrails-hooks` |
+| — | M10 | แล็บสั้น Context / memory | `10-context-memory` |
+| `w8` | M11 | Workshop 8 — Feature | `11-feature` |
+| `w9` | M12 | Workshop 9 — Capstone | `12-capstone` |
+| — | M13 | Deploy / preflight (ไม่มี drop-in wN) | `13-deploy-preflight` |
+
+ตัวอย่าง: ตามไม่ทันหลัง Capstone → `node scripts/catch-up.js w9` (ไม่ใช่ `w12`)
+
 ## เวอร์ชันที่ตรวจแล้ว
 
 | รายการ | ค่า |
@@ -136,7 +158,7 @@ node scripts/check-solutions.mjs
 | วันที่ตรวจสคริปต์ | 2026-10-19 |
 | Node | 24.19.0 (ขั้นต่ำของคอร์สคือ 20) |
 | Git | 2.51.0.windows.1 |
-| ระบบที่รันสคริปต์ | Windows, Git Bash ไม่จำเป็นสำหรับสคริปต์ Node |
+| ระบบที่รันสคริปต์ | Windows (PowerShell) · สคริปต์ Node ไม่ผูกเชลล์ |
 | Claude Code ขั้นต่ำของคอร์ส | 2.1.296 |
 | รัน headless ชุดเก่า | 2.1.302 |
 
