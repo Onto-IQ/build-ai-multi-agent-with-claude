@@ -22,8 +22,9 @@
 | Tool calling | การเรียกเครื่องมือ | โมเดลเลือกเครื่องมือ รันไทม์ทำให้ แล้วส่งผลกลับเข้า context |
 | Subagent | เอเจนต์ย่อย | context แยก สรุปผลกลับผู้เรียก |
 | Swarm | งานขนาน | งานย่อยไม่ต้องใช้ผลของกันและกัน (ในคอร์สนี้มักใช้ Explore subagents) |
-| Agent Teams | ทีมเอเจนต์ | experimental — teammate คนละ session มี mailbox + รายการงานร่วม เปิดด้วย `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` |
-| Teammate | เพื่อนทีม | สมาชิกใน Agent Teams ที่ lead สร้างด้วยชื่อ |
+| Agent Teams | ทีมเอเจนต์ | โหมดให้ Claude สร้างเพื่อนทีมที่คุยกันเองได้และมีรายการงานร่วม — เปิดด้วยไฟล์ `.claude/settings.local.json` |
+| settings.local.json | ไฟล์ตั้งค่าบนเครื่องคุณ | ไฟล์ในโฟลเดอร์ `.claude/` ที่เป็นของเครื่องคุณคนเดียว · ไม่ส่งขึ้น git · เปิดโหมดทีมแล้วต้องลบเอง |
+| Teammate | เพื่อนทีม | สมาชิกใน Agent Teams ที่หัวหน้าตั้งชื่อให้ |
 | Sequential pipeline | งานทีละขั้น | ผลของขั้นก่อนหน้าเป็นอินพุตของขั้นถัดไป |
 | Leader | หัวหน้างาน | แตกงาน รวมผล ไม่ได้ลงมือทุกไฟล์เอง |
 | Shared contract | สเปกกลาง | สเปกที่ทุกบทบาทยึด เช่น `PRODUCT-SPEC.md` |

@@ -1,6 +1,6 @@
 # Module 3 — Swarm / Parallel exploration + Agent Teams
 
-> ⏱ ~80 นาที · 🎯 Part A: prompt เดียวปล่อย Explore สามตัวรวมรายงาน · Part B: เปิด Agent Teams ให้ teammate ท้าทายรายงานผ่าน mailbox + รายการงานร่วม · Explore swarm then Agent Teams challenge — both read-only.
+> ⏱ ~80 นาที · 🎯 Part A: สั่งครั้งเดียวให้ Explore สามตัวสำรวจแล้วรวมรายงาน · Part B: เปิดโหมดทีมให้เพื่อนทีมท้าทายรายงาน มีรายการงานร่วม · ทั้งสองรอบห้ามแก้ไฟล์แอป
 
 ## Key idea / แนวคิดหลัก — เล่าเป็นเรื่อง
 
@@ -10,9 +10,9 @@
 
 ข้อกันพลาดอยู่ที่คำว่า "พร้อมกัน": swarm ใช้ได้เฉพาะก้อนงานที่ไม่ต้องรอผลกัน เราเลือก `Explore` เพราะอ่านอย่างเดียว — อ่านได้เร็ว และแก้ไฟล์ไม่ได้แม้จะอยาก
 
-**Part B — Agent Teams** ต่อเมื่อมีรายงานแล้ว: teammate เป็น Claude เต็มตัวคนละหน้าต่างบริบท มีรายการงานร่วมและส่งข้อความหากันได้โดยไม่ผ่าน lead ทุกครั้ง ใช้เมื่อต้องการให้พวกเขาสังเคราะห์/ท้าทายกันเอง — ไม่ใช่แค่รายงานกลับมาเงียบ ๆ ราคาประมาณ **~15×** แชทเดียว คลาสนี้มีสปอนเซอร์รองรับจึงเป็นแล็บบังคับ ไม่ใช่แค่สาธิต
+**Part B — Agent Teams** ต่อเมื่อมีรายงานแล้ว: เพื่อนทีมเป็น Claude คนละชุดความจำ มีรายการงานร่วมและคุยกันเองได้ ไม่ต้องส่งทุกข้อความผ่านหัวหน้า ใช้เมื่ออยากให้พวกเขาท้าทาย/ช่วยกันเอง — แพงกว่าคุยคนเดียวประมาณ **15 เท่า** คลาสมีสปอนเซอร์จึงให้ทุกคนทำ ไม่ใช่แค่ดูสาธิต
 
-> EN: Part A = three Explore subagents, one short report. Part B = experimental Agent Teams that challenge the report via shared tasks and peer messages.
+> EN: Part A = three Explore subagents, one short report. Part B = Agent Teams that challenge the report via shared tasks and peer messages.
 
 ## Concept / เนื้อหา
 
@@ -37,29 +37,27 @@
 
 ก่อนกดส่ง ตรวจสามข้อ: แต่ละก้อนมีเจ้าของคนเดียว, บอกแล้วว่าข้อมูลต้องเชื่อมกันอย่างไร, และใส่ประโยคห้ามแก้ไฟล์แล้ว
 
-### Part B — Explore swarm ต่างจาก Agent Teams อย่างไร
+### Part B — Explore กับ Agent Teams ต่างกันยังไง
 
-| | Explore subagents (Part A) | Agent Teams (Part B) |
+| | Part A — Explore | Part B — Agent Teams |
 |---|---|---|
-| เปิดยังไง | ค่าเริ่มต้นของ Claude Code | ตั้ง `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` แล้วเปิด TUI |
-| การสื่อสาร | สรุปกลับ lead เป็นหลัก | teammate ส่งข้อความหากันได้ + รายการงานร่วม |
-| เหมาะกับ | อ่าน/สรุปก้อนอิสระ เร็ว ถูกกว่า | ท้าทายสมมติฐาน ประสานงานที่ต้องคุยกัน |
-| Token | ต่ำกว่าในสองแบบของโมดูลนี้ | สูงกว่ามาก (~15× แชทเดียว) |
-| Headless `-p` | ใช้ได้ถ้าจำเป็น | **ไม่สร้าง teammate** — ต้อง TUI |
+| เปิดยังไง | เปิด `claude` แล้วสั่งได้เลย | ต้องสร้างไฟล์ `.claude/settings.local.json` ก่อน แล้วค่อยเปิด `claude` |
+| การคุยกัน | ผู้ช่วยส่งสรุปกลับหัวหน้าเป็นหลัก | เพื่อนทีมคุยกันเองได้ + มีรายการงานร่วม |
+| เหมาะกับ | อ่านคนละส่วนแล้วสรุปสั้น | ให้ช่วยท้าทายรายงาน / ถกกันเอง |
+| ค่าใช้จ่าย | ถูกกว่าในสองรอบของบทนี้ | แพงกว่ามาก (~15 เท่าของแชทคนเดียว) |
+| `claude -p` | ใช้ได้ถ้าจำเป็น | **ใช้ไม่ได้กับโหมดทีม** — ต้องเปิดหน้าจอ `claude` |
 
-เปิด Teams แล้วยังเปลี่ยนพฤติกรรม delegation ปกติ: subagent ที่ Claude ตั้งชื่ออาจกลายเป็น teammate — **จึงต้องปิด flag หลังจบ Part B** ก่อนไป Workshop 2
+หลัง Part B ต้อง **ลบไฟล์ `settings.local.json`** ก่อนไป Workshop 2 — ไม่งั้น Claude อาจยังเปิดโหมดทีมอยู่โดยที่คุณไม่ได้ขอ (ไฟล์นี้ไม่หายเองเมื่อปิดหน้าต่าง)
 
 ## ลงมือทำตามลำดับ
 
 ทำตาม [LAB.md](LAB.md) — สรุปลำดับห้อง:
 
-1. Part A ใน TUI ด้วย prompt Explore สามตัว → เขียน `docs/EXPLORATION-REPORT.md`
-2. `git status` + `npm run gate` (ยัง exit 2)
-3. ออก TUI → ตั้ง `$env:CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1"` → เปิด `claude` ใหม่
-4. Part B ด้วย prompt Agent Teams สามชื่อ → เขียน `docs/TEAMS-REVIEW.md` → shut down teammates
-5. ออก TUI → ลบ env ของ flag
-
-หมายเหตุ headless: ถ้าต้องรัน Part A นอก TUI จริง ๆ คำสั่งคือ `claude -p "<prompt>" --allowedTools "Task" --max-turns 20` จากโฟลเดอร์แอป — Part B **ห้าม** ใช้ทางนี้
+1. Part A ใน `claude` ด้วย prompt Explore สามตัว → เขียน `docs/EXPLORATION-REPORT.md`
+2. `git status` + `npm run gate` (พิมพ์ `echo $LASTEXITCODE` ได้ `2`)
+3. ปิด `claude` → สร้าง `.claude/settings.local.json` ตาม LAB → เปิด `claude` ใหม่
+4. Part B ด้วย prompt Agent Teams สามชื่อ → เขียน `docs/TEAMS-REVIEW.md` → สั่งเพื่อนทีมปิดงาน
+5. ปิด `claude` → **ลบ** `settings.local.json` (เป็นขั้นเรียน ไม่ใช่แค่เก็บกวาด)
 
 ## Prompt pattern — Part A (Explore)
 
@@ -89,6 +87,24 @@ Do not modify files. Return one report under 300 words with headings: structure,
 | เลข 1–3 | ก้อนงานคนละบริบท |
 | Do not modify / ห้ามแก้ไข | กันเอเจนต์ลงมือแก้ |
 | under 300 words | กันสรุปยาวจน leader อ่านไม่ไหว |
+
+## เปิดโหมดทีม — คัดลอกใส่ไฟล์
+
+ก่อน Part B ให้สร้างไฟล์ชื่อ `.claude/settings.local.json` ในโฟลเดอร์แอป แล้ว**คัดลอกทั้งก้อนนี้**ไปวาง บันทึก (Save) แล้วค่อยเปิด `claude` ใหม่:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_MAX_TURNS": "20"
+  }
+}
+```
+
+- `...AGENT_TEAMS` = `"1"` → เปิดโหมดทีม  
+- `...MAX_TURNS` = `"20"` → เพดานไม่เกิน 20 รอบ  
+
+จบ Part B แล้ว **ลบทั้งไฟล์** นี้ทิ้ง (คลิกขวา → Delete) — ไม่งั้นรอบถัดไปยังเป็นโหมดทีมอยู่
 
 ## Prompt pattern — Part B (Agent Teams)
 
@@ -139,8 +155,8 @@ When finished, ask all teammates to shut down.
 - แตกงานที่ต้องใช้ผลกันให้ขนาน — ก้อนที่รอกันจะสรุปคนละสมมติฐาน
 - เปิด Teams แล้วใช้ `claude -p` — ไม่ได้ teammate
 - prompt Part B ไม่พูดว่า agent team — ได้ Explore ธรรมดาแล้วคิดว่าจบแล็บแล้ว
-- ลืมปิด `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` — Workshop 2+ อาจแตกเป็น teammate โดยไม่ตั้งใจ
-- ตั้ง `--max-turns` ต่ำใน headless Part A — รวมรายงานไม่ทัน
+- ลืมลบไฟล์ `settings.local.json` — Workshop ถัดไปอาจยังเป็นโหมดทีมโดยไม่ตั้งใจ
+- Part B ไม่ใส่ `CLAUDE_CODE_MAX_TURNS` หรือใส่ต่ำเกินไป — ทีมยังไม่ทันสรุปก็หมดรอบ (ในคอร์สใช้ `"20"`)
 
 ## Quick check / ทบทวน
 
@@ -160,8 +176,8 @@ When finished, ask all teammates to shut down.
 </details>
 
 <details>
-<summary>4. ทำไมต้องปิด flag หลัง Part B</summary>
-เมื่อเปิด Teams การ delegation ปกติอาจกลายเป็น teammate — แล็บถัดไปต้องการพฤติกรรม subagent/specialty ตาม LAB
+<summary>4. ทำไมต้องลบ settings.local.json หลัง Part B</summary>
+ไฟล์นี้บอก Claude ว่า “เปิดโหมดทีมอยู่” และไม่หายเองเมื่อปิดหน้าต่าง — ลืมลบแล้วรอบถัดไปอาจเป็นทีมใหญ่โดยไม่ตั้งใจ
 </details>
 
 ## Go deeper

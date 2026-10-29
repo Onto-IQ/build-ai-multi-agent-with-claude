@@ -45,7 +45,7 @@ Leader แตกงาน ──────┼──> งาน B ──┼─�
 | หน้าเว็บกับ API หลังมี PRODUCT-SPEC แล้ว | ขนานได้ |
 | แก้บั๊กจุดเดียว ต้องไล่สถานะต่อเนื่อง | อย่าตั้งทีมหลายตัว |
 
-Agent Teams เป็นแล็บบังคับใน [Module 3 Part B](../03-swarm/LAB.md) — เปิดด้วย `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` เฉพาะเซสชันนั้น แล้วปิด flag ก่อนไป Workshop ถัดไป (เมื่อเปิดอยู่ การ delegation ปกติอาจกลายเป็น teammate)
+Agent Teams เป็นแล็บบังคับใน [Module 3 Part B](../03-swarm/LAB.md) — เปิดโดยสร้างไฟล์ `.claude/settings.local.json` แล้ว**ลบไฟล์นั้น**ก่อนไป Workshop ถัดไป (ถ้าทิ้งไว้ Claude อาจยังเปิดโหมดทีมอยู่ ทั้งที่คุณไม่ได้ขอ)
 
 ## ลงมือทำตามลำดับ
 
