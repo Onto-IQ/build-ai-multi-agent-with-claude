@@ -40,7 +40,7 @@ git clone <URL-workshop-repo> C:\dev\multi-agent-workshop
 
 ผลที่คาดหวัง: ได้โฟลเดอร์ `C:\dev\multi-agent-workshop` ที่มี `package.json`, `server.js`, `data/`, `web/`
 
-> 📚 **รู้เพิ่ม:** ทุกคำสั่งในแล็บถัด ๆ ไปเขียน path ตายตัวไว้ที่ `C:\dev\multi-agent-workshop` เพื่อให้ copy-paste ได้ทั้งคอร์ส ถ้าคุณเก็บแอปไว้ที่อื่น ให้ตั้ง `$env:WORKSHOP_DIR="path ของคุณ"` ทุกครั้งก่อนรันสคริปต์ตรวจ (แนะนำ path ตายตัว — ง่ายกว่า)
+> 📚 **รู้เพิ่ม:** ทุกคำสั่งในแล็บถัด ๆ ไปเขียน path ตายตัวไว้ที่ `C:\dev\multi-agent-workshop` เพื่อให้ copy-paste ได้ทั้งคอร์ส · `catch-up` / `verify-setup` (course) / `check-solutions` ชี้ path นี้เป็นค่าเริ่มต้น · ถ้าเก็บคนละที่ ให้ copy `.env.example` → `.env` แล้วแก้ `WORKSHOP_DIR` (หรือตั้ง `$env:WORKSHOP_DIR`) — แนะนำ path ตายตัว
 
 > 📚 **clone หรือ ZIP (course repo):** คำสั่ง `git status` / `git diff` ในแล็บต้องอาศัยโฟลเดอร์ `.git` ซึ่งมีเฉพาะเมื่อ `git clone` — ถ้าคุณ download ZIP ของ course repo แทน ให้ทำ snapshot เริ่มต้นหนึ่งครั้งที่ course repo: `git init` → `git add -A` → `git commit -m "start from zip"` แล้วทุกแล็บเทียบ "แตะไฟล์บทเรียนหรือยัง" กับจุดเริ่มนี้ได้ทั้งคอร์ส (แนะนำ clone มากกว่า — อัปเดตคอร์สด้วย `git pull` ได้)
 

@@ -87,7 +87,7 @@ git commit -m "start from zip"
 
    แนะนำ `git clone` มากกว่า เพราะอัปเดตของคอร์สภายหลังด้วย `git pull` ได้
 
-> 📚 **เก็บ workshop repo ไว้ที่อื่นได้:** ทุกสคริปต์ตรวจใช้ path เริ่มต้น `C:\dev\multi-agent-workshop` ถ้าคุณเก็บไว้ที่อื่น ให้ตั้ง `export WORKSHOP_DIR="/c/path/ของคุณ"` (Git Bash) หรือ `$env:WORKSHOP_DIR="C:\path\ของคุณ"` (PowerShell) ก่อนรันสคริปต์ทุกครั้ง — แนะนำ path เริ่มต้น เพราะคำสั่งในแล็บ copy-paste ได้ทั้งคอร์ส
+> 📚 **เก็บ workshop repo ไว้ที่อื่นได้:** ค่าเริ่มต้นของ `catch-up` / `verify-setup` (course) / `check-solutions` คือ `C:\dev\multi-agent-workshop` · ถ้าเก็บคนละที่ ให้ copy `.env.example` → `.env` แล้วแก้ `WORKSHOP_DIR=...` (gitignore แล้ว) หรือตั้ง `$env:WORKSHOP_DIR` / `export WORKSHOP_DIR` ชั่วคราว — แนะนำ path เริ่มต้น เพราะคำสั่งในแล็บ copy-paste ได้ทั้งคอร์ส
 
 ถ้ายังไม่ล็อกอิน Claude — ใส่ `--skip-claude` ได้ทั้งสองฝั่ง:
 

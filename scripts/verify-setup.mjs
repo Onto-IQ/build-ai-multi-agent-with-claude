@@ -6,15 +6,17 @@ import { existsSync } from 'node:fs';
 import http from 'node:http';
 import net from 'node:net';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
+
+const require = createRequire(import.meta.url);
+const { resolveWorkshopDir } = require('./workshop-dir.js');
 
 const exec = promisify(execFile);
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // The app lives in its own workshop repo; the course repo only ships lessons.
-const workshop = process.env.WORKSHOP_DIR
-  ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'C:\\dev\\multi-agent-workshop';
+const { dir: workshop, source: workshopSource } = resolveWorkshopDir();
 const skipClaude = process.argv.includes('--skip-claude');
 const skipPrompt = skipClaude || process.argv.includes('--skip-claude-prompt');
 
@@ -112,6 +114,7 @@ async function commandVersion(bin, args) {
 
 async function main() {
   console.log(`verify-setup (course) · ${repo}`);
+  console.log(`workshop target · ${workshop} (from ${workshopSource})`);
   console.log('Tip: already inside the workshop app? Prefer: cd C:\\dev\\multi-agent-workshop && npm run verify');
 
   if (existsSync(path.join(repo, 'Lessons'))) {
@@ -131,7 +134,7 @@ async function main() {
       warn('workshop already has .mcp.json — starter should not; learners add it in Workshop 6 (MCP). Remove it if you are resetting to day-1 state.');
     }
   } else {
-    bad(`workshop project not found at ${workshop}. Clone the workshop repo your instructor shared into that path (or set WORKSHOP_DIR to your copy), then re-run this script.`);
+    bad(`workshop project not found at ${workshop}. Clone into C:\\dev\\multi-agent-workshop, or set WORKSHOP_DIR / copy .env.example → .env, then re-run.`);
   }
 
   const nodeVersion = parseVersion(process.version);

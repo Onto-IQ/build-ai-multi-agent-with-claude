@@ -3,13 +3,15 @@
 import { spawn } from 'node:child_process';
 import net from 'node:net';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+
+const require = createRequire(import.meta.url);
+const { resolveWorkshopDir } = require('./workshop-dir.js');
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // The app lives in its own workshop repo; the starter gate runs there.
-const workshop = process.env.WORKSHOP_DIR
-  ? path.resolve(process.env.WORKSHOP_DIR)
-  : 'C:\\dev\\multi-agent-workshop';
+const { dir: workshop, source: workshopSource } = resolveWorkshopDir();
 const workshops = ['w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9'];
 
 function freePort() {
@@ -39,6 +41,7 @@ function run(script, args, options) {
 }
 
 async function main() {
+  console.log(`check-solutions: workshop = ${workshop} (from ${workshopSource})`);
   const port = await freePort();
   const gate = await run(path.join(workshop, 'scripts', 'quality-gate.js'), [], {
     cwd: workshop,

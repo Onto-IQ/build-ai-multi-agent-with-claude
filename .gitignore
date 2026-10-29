@@ -28,3 +28,7 @@ scripts/apply-keyphrase-style.mjs
 
 # Deck แจกจ่ายนอก repo (ไม่ track ไฟล์งานนำเสนอ)
 *.pptx
+
+# Local workshop path override (see .env.example) — never commit machine-specific paths
+.env
+.env.local
