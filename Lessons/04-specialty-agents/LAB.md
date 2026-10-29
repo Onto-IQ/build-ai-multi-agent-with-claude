@@ -41,18 +41,18 @@ frontmatter ต้องตรงนี้: name เป็น data-researcher; d
 
 3. **ปิด TUI แล้วเปิด `claude` ใหม่** — เอเจนต์ใหม่ถูกโหลดตอนเซสชันเริ่มเท่านั้น
 
-4. สั่งใช้เอเจนต์ (เลือกอย่างหนึ่ง):
+4. สั่งใช้เอเจนต์ (เลือกอย่างหนึ่ง) — เครื่องหมาย `@` หน้าชื่อ = **เรียกเอเจนต์ตัวนั้นโดยตรง** (พิมพ์ `@` แล้วเลือกชื่อจากรายการใน TUI ก็ได้):
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Use the data-researcher subagent. Explain POST /api/notes citing server.js:line for every claim. Do not edit files.
+@data-researcher Explain POST /api/notes citing server.js:line for every claim. Do not edit files.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-ให้ subagent data-researcher อธิบายว่า POST /api/notes ทำอะไร โดยทุกข้ออ้างต้องระบุ server.js:บรรทัด ห้ามแก้ไฟล์
+@data-researcher อธิบายว่า POST /api/notes ทำอะไร โดยทุกข้ออ้างต้องระบุ server.js:บรรทัด ห้ามแก้ไฟล์
 ```
 
 ผลที่คาดหวัง: คำตอบมีหลักฐานแบบ `server.js:` อย่างน้อยหนึ่งจุด
