@@ -61,10 +61,21 @@ C:\dev\multi-agent-workshop       ← แอป Registry Insight (ข้อม�
 git clone <url-ของ-course-repo>
 cd build-ai-multi-agent-with-claude
 git clone <url-ของ-workshop-repo> C:/dev/multi-agent-workshop
+
+# 1) ตรวจที่ workshop (โฟลเดอร์แอป — ไม่สับสนว่าให้รันฝั่งไหน)
+cd C:/dev/multi-agent-workshop
+npm run verify
+
+# 2) ตรวจครบสอง repo ที่ course (เจอ workshop ตาม WORKSHOP_DIR)
+cd <path-to-course-repo>
 node scripts/verify-setup.mjs
 ```
 
-ผลที่คาดหวัง: บรรทัด `verify-setup: passed` พอร์ต 3000 ว่าง หน้าแอปตอบได้ และ starter quality gate เป็น exit 2
+ผลที่คาดหวัง:
+- ที่ workshop: `verify-setup (workshop): passed`
+- ที่ course: `verify-setup: passed` พร้อม `workshop project found` · พอร์ต 3000 ว่าง · starter gate exit 2
+
+> สคริปต์ชื่อ `verify-setup.mjs` มี**ทั้งสอง repo** — รันในโฟลเดอร์ไหนได้ผลของโฟลเดอร์นั้น
 
 > 📚 **ถ้า download ZIP แทน `git clone` (course repo):** โฟลเดอร์ที่แตกออกมาไม่มี `.git` คำสั่ง `git status` / `git diff` ในแล็บจะขึ้น `fatal: not a git repository` — ทำ snapshot เริ่มต้นหนึ่งครั้งก็ใช้ได้ทั้งคอร์ส:
 
@@ -78,9 +89,13 @@ git commit -m "start from zip"
 
 > 📚 **เก็บ workshop repo ไว้ที่อื่นได้:** ทุกสคริปต์ตรวจใช้ path เริ่มต้น `C:\dev\multi-agent-workshop` ถ้าคุณเก็บไว้ที่อื่น ให้ตั้ง `export WORKSHOP_DIR="/c/path/ของคุณ"` (Git Bash) หรือ `$env:WORKSHOP_DIR="C:\path\ของคุณ"` (PowerShell) ก่อนรันสคริปต์ทุกครั้ง — แนะนำ path เริ่มต้น เพราะคำสั่งในแล็บ copy-paste ได้ทั้งคอร์ส
 
-ถ้ายังไม่ล็อกอิน Claude:
+ถ้ายังไม่ล็อกอิน Claude — ใส่ `--skip-claude` ได้ทั้งสองฝั่ง:
 
 ```bash
+cd C:/dev/multi-agent-workshop
+node scripts/verify-setup.mjs --skip-claude
+
+cd <path-to-course-repo>
 node scripts/verify-setup.mjs --skip-claude
 ```
 

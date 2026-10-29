@@ -66,13 +66,23 @@
 
 ## เช็กลิสต์วันแรก
 
-จาก course repo (รากของ repo นี้):
+ตรวจที่ **workshop** ก่อน (โฟลเดอร์แอป):
 
 ```bash
+cd C:/dev/multi-agent-workshop
+npm run verify
+```
+
+ผ่านเมื่อขึ้น `verify-setup (workshop): passed` (เครื่อง + บูตแอป + starter gate exit 2)
+
+จากนั้น (แนะนำ) ตรวจครบสอง repo ที่ **course**:
+
+```bash
+cd <path-to-course-repo>
 node scripts/verify-setup.mjs
 ```
 
-ผ่านเมื่อ Node กับ Git พร้อม workshop repo ถูกพบ หน้าแอปตอบได้ และ quality gate ชุดเริ่มต้นจบด้วย exit 2 ถ้ายังไม่ล็อกอิน Claude ให้ใส่ `--skip-claude` ชั่วคราว แล้วกลับมาล็อกอินใน Lab 0
+ถ้ายังไม่ล็อกอิน Claude ให้ใส่ `--skip-claude` ชั่วคราว แล้วกลับมาล็อกอินใน Lab 0
 
 เปิดแอป — ใน workshop repo:
 

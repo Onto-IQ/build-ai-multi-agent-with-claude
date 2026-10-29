@@ -111,10 +111,13 @@ async function commandVersion(bin, args) {
 }
 
 async function main() {
+  console.log(`verify-setup (course) · ${repo}`);
+  console.log('Tip: already inside the workshop app? Prefer: cd C:\\dev\\multi-agent-workshop && npm run verify');
+
   if (existsSync(path.join(repo, 'Lessons'))) {
     note('course repo has Lessons/ lesson folders');
   } else {
-    bad('course repo is missing Lessons/ — re-clone the course repo');
+    bad('course repo is missing Lessons/ — re-clone the course repo (or run npm run verify inside the workshop app repo)');
   }
 
   if (existsSync(path.join(workshop, 'server.js')) && existsSync(path.join(workshop, 'package.json'))) {

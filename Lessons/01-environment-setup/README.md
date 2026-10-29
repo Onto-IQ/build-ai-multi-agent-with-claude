@@ -38,7 +38,7 @@
 
 ## ลงมือทำตามลำดับ
 
-ทุกขั้นพิมพ์ตามได้เลย — ขั้นตรวจเครื่องทำจาก **course repo** (repo บทเรียนนี้) ส่วนคำสั่งแอป `npm start` / `npm run gate` ทำจาก **workshop repo** `C:\dev\multi-agent-workshop`:
+ทุกขั้นพิมพ์ตามได้เลย — ตรวจเครื่องหลักทำจาก **workshop repo** ด้วย `npm run verify` · คำสั่งแอป `npm start` / `npm run gate` ก็อยู่ที่นี่ · ที่ **course repo** ใช้ `node scripts/verify-setup.mjs` เมื่ออยากตรวจครบสอง repo:
 
 1. ตรวจเวอร์ชัน:
 

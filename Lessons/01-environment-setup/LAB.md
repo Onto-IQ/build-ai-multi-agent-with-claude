@@ -12,8 +12,8 @@
 
 | Repo | มีอะไร | คุณทำอะไรที่นี่ |
 |---|---|---|
-| **course repo** (โฟลเดอร์บทเรียนที่ clone มา) | บทเรียน แล็บ สคริปต์ตรวจ | อ่านแล็บ รัน `verify-setup` / `catch-up` |
-| **workshop repo** (`C:\dev\multi-agent-workshop`) | แอป Registry Insight ล้วน | รัน `claude` ตลอดคอร์ส ผลงานทุกชิ้น (เอกสาร handoff, agents, โค้ดที่แก้) ปรากฏที่นี่ |
+| **course repo** (โฟลเดอร์บทเรียนที่ clone มา) | บทเรียน แล็บ สคริปต์ตรวจ | อ่านแล็บ รัน `catch-up` / `check-solutions` และ `verify-setup` แบบครบสอง repo |
+| **workshop repo** (`C:\dev\multi-agent-workshop`) | แอป Registry Insight ล้วน | รัน `claude` ตลอดคอร์ส · รัน `npm run verify` / `npm start` / `npm run gate` · ผลงานทุกชิ้นอยู่ที่นี่ |
 
 ที่ course repo จงใจ**ไม่มีโค้ดแอป** — เมื่อคุณรัน claude ที่ workshop repo agent จะเห็นเฉพาะแอป ไม่เห็นเฉลยหรือเนื้อหาบทเรียน
 
@@ -54,15 +54,27 @@ claude
 
 ผลที่คาดหวัง: เห็นบัญชีของคลาส ไม่ใช่โหมด API key
 
-4. รันสคริปต์ตรวจ — ต้องอยู่ที่ course repo (โฟลเดอร์ที่มี `scripts/` และ `Lessons/`)
+4. รันสคริปต์ตรวจที่ **workshop repo** ก่อน (โฟลเดอร์แอป — มี `server.js`)
 
 ```powershell
+cd C:\dev\multi-agent-workshop
+npm run verify
+```
+
+ผลที่คาดหวัง: `verify-setup (workshop): passed` และ starter quality gate เป็น exit 2
+
+> 📚 **รู้เพิ่ม:** สคริปต์ชื่อเดียวกันมีสองที่ — รันในโฟลเดอร์ไหนได้ผลของโฟลเดอร์นั้น · ที่ workshop ตรวจเครื่อง+บูตแอป · ที่ course (ขั้นถัดไป) ตรวจว่าเจอ workshop ตาม `WORKSHOP_DIR` ด้วย
+
+5. (แนะนำ) รันสคริปต์ตรวจครบสอง repo ที่ **course repo** (โฟลเดอร์ที่มี `Lessons/`)
+
+```powershell
+cd <path-to-course-repo>
 node scripts/verify-setup.mjs
 ```
 
-ผลที่คาดหวัง: `verify-setup: passed` พร้อมบรรทัด `workshop project found` และบรรทัดว่า starter quality gate เป็น exit 2
+ผลที่คาดหวัง: `verify-setup: passed` พร้อมบรรทัด `workshop project found` และ starter quality gate เป็น exit 2
 
-5. เปิดแอปคนละเทอร์มินัล — **ใน workshop project**
+6. เปิดแอปคนละเทอร์มินัล — **ใน workshop project**
 
 ```powershell
 cd C:\dev\multi-agent-workshop
@@ -73,7 +85,7 @@ npm start
 
 ผลที่คาดหวัง: หน้าบอกว่าแดชบอร์ด**ยังไม่พร้อม** และ**ไม่มีตัวเลขตั้งต้นที่ใช้ได้** (เช่น จำนวนกิจการเป็น 0 หรือไม่โชว์ยอดจริง) — นี่คือสถานะ Initial ตามดีไซน์ ไม่ใช่เครื่องพัง
 
-6. รัน quality gate หลังปิดเซิร์ฟเวอร์แล้ว — ยังอยู่ใน workshop project
+7. รัน quality gate หลังปิดเซิร์ฟเวอร์แล้ว — ยังอยู่ใน workshop project
 
 ```powershell
 npm run gate
@@ -88,7 +100,8 @@ npm run gate
 - [ ] `claude --version` ≥ 2.1.296
 - [ ] `echo $env:ANTHROPIC_API_KEY` ว่าง
 - [ ] `C:\dev\multi-agent-workshop` มี `package.json` และ `server.js`
-- [ ] `node scripts/verify-setup.mjs` ผ่าน (รันที่ course repo)
+- [ ] `npm run verify` ผ่านที่ workshop repo (`verify-setup (workshop): passed`)
+- [ ] (แนะนำ) `node scripts/verify-setup.mjs` ผ่านที่ course repo ด้วย
 - [ ] หน้า `http://127.0.0.1:3000` เปิดได้และปิดเซิร์ฟเวอร์แล้ว
 - [ ] quality gate เป็น exit 2 โดยไม่ได้แก้ไฟล์
 
@@ -99,7 +112,8 @@ npm run gate
 | `claude` ไม่พบ หรือชี้ไฟล์เก่า | PATH หรือ alias | ดู SETUP.md ขั้นที่ 2 |
 | `fatal: not a git repository` ตอนรัน git ที่ course repo | โฟลเดอร์มาจาก download ZIP (ไม่มี `.git`) | ทำ snapshot ตามหมายเหตุขั้นที่ 1 หรือ `git clone` ใหม่ |
 | `verify-setup` FAIL ว่า workshop project not found | ยังไม่ได้ clone workshop repo หรือ clone ไว้คนละ path | clone ตามขั้นที่ 2 หรือตั้ง `$env:WORKSHOP_DIR` ชี้โฟลเดอร์ที่ clone ไว้แล้วรันใหม่ |
-| `Cannot find module .../verify-setup.mjs` | รันจากผิดโฟลเดอร์ (เช่นอยู่ใน workshop repo) หรือ clone จากสำเนาเก่า | กลับไป course repo (โฟลเดอร์ที่มี `Lessons/`) แล้วรันใหม่ ถ้าไม่มีไฟล์จริงให้ `git pull` หรือ clone ใหม่จาก main |
+| `Cannot find module .../verify-setup.mjs` | รันจากโฟลเดอร์ที่ไม่มีสคริปต์ หรือ clone เก่า | ที่ workshop ใช้ `npm run verify` · ที่ course ใช้ `node scripts/verify-setup.mjs` ในโฟลเดอร์ที่มี `Lessons/` · `git pull` ถ้ายังไม่มีไฟล์ |
+| `this folder looks like the course repo` จาก workshop verify | รัน `npm run verify` ใน course โดยผิด | `cd C:\dev\multi-agent-workshop` แล้วรันใหม่ |
 | port 3000 busy (port busy) | เซิร์ฟเวอร์ค้าง | Ctrl+C หรือ `$env:PORT=3001; npm start` (ใน workshop repo) |
 | quality gate แสดง port busy | ยังไม่ปิดเซิร์ฟเวอร์ | ปิดก่อนรัน `npm run gate` |
 | `claude -p` ไม่ตอบ CLAUDE-OK | ยังไม่ล็อกอิน หรือคีย์ API ทับ | ล็อกอินใน TUI แล้วปิดคีย์ (`Remove-Item Env:ANTHROPIC_API_KEY`) |
