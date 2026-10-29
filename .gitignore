@@ -6,29 +6,45 @@ Desktop.ini
 # Editors / IDE
 .vscode/
 .idea/
+.cursor/
 
 # Node (แอปเป็น zero-dependency แต่กันอนาคต)
 node_modules/
 npm-debug.log*
 
+# --- ผู้เรียนไม่ควรเห็น (instructor / authoring / secrets) ---
+
 # ZCode (agent ฝั่งผู้สอน — เก็บเฉพาะในเครื่อง ไม่ push ขึ้น GitHub)
 .zcode/
 
-# เอกสารภายใน (ประวัติการตรวจทาน — เก็บไว้ในเครื่องเท่านั้น)
+# เอกสารภายใน (outline / แผนโครงสร้าง — เก็บไว้ในเครื่องเท่านั้น)
 vibe-code-l2-course-outline-internal.md
+2026-10-28-two-repo-restructure.md
 
-# โซนผู้สอน (เฉลย โน้ตสอน บันทึกทดสอบ — นักเรียนไม่ควรเห็น)
+# โซนผู้สอน (โน้ตสอน · test-runs · source-material · agent-lab — นักเรียนไม่ควรเห็น)
 instructor/
 
-# เครื่องมือ authoring ภายใน
+# เครื่องมือ authoring ภายใน (จัดสไตล์ / สร้าง deck)
 scripts/apply-keyphrase-style.mjs
+scripts/build-phasef-deck.mjs
+
+# ไฟล์ชั่วคราวตอนแก้ deck / สคริปต์ในเครื่อง
+_tmp_*.py
+_tmp_*.mjs
+_tmp_*.json
 
 # Claude Code ใช้ที่ workshop repo เท่านั้น (anchor ที่ราก — ห้ามกลืน solutions/*/drop-in/.claude/)
 /.claude/
 
 # Deck แจกจ่ายนอก repo (ไม่ track ไฟล์งานนำเสนอ)
 *.pptx
+*.pptm
+~$*
 
 # Local workshop path override (see .env.example) — never commit machine-specific paths
 .env
 .env.local
+
+# --- ตั้งใจให้ผู้เรียนเห็นได้ — อย่าใส่ gitignore ---
+# Lessons/  SETUP.md  README.md  reference/  solutions/  scripts/catch-up.js
+# scripts/check-solutions.mjs  scripts/verify-setup.mjs  .env.example
