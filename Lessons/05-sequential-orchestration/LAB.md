@@ -137,13 +137,28 @@ When finished, ask each teammate by name to shut down (message data, then backen
 
 ### C — คุณรันของจริง + รีวิว (ต่อคิว · โหมดทีมปิดแล้ว)
 
-9. รัน SQL ด้วยมือคุณเอง (workshop repo):
+9. รัน SQL ด้วยมือคุณเอง (workshop repo) — คำสั่ง `duckdb` นี้คือ**เครื่องมือบนเครื่องคุณ** ไม่ใช่ MCP:
+
+> 📚 **DuckDB วันนี้ vs MCP ทีหลัง:** เอเจนต์เพิ่งเขียนไฟล์ `.sql` ให้ · **คุณ** เป็นคนพิมพ์ `duckdb` ใน PowerShell เพื่อพิสูจน์ผล (นิสัยเดียวกับรัน `npm run gate` เอง) · **ยังไม่ต้องมี** `.mcp.json` และยังไม่ต้องเข้าใจ MCP · Workshop 6 จะสอนให้เอเจนต์เรียกถามข้อมูลผ่าน MCP เอง — คนละขั้น คนละบท
 
 ```powershell
 duckdb -c ".read scripts/clean-export.sql"
+echo $LASTEXITCODE
 ```
 
-ผลที่คาดหวัง: `data/dataset.csv` สะอาด 16,772 แถว (วันที่ ISO ทุนไม่มีลูกน้ำ มีคอลัมน์ province)
+ผลที่คาดหวังหลัง `duckdb`: **หน้าจอเงียบได้** (ไม่พิมพ์ตาราง) — แปลว่าสคริปต์รันจบแล้ว · `$LASTEXITCODE` ควรเป็น `0` (สำเร็จ) ไม่ใช่คำสั่งพัง
+
+จากนั้น**ตรวจไฟล์จริง** อย่าเชื่อแค่ความเงียบ:
+
+```powershell
+(Get-Content data\dataset.csv | Measure-Object -Line).Lines
+Get-Content data\dataset.csv -TotalCount 3
+```
+
+| คำสั่ง | ดูอะไร | ค่าที่คาดหวัง |
+|---|---|---|
+| `(Get-Content ...).Lines` | จำนวนบรรทัดในไฟล์ | ประมาณ **16773** = 1 แถวหัวตาราง + **16772** แถวข้อมูล |
+| `Get-Content ... -TotalCount 3` | หัวตาราง + 2 แถวแรก | วันที่แบบ `2015-01-12` (ISO) · ทุนเป็นตัวเลขไม่มีลูกน้ำ · มีคอลัมน์ `province` |
 
 > 📚 **รู้เพิ่ม:** ถ้า gate รายงาน `unknown-province` ให้ชี้ `lib/inspect-data.js` แล้วสั่ง developer แก้กฎดึงจังหวัดต่อ (เปิด `claude` ใหม่หลังลบ settings แล้ว)
 
@@ -195,6 +210,7 @@ echo $LASTEXITCODE
 | หมดรอบกลางคัน | งานลงมือยาว | ตรวจว่า MAX_TURNS เป็น `"30"` · Save แล้วเปิดใหม่ |
 | `Stop Task` / `No task found with ID: data` (หรือ backend/frontend) | หัวหน้าสับสน **ชื่อเพื่อนทีม** กับ **รหัสงานในรายการ** | ปกติเจอตอนปิดทีม · ถ้ามี DESIGN/SQL/แก้ไฟล์ครบแล้วไปต่อได้ · รอบหน้าให้สั่ง shut down ทีละชื่อเพื่อน ไม่ใช่ Stop Task ด้วยชื่อนั้น |
 | หน้าเว็บยังของเดิม | ยังไม่รัน SQL | รันขั้น 9 ซ้ำ |
+| รัน `duckdb` แล้วเงียบ ไม่รู้สำเร็จไหม | DuckDB สำเร็จมักไม่พิมพ์อะไร | ดู `$LASTEXITCODE` เป็น `0` แล้วรันนับบรรทัด / ดู 3 แถวแรกตามขั้น 9 |
 | แล็บหลังยังเป็นทีมใหญ่เอง | ลืมลบ `settings.local.json` | ลบไฟล์แล้วเปิด `claude` ใหม่ |
 | port busy | เซิร์ฟเวอร์ค้าง | ปิดก่อนรัน gate หรือตั้ง `PORT` |
 

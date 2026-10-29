@@ -30,7 +30,8 @@
 | Shared contract | สเปกกลาง | สเปกที่ทุกบทบาทยึด เช่น `PRODUCT-SPEC.md` |
 | Specialty agent | เอเจนต์เฉพาะทาง | ไฟล์ใน `.claude/agents/` |
 | Skill | skill | ขั้นตอนใน `.claude/skills/<ชื่อ>/SKILL.md` |
-| MCP | MCP | JSON-RPC ให้เอเจนต์เรียกเครื่องมือภายนอก |
+| DuckDB (CLI) | คำสั่ง duckdb ในเทอร์มินัล | เครื่องมือที่**คน**รันเอง (เช่น Workshop 3 อ่าน `.sql`) — ยังไม่ใช่ MCP |
+| MCP | MCP | JSON-RPC ให้**เอเจนต์**เรียกเครื่องมือภายนอก (Workshop 6) — คนละขั้นกับพิมพ์ `duckdb` เอง |
 | stdio | stdio | MCP บนเครื่องเดียวกัน — stdout มีได้แค่ JSON |
 | Hook | hook | สคริปต์ที่รันเองที่จุดเหตุการณ์ — hook exit 2 = บล็อก |
 | Quality gate | quality gate | `scripts/quality-gate.js` — exit 0 ผ่าน, exit 2 ไม่ผ่าน |
