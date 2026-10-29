@@ -170,7 +170,7 @@ async function main() {
       ['M2', 'สถาปัตยกรรม + /init', 'onboard CLAUDE.md'],
       ['M3 / W1', 'Swarm', 'สำรวจขนาน 3 สาย'],
       ['M4 / W2', 'Specialty agent', 'data-researcher — ยังไม่ต่อ MCP'],
-      ['M5 / W3', 'Sequential', 'clean-export · เว็บโชว์ยอด'],
+      ['M5 / W3', 'Hybrid', 'แผน→Teammate data/be/fe→รีวิว'],
       ['M6 / W4', 'Fix + QA', 'gate → 6/6'],
       ['M7 / W5', 'Skills', 'release-manager + checklist'],
     ];
