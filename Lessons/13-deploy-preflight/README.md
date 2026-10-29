@@ -24,7 +24,7 @@
 | 4 | `ANTHROPIC_API_KEY` ว่าง (`echo $env:ANTHROPIC_API_KEY`) | ไม่หลุดไปคิดเงินรายครั้ง |
 | 5 | เซิร์ฟเวอร์ในเครื่องถูกปิดแล้ว | quality gate ไม่เจอ port busy |
 | 6 | รู้ว่าจะหยุดเมื่อเอเจนต์วน | มีคนดูอยู่ |
-| 7 | บัญชี Vercel ล็อกอินแล้ว | ไม่ไปสมัครกลางแล็บ |
+| 7 | บัญชี Vercel ล็อกอินแล้ว + Claude มีการเชื่อม `vercel` (`/mcp` OAuth) | ไม่ไปสมัคร/เชื่อมกลางชั่วโมง deploy |
 
 ไฟล์ตั้งค่าในเฉลย `solutions/w9/drop-in/vercel.json` ชี้หน้า `web/` และฟังก์ชัน `api/summary.js` — ฟังก์ชันนั้นอ่าน CSV ที่สะอาด แต่ยังไม่ได้ถูกเรียกบนคลาวด์ในรอบจัดโครงสร้างนี้ บอกไว้ตรง ๆ เพื่อไม่ให้เข้าใจเกินของจริง
 
@@ -38,22 +38,48 @@
 npm run gate && echo GATE-GREEN
 ```
 
-2. ทางที่แนะนำคือให้เอเจนต์ทำผ่าน TUI — วาง prompt จากหัวข้อถัดไป แล้วดูว่ามันหยุดเองเมื่อ gate ไม่ผ่านหรือไม่
+2. เชื่อม Vercel ใน TUI ก่อน (ยังไม่ deploy) — วาง prompt **ตั้งการเชื่อม** จาก [LAB.md ขั้น 4](LAB.md) แล้วทำ `/mcp` → OAuth ให้จบ
 
-3. ทางสำรองคือคุณกดเองด้วย Vercel CLI — หลัง gate เขียว:
+3. ทางที่แนะนำคือให้เอเจนต์ deploy ผ่าน TUI — วาง prompt **deploy** จาก [LAB.md ขั้น 5](LAB.md) แล้วดูว่ามันหยุดเองเมื่อ gate ไม่ผ่านหรือไม่
+
+4. ทางสำรองคือคุณกดเองด้วย Vercel CLI — หลัง gate เขียว:
 
 ```bash
 vercel --prod
 ```
 
-4. ปิดงานด้วยหลักฐานสองอย่างที่คุณเก็บเอง: production URL ที่เปิดได้จริง และ commit ที่ขึ้นจริง — จนกว่าจะมีสองอย่างนี้จากรอบจริงหนึ่งรอบ ห้องนี้ยังไม่นับว่า deploy ได้
+5. ปิดงานด้วยหลักฐานสองอย่างที่คุณเก็บเอง: production URL ที่เปิดได้จริง และ commit ที่ขึ้นจริง — จนกว่าจะมีสองอย่างนี้จากรอบจริงหนึ่งรอบ ห้องนี้ยังไม่นับว่า deploy ได้
 
-## Prompt pattern — เลือกใช้อย่างใดอย่างหนึ่ง
+## Prompt pattern — เชื่อมก่อน แล้วค่อย deploy
+
+### A) ตั้งการเชื่อม Vercel (ยังไม่ขึ้นของจริง)
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Deploy this Registry Insight app to Vercel with the Vercel connection.
+Set up the official Vercel connection for this Claude Code session so we can deploy later.
+Add the remote MCP server named vercel at https://mcp.vercel.com if it is not already configured.
+Then tell me to open /mcp, select vercel, and finish the browser OAuth.
+After I confirm auth, verify with a read-only check (for example list teams or list projects) and report PASS or FAIL with short evidence.
+Do not deploy. Do not create a new Vercel project. Do not print tokens, cookies, or any sk- value.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ตั้งการเชื่อม Vercel อย่างเป็นทางการให้เซสชัน Claude Code นี้ เพื่อเตรียม deploy ทีหลัง
+ถ้ายังไม่มี ให้เพิ่ม remote MCP ชื่อ vercel ที่ https://mcp.vercel.com
+แล้วบอกให้ฉันเปิด /mcp เลือก vercel แล้วทำ OAuth ในเบราว์เซอร์ให้จบ
+หลังฉันยืนยันว่า auth แล้ว ให้ตรวจแบบอ่านอย่างเดียว (เช่น list teams หรือ list projects) แล้วรายงาน PASS หรือ FAIL พร้อมหลักฐานสั้น ๆ
+ห้าม deploy ห้ามสร้างโปรเจกต์ Vercel ใหม่ ห้ามพิมพ์ token · cookie หรือค่าที่ขึ้นต้นด้วย sk-
+```
+
+### B) Deploy (หลังการเชื่อม PASS)
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Deploy this Registry Insight app to Vercel with the Vercel connection we just set up.
 Before deploying, run npm run gate. If it fails, stop and report.
 After deploying, give me the production URL and the commit that was deployed.
 Do not print any sk- value.
@@ -62,7 +88,7 @@ Do not print any sk- value.
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-Deploy แอป Registry Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel
+Deploy แอป Registry Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel ที่เพิ่งตั้งไว้
 ก่อน deploy ให้รัน npm run gate ถ้าไม่ผ่านให้หยุดแล้วรายงาน
 หลัง deploy ส่ง production URL และ commit ที่ขึ้นจริง
 ห้ามพิมพ์ค่าที่ขึ้นต้นด้วย sk-
@@ -72,6 +98,7 @@ Deploy แอป Registry Insight ขึ้น Vercel โดยใช้กา�
 
 | ส่วน | หน้าที่ |
 |---|---|
+| ตั้ง MCP + `/mcp` OAuth ก่อน | มีการเชื่อมก่อนสั่งขึ้นของจริง |
 | รัน quality gate ก่อน | preflight ในตัวคำสั่ง |
 | ถ้าไม่ผ่านให้หยุด | กันของแดงขึ้นของจริง |
 | ส่ง URL กับ commit | รู้ว่าอะไรขึ้น |

@@ -47,12 +47,47 @@ echo $env:ANTHROPIC_API_KEY
 
 ผลที่คาดหวัง: ว่าง และคุณล็อกอิน Vercel ได้ในเบราว์เซอร์
 
-4. เปิด TUI แล้ววาง prompt deploy เฉพาะเมื่อผู้สอนบอกว่าห้องนี้ deploy จริง (เลือกอย่างใดอย่างหนึ่ง):
+4. เปิด TUI แล้ว**เชื่อม Vercel ก่อน** (ยังไม่ deploy) — วาง prompt อย่างใดอย่างหนึ่ง:
 
 **เวอร์ชันอังกฤษ (แนะนำ):**
 
 ```text
-Deploy this Registry Insight app to Vercel with the Vercel connection.
+Set up the official Vercel connection for this Claude Code session so we can deploy later.
+Add the remote MCP server named vercel at https://mcp.vercel.com if it is not already configured.
+Then tell me to open /mcp, select vercel, and finish the browser OAuth.
+After I confirm auth, verify with a read-only check (for example list teams or list projects) and report PASS or FAIL with short evidence.
+Do not deploy. Do not create a new Vercel project. Do not print tokens, cookies, or any sk- value.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+ตั้งการเชื่อม Vercel อย่างเป็นทางการให้เซสชัน Claude Code นี้ เพื่อเตรียม deploy ทีหลัง
+ถ้ายังไม่มี ให้เพิ่ม remote MCP ชื่อ vercel ที่ https://mcp.vercel.com
+แล้วบอกให้ฉันเปิด /mcp เลือก vercel แล้วทำ OAuth ในเบราว์เซอร์ให้จบ
+หลังฉันยืนยันว่า auth แล้ว ให้ตรวจแบบอ่านอย่างเดียว (เช่น list teams หรือ list projects) แล้วรายงาน PASS หรือ FAIL พร้อมหลักฐานสั้น ๆ
+ห้าม deploy ห้ามสร้างโปรเจกต์ Vercel ใหม่ ห้ามพิมพ์ token · cookie หรือค่าที่ขึ้นต้นด้วย sk-
+```
+
+ผลที่คาดหวัง: มีชื่อเซิร์ฟเวอร์ `vercel` · คุณทำ OAuth จบในเบราว์เซอร์ · เอเจนต์รายงาน PASS จากเครื่องมืออ่านอย่างเดียว · **ยังไม่มี** production URL
+
+**ทางสำรองถ้าเอเจนต์ไม่เพิ่ม MCP ให้เอง** — รันนอก TUI ใน PowerShell ที่ workshop repo แล้วกลับเข้า `claude` ใหม่:
+
+```powershell
+claude mcp add --transport http vercel https://mcp.vercel.com
+claude
+```
+
+ใน TUI พิมพ์ `/mcp` → เลือก `vercel` → Authenticate
+
+> 📚 **รู้เพิ่ม:** การเชื่อม ≠ การ deploy · ขั้นนี้แค่ให้ Claude เรียกบัญชี Vercel ของคุณได้ · ของที่ขึ้นจริงยังต้องมีคนกด (หรือสั่งในขั้นถัดไป) และยืนยันด้วย URL
+
+5. วาง prompt deploy **เฉพาะเมื่อ** การเชื่อมขั้น 4 เป็น PASS และผู้สอนบอกว่าห้องนี้ deploy จริง:
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Deploy this Registry Insight app to Vercel with the Vercel connection we just set up.
 Before deploying, run npm run gate. If it fails, stop and report.
 After deploying, give me the production URL and the commit that was deployed.
 Do not print any sk- value.
@@ -61,7 +96,7 @@ Do not print any sk- value.
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
 
 ```text
-Deploy แอป Registry Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel
+Deploy แอป Registry Insight ขึ้น Vercel โดยใช้การเชื่อม Vercel ที่เพิ่งตั้งไว้
 ก่อน deploy ให้รัน npm run gate ถ้าไม่ผ่านให้หยุดแล้วรายงาน
 หลัง deploy ส่ง production URL และ commit ที่ขึ้นจริง
 ห้ามพิมพ์ค่าที่ขึ้นต้นด้วย sk-
@@ -77,6 +112,7 @@ Deploy แอป Registry Insight ขึ้น Vercel โดยใช้กา�
 - [ ] health ไม่มี `sk-`
 - [ ] `ANTHROPIC_API_KEY` ว่าง
 - [ ] เซิร์ฟเวอร์ท้องถิ่นถูกปิดแล้ว
+- [ ] การเชื่อม Vercel (`/mcp` · OAuth) ผ่าน หรือมีบันทึกว่าห้องนี้ให้ผู้สอนสาธิต
 - [ ] มี URL จริง หรือมีบันทึกว่าห้องนี้ให้ผู้สอนสาธิต และคุณเก็บผล quality gateไว้
 
 ## 🛠 Troubleshooting
@@ -87,6 +123,8 @@ Deploy แอป Registry Insight ขึ้น Vercel โดยใช้กา�
 | `PORT=3001` is not recognized / คำสั่งพัง | วาง syntax bash ใน PowerShell | ใช้ `$env:PORT = 3001; npm start` ตามขั้น 2 |
 | port busy | ของเก่ายังฟังอยู่ | ปิดหรือเปลี่ยน `PORT` (`$env:PORT = 3001`) |
 | `Unable to connect` / connection refused ที่ 3001 | เซิร์ฟเวอร์ยังไม่ขึ้น หรือเรียกผิดพอร์ต | รอเทอร์มินัล A โชว์ listening แล้วเรียก `3001` อีกครั้ง |
+| ไม่มีเครื่องมือ vercel ในแชท | ยังไม่เพิ่ม MCP หรือยังไม่ OAuth | รัน `claude mcp add --transport http vercel https://mcp.vercel.com` แล้ว `/mcp` → Authenticate |
+| `/mcp` ไม่มี vercel / OAuth ค้าง | endpoint ผิด หรือเบราว์เซอร์ยังไม่จบ | ยืนยัน URL คือ `https://mcp.vercel.com` แล้วทำ auth ใหม่ |
 | headless ไม่ยอมเรียก vercel | Bash ถูกปฏิเสธ | ใช้ TUI หรือรัน CLI เอง |
 | ไม่มีบัญชี Vercel | ยังไม่สมัคร | หยุดที่เช็กลิสต์ ผู้สอนสาธิต |
 | ได้คำว่า deployed แต่ไม่มี URL | ไม่มีหลักฐาน | อย่าเช็คผ่านข้อนี้ |
