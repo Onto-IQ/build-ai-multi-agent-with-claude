@@ -1,10 +1,12 @@
 # Workshop 4 — แก้สามปมด้วย QA handoff
 
-> ⏱ machine ~12 นาที · Start state: quality gate 2/6 (เหลือ `bad-json-does-not-crash`, `health-no-secrets`, `notes-validation`, `notes-persists`) · มี planner + developer จาก Workshop 3
+> ⏱ machine ~12 นาที (รอบ A) + ~3–5 นาที (รอบ B ถ้าทำ) · Start state: quality gate 2/6 (เหลือ `bad-json-does-not-crash`, `health-no-secrets`, `notes-validation`, `notes-persists`) · มี planner + developer จาก Workshop 3
 
 ## Goal / เป้าหมาย
 
 quality gate **6/6 exit 0** และ `POST /api/notes` บันทึกข้อมูลได้จริงโดยเซิร์ฟเวอร์ไม่ล้มและไม่รั่วของ — จบด้วยวงจร handoff ครบรอบ: qa รายงาน → developer แก้ → qa ตรวจซ้ำ
+
+> 📚 **รอบ A แล้วค่อยรอบ B:** รอบ A คุณกดทีละจังหวะเพื่อเห็นสัญญาบนดิสก์ · รอบ B encode สัญญาเดิมเป็น conductor prompt ให้เครื่องวิ่งซ้ำ (ยังหยุดให้คุณรัน gate) — ตอบข้อโต้แย้ง “ให้คนเป็น orchestrator ไม่ practical”: practical คือถือสัญญา ไม่ใช่พิมพ์แชทแทนเอเจนต์ทุกประโยค
 
 ## สังเกต handoff (วงจรปิด)
 
@@ -14,7 +16,7 @@ quality gate **6/6 exit 0** และ `POST /api/notes` บันทึกข้
 | qa | `docs/QA-REPORT.md` (3 findings) | developer แก้ตามรายงาน |
 | developer (แก้) | `server.js` ใหม่ | qa ตรวจซ้ำ + คุณรัน gate |
 
-## Steps / ขั้นตอน
+## Steps / ขั้นตอน — รอบ A (บังคับ)
 
 1. ดูของแดงก่อนแก้ — รัน gate แล้วจดบรรทัด FAIL ทั้งสี่
 
@@ -100,6 +102,41 @@ npm run gate
 
 📦 **Handoff ปิดวงจร:** รายงานเดียวกันมีทั้ง finding และหลักฐานหลังแก้ — โยงไปหา Module 13 ตอน deploy
 
+## Steps / ขั้นตอน — รอบ B (สั้น · encode สัญญาเดิม)
+
+ทำหลังรอบ A ผ่านแล้ว · หรือใช้จับภาพ conductor หลัง catch-up (โฟกัสจุดหยุดก่อน gate และห้ามเปิด Teams)
+
+1. **ยังไม่เปิด** `settings.local.json` / Agent Teams — ใช้ specialty agent อย่างเดียว
+2. วาง conductor prompt (เลือกอย่างใดอย่างหนึ่ง) แล้วกดอนุญาตเมื่อถูกถาม
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Run the QA fix cycle using specialty agents only (no Agent Teams).
+1) Invoke @qa — reproduce the four red gate cases (bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists); write docs/QA-REPORT.md with three findings citing server.js:line and the exact reproduction; do not edit server.js or quality-gate.js.
+2) Invoke @developer — read that report and fix exactly those findings; do not touch scripts/quality-gate.js.
+3) Stop. Tell me to run: npm run gate
+Do not claim the gate passed until I paste the gate output. After I confirm 6/6, invoke @qa to append "Evidence after fix" to the same QA-REPORT.md.
+```
+
+**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+
+```text
+รันวงจรแก้ด้วย QA โดยใช้ specialty agent อย่างเดียว (ห้ามเปิด Agent Teams)
+1) เรียก @qa — รีโปรดิวส์สี่เคสแดง (bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists) แล้วเขียน docs/QA-REPORT.md สาม findings อ้าง server.js:บรรทัด และวิธีรีโปรดิวส์ ห้ามแก้ server.js หรือ quality-gate.js
+2) เรียก @developer — อ่านรายงานนั้นแล้วแก้เฉพาะ findings ห้ามแตะ scripts/quality-gate.js
+3) หยุด แล้วบอกให้ฉันรัน: npm run gate
+ห้ามประกาศว่า gate ผ่านจนกว่าฉันจะวางผล gate มา หลังฉันยืนยัน 6/6 ให้เรียก @qa append หัวข้อ Evidence after fix ใน QA-REPORT.md ไฟล์เดิม
+```
+
+3. เมื่อเอเจนต์หยุด — รัน gate เอง วางผลกลับในแชท แล้วให้ขั้น Evidence เดินต่อ
+
+```powershell
+npm run gate
+```
+
+📦 **จุดสอนรอบ B:** orchestrator ไม่หาย — ย้ายจากนิ้วคุณไปเป็น conductor prompt ที่วิ่ง**สัญญาเดิม** และยังมีจุดหยุดให้คนปิดด้วย gate
+
 ## ✅ Checkpoint
 
 - [ ] `docs/QA-REPORT.md` มีสาม findings + `server.js:บรรทัด` + วิธีรีโปรดิวส์ + ผลหลังแก้
@@ -108,6 +145,7 @@ npm run gate
 - [ ] โน้ตที่บันทึกอยู่รอดจากการรีสตาร์ทเซิร์ฟเวอร์ (เก็บลง `data/notes.json`)
 - [ ] `/api/health` ไม่มี `sk-` หรือ token รูปแบบใด
 - [ ] `.claude/agents/` มี qa.md ที่มี Bash ใน tools
+- [ ] (รอบ B ถ้าทำ) conductor หยุดก่อน gate · ไม่ได้เปิด Agent Teams · Evidence อยู่ไฟล์เดิม
 - [ ] จบวันที่ 1: เว็บโชว์ยอดจริง + บันทึกได้จริง
 
 ## 🛠 Troubleshooting
@@ -120,6 +158,8 @@ npm run gate
 | gate ยัง 2/6 | แก้แล้วแต่ไม่ได้ปิดเซิร์ฟเวอร์เก่าก่อนรัน gate | ปิด `npm start` แล้วรัน gate ใหม่ |
 | เคส notes-persists ยังแดง | เก็บโน้ตในตัวแปร ไม่ได้ลงไฟล์ | ชี้ finding ที่ 3 ใน QA-REPORT แล้วสั่ง developer แก้ต่อ |
 | `Agent type not found` | ยังไม่ได้รีสตาร์ท TUI | ปิดแล้วเปิดใหม่ |
+| รอบ B ประกาศผ่านก่อนมีผล gate | prompt ไม่บังคับจุดหยุด | ย้ำ "Stop. Tell me to run npm run gate" แล้ววางผลเอง |
+| รอบ B เปิด Teammate เอง | สับสนกับ Workshop 3 | สั่งซ้ำ "specialty agents only · no Agent Teams" |
 
 ## 🆘 Behind? Catch up
 
@@ -133,7 +173,8 @@ node scripts/catch-up.js w4
 
 ## Stretch / ต่อยอด
 
-สั่ง qa เพิ่ม finding ที่สี่จากการสำรวจใน Workshop 1 (เช่น พฤติกรรม 404 หรือ method แปลก) ลงใน QA-REPORT เดิม — ไว้ให้ Workshop 7 ใช้ต่อ
+- รอบ B ด้านบน (conductor prompt) — ซ้อม encode สัญญาหลังรอบ A
+- สั่ง qa เพิ่ม finding ที่สี่จากการสำรวจใน Workshop 1 (เช่น พฤติกรรม 404 หรือ method แปลก) ลงใน QA-REPORT เดิม — ไว้ให้ Workshop 7 ใช้ต่อ
 
 ## Solution → solutions/w4/
 

@@ -1,6 +1,6 @@
 # Module 6 — แก้ crash ด้วย QA handoff / Fix with a QA handoff
 
-> ⏱ ~40 นาที · 🎯 แยกคนเขียนกับคนพิสูจน์ · วงจร qa → รายงาน → developer แก้ → qa ตรวจซ้ำ · quality gate **6/6**
+> ⏱ ~45 นาที · 🎯 แยกคนเขียนกับคนพิสูจน์ · รอบ A คนจัดคิว handoff · รอบ B encode สัญญาเดิมให้เครื่องวิ่ง · quality gate **6/6**
 
 แบบฝึกหัด (prompt ที่ต้องคัดลอก) อยู่ที่ **[LAB.md](LAB.md)** — หน้านี้สำหรับอ่านทบทวนแนวคิด
 
@@ -13,6 +13,20 @@ Workshop 3 จบด้วยเว็บที่โชว์ยอดจริ
 เลยเปิดบทบาท **qa** คนละไฟล์เอเจนต์ — มี Bash ให้ออก request ได้ แต่**ห้ามแก้** `server.js` · งานของ qa คือรีโปรดิวส์ → เขียน `docs/QA-REPORT.md` → หลัง developer แก้แล้วรันรีโปรดิวส์เดิมซ้ำแล้ว append ผล
 
 > EN: Separate the writer from the prover. QA reproduces with real requests, writes a file handoff, never edits server.js. Developer fixes only the findings. Gate closes at 6/6.
+
+### ตอบข้อโต้แย้ง: “ให้คนเป็น Orchestrator ไม่ practical”
+
+ในงานจริง**ไม่มีคนพิมพ์ต่อทุกข้อความแทนเอเจนต์** — แต่ยังมี orchestrator เสมอ แค่ย้ายจาก “นิ้วคุณ” ไปเป็น leader agent / skill / hook / CI
+
+สิ่งที่ไม่ practical คือการให้คนส่งแชททีละประโยคตลอดโปรดักชัน · สิ่งที่ practical คือ**ถือสัญญาและจุดหยุด** (ใครทำอะไร · ส่งไฟล์อะไร · เมื่อไหร่ถึงถือว่าผ่าน)
+
+วันนี้คุณถือสัญญาก่อน (รอบ A) · ท้ายแล็บ encode สัญญาเดิมให้เครื่องวิ่งซ้ำ (รอบ B) · วันพรุ่งนี้คอร์สจะให้เครื่องถือสัญญาแทนมากขึ้น (Skills → Guardrails → Capstone)
+
+| ที่มักเข้าใจผิด | ที่คอร์สสอน |
+|---|---|
+| ทุกโปรดักชันต้องมีคนคลิกทีละขั้น | คลิกทีละขั้น = **รอบเรียนรู้** รอบเดียว แล้ว encode |
+| ไม่มี orchestrator = ทันสมัยกว่า | ไม่มีสัญญา = กลับไปมุก “เทสแล้วเวิร์ก” |
+| Practical = ให้เอเจนต์คุยกันเองจนจบ | Practical = **สัญญาเดียวกัน** ให้คนหรือเครื่องวิ่งก็ได้ |
 
 ## Concept / เนื้อหา
 
@@ -64,12 +78,28 @@ Workshop 3 สั่ง teammate **ห้าม** แก้สี่เคสน
 
 ## ลำดับในห้อง (ภาพรวม)
 
+### รอบ A — บังคับ (เรียนรู้สัญญา · คนจัดคิว)
+
 1. รัน `npm run gate` — จด FAIL ทั้งสี่ (ยังไม่แก้)
 2. สร้าง `.claude/agents/qa.md` → ปิด TUI แล้วเปิด `claude` ใหม่
 3. `@qa` สืบสวนสี่เคส → ได้ `docs/QA-REPORT.md` สาม findings (ห้ามแก้ของ)
 4. `@developer` แก้ตามรายงานเท่านั้น
 5. คุณรัน gate เอง → คาด **6/6 exit 0**
 6. `@qa` รันรีโปรดิวส์เดิมซ้ำ → append Evidence after fix
+
+### รอบ B — สั้น (encode สัญญาเดิม · conductor prompt)
+
+หลังรอบ A ผ่านแล้ว (หรือใช้ catch-up แล้วอยากซ้อมเส้นทางอัตโนมัติ): สั่ง **prompt เดียว** ให้ main จัดคิว `@qa` → `@developer` ตามไฟล์เดิม — **ยังไม่เปิด Agent Teams** — และ**หยุดก่อน gate** ให้คุณรัน `npm run gate` เอง แล้วค่อยให้ `@qa` append Evidence
+
+ข้อความเต็มอยู่ที่ [LAB.md](LAB.md) หัวข้อรอบ B
+
+แผนที่ไปต่อในคอร์ส (อย่าคิดว่า W4 จบแล้ว automated ทั้งระบบ):
+
+| หลัง W4 | ใครถือสัญญา |
+|---|---|
+| W5 Skills | checklist ซ้ำได้โดยไม่ต้องจำขั้นตอน |
+| W7 Hooks + gate | เครื่องบังคับ stop condition |
+| Capstone | leader-first จัดคิวบทบาทบนสเปกเดียว |
 
 ## สิ่งที่ต้องจำ (ทบทวน)
 
@@ -80,6 +110,7 @@ Workshop 3 สั่ง teammate **ห้าม** แก้สี่เคสน
 | รายงานเป็นไฟล์ handoff | developer อ่านสัญญา ไม่เดาจากแชท |
 | แก้ตาม findings เท่านั้น | อย่า “เก็บงาน” เกินรายงานในรอบนี้ |
 | คุณเป็นคนปิด gate | `npm run gate` คือหลักฐาน ไม่ใช่คำพูดเอเจนต์ |
+| รอบ A แล้วค่อยรอบ B | เห็นสัญญาก่อน แล้วค่อยให้เครื่องวิ่งซ้ำ |
 | ปิดเซิร์ฟเวอร์ก่อน gate | port 3000 ค้างทำให้ผลเพี้ยน (เหมือน W3) |
 
 ## Common pitfalls / กับดัก
@@ -90,6 +121,8 @@ Workshop 3 สั่ง teammate **ห้าม** แก้สี่เคสน
 - gate ยังแดงเพราะเซิร์ฟเวอร์เก่าค้างพอร์ต
 - developer แตะ `scripts/quality-gate.js` เพื่อให้ผ่านแบบปลอม
 - ได้ 6/6 แล้วข้ามขั้น qa ตรวจซ้ำ — วงจร handoff ยังไม่ปิด
+- ข้ามรอบ A ไปรอบ B ตั้งแต่ต้น — จะไม่เห็นจุดหยุด handoff
+- เปิด Agent Teams ในรอบ B — บทนี้สอนสัญญาไฟล์ ไม่ใช่ Teammate คุยกันเอง
 
 ## Quick check / ทบทวน
 
@@ -111,6 +144,11 @@ Workshop 3 สั่ง teammate **ห้าม** แก้สี่เคสน
 <details>
 <summary>4. Evidence after fix อยู่ไฟล์ไหน</summary>
 append ใน docs/QA-REPORT.md ไฟล์เดิม — ไม่สร้างรายงานใหม่ทิ้งของเก่า
+</details>
+
+<details>
+<summary>5. รอบ B แทนที่การมี orchestrator ได้เลยไหม</summary>
+ไม่ได้แทนในความหมาย “ไม่มี orchestrator” — รอบ B แค่ย้ายนิ้วคุณไปเป็น conductor prompt ที่วิ่งสัญญาเดิม และยังหยุดให้คุณปิดด้วย gate
 </details>
 
 ## Go deeper
