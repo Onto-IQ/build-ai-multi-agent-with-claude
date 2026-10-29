@@ -112,7 +112,7 @@ Enable an agent team (not Explore subagents). Spawn exactly 3 named teammates:
 
 Use a shared task list. The three teammates data, backend, and frontend must message each other at least 5 times before you synthesize.
 Do not touch scripts/quality-gate.js. Cite which task numbers you completed.
-When finished, ask all teammates to shut down.
+When finished, ask each teammate by name to shut down (message data, then backend, then frontend). Do not call Stop Task using the names data/backend/frontend — those are teammate names, not task IDs.
 ```
 
 **เวอร์ชันไทย (ใช้ได้เต็มที่):**
@@ -126,7 +126,7 @@ When finished, ask all teammates to shut down.
 
 ใช้รายการงานร่วม เพื่อนทีม data, backend, frontend ต้องส่งข้อความหากันอย่างน้อย 5 ครั้งก่อนที่คุณจะสรุป
 ห้ามแตะ scripts/quality-gate.js รายงานว่าทำ task เลขอะไรครบบ้าง
-จบแล้วให้ teammate ทุกตัว shut down
+จบแล้วให้สั่ง teammate ทีละชื่อให้ shut down (ส่งข้อความหา data แล้ว backend แล้ว frontend) ห้ามใช้ Stop Task โดยใส่ชื่อ data/backend/frontend เป็นรหัสงาน — นั่นคือชื่อเพื่อนทีม ไม่ใช่รหัสในรายการงาน
 ```
 
 ผลที่คาดหวัง: แผงเอเจนต์มีชื่อ `data` / `backend` / `frontend` · มีรายการงานร่วม · ได้ DESIGN + SQL + การแก้ backend/frontend
@@ -193,6 +193,7 @@ echo $LASTEXITCODE
 | ได้แค่ Explore ไม่มี teammate ชื่อ | ยังไม่มี settings หรือเปิด `claude` ก่อน Save | ตรวจไฟล์ → เปิดใหม่ → สั่งชัดว่า agent team |
 | ใช้ `claude -p` แล้วไม่มีทีม | โหมดทีมต้องใช้หน้าจอโต้ตอบ | ใช้ `claude` อย่างเดียว |
 | หมดรอบกลางคัน | งานลงมือยาว | ตรวจว่า MAX_TURNS เป็น `"30"` · Save แล้วเปิดใหม่ |
+| `Stop Task` / `No task found with ID: data` (หรือ backend/frontend) | หัวหน้าสับสน **ชื่อเพื่อนทีม** กับ **รหัสงานในรายการ** | ปกติเจอตอนปิดทีม · ถ้ามี DESIGN/SQL/แก้ไฟล์ครบแล้วไปต่อได้ · รอบหน้าให้สั่ง shut down ทีละชื่อเพื่อน ไม่ใช่ Stop Task ด้วยชื่อนั้น |
 | หน้าเว็บยังของเดิม | ยังไม่รัน SQL | รันขั้น 9 ซ้ำ |
 | แล็บหลังยังเป็นทีมใหญ่เอง | ลืมลบ `settings.local.json` | ลบไฟล์แล้วเปิด `claude` ใหม่ |
 | port busy | เซิร์ฟเวอร์ค้าง | ปิดก่อนรัน gate หรือตั้ง `PORT` |
