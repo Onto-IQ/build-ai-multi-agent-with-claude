@@ -1,10 +1,10 @@
 # Workshop 7 — Guardrails ครบ: hook + cost gate
 
-> ⏱ machine ~8 นาที · Start state: อยู่ใน workshop repo · quality gate 6/6 exit 0 จาก Workshop 4 · แอปใช้งานได้ครบ
+> ⏱ machine ~10 นาที · Start state: อยู่ใน workshop repo · quality gate 6/6 exit 0 จาก Workshop 4 · แอปใช้งานได้ครบ
 
 ## Goal / เป้าหมาย
 
-มี hook ที่บล็อกคำสั่งอันตราย (exit 2) และ cost gate ที่ทดสอบได้โดยไม่ต้องเปิด Claude — พร้อมยืนยันว่า gate ยังเขียวครบ 6/6 ก่อนเริ่ม feature ใน Workshop 8
+มี hook ที่บล็อกคำสั่งอันตราย (exit 2) ที่ยืนยันแล้วทั้งด้วยมือและผ่าน Claude เอง และ cost gate ที่ทดสอบได้โดยไม่ต้องเปิด Claude — พร้อมยืนยันว่า gate ยังเขียวครบ 6/6 ก่อนเริ่ม feature ใน Workshop 8
 
 ## สังเกต handoff
 
@@ -64,7 +64,35 @@ $proc.ExitCode
 
 ผลที่คาดหวัง: ไม่มีข้อความบล็อก และ exit 0
 
-5. cost gate — เขียน `usage.json` ด้วยตัวเลขฝึก (เขียนแบบไม่มี BOM) แล้วรัน
+5. ทดสอบผ่าน Claude เอง — ขั้น 3–4 พิสูจน์แค่สคริปต์ Node ลอย ๆ ขั้นนี้พิสูจน์ว่า Claude Code เรียก hook เองก่อนคำสั่งรันจริง
+
+สร้างโฟลเดอร์ทิ้งได้ไว้ก่อน เผื่อ hook ยังไม่ถูกผูก ของจริงใน repo จะไม่หาย:
+
+```powershell
+New-Item -ItemType Directory -Force hook-test-dummy | Out-Null
+```
+
+แล้ววางในเซสชัน TUI (เปิดใหม่หลังเขียน `settings.json` เสร็จก็ได้):
+
+**เวอร์ชันอังกฤษ (แนะนำ):**
+
+```text
+Run this exact bash command: rm -rf hook-test-dummy
+```
+
+ถ้ามีกล่องขออนุญาตรันคำสั่ง ให้กดอนุญาต — ตัวที่บล็อกต่อจากนั้นต้องเป็น hook ไม่ใช่คุณ
+
+ผลที่คาดหวัง: Claude รายงานว่าคำสั่งถูกบล็อกพร้อมเหตุผลที่อ่านได้ (`blocked dangerous command: rm -rf hook-test-dummy`) และยืนยันด้วยมือว่าโฟลเดอร์ยังอยู่:
+
+```powershell
+Test-Path hook-test-dummy
+```
+
+ผลที่คาดหวัง: `True`
+
+> 📚 **รู้เพิ่ม:** ต่างจากขั้น 3 ตรงที่ payload ไม่ได้มาจากมือคุณ — Claude Code เป็นคนป้อนให้ hook เองทุกครั้งก่อนคำสั่งรัน นี่คือหลักฐานว่ากฎบังคับได้จริงแม้ไม่มีใครเฝ้า · อย่าทดสอบด้วย `rm -rf data` ตรง ๆ เพราะถ้า hook ยังไม่ผูก ข้อมูลชุดสะอาดจาก Workshop 4 หายเลย
+
+6. cost gate — เขียน `usage.json` ด้วยตัวเลขฝึก (เขียนแบบไม่มี BOM) แล้วรัน
 
 ```powershell
 [IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":0.5,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))
@@ -73,7 +101,7 @@ node scripts/cost-gate.js usage.json
 
 ผลที่คาดหวัง: `PASS | cost-gate` และ exit 0 เมื่อต่ำกว่า 2 USD และต่ำกว่า 20000 output token
 
-6. ทดสอบฝั่งเกินงบ — ตั้ง `total_cost_usd` เป็น 3
+7. ทดสอบฝั่งเกินงบ — ตั้ง `total_cost_usd` เป็น 3
 
 ```powershell
 [IO.File]::WriteAllText("$pwd\usage.json", '{"total_cost_usd":3,"usage":{"output_tokens":1000}}', (New-Object System.Text.UTF8Encoding($false)))
@@ -84,7 +112,7 @@ node scripts/cost-gate.js usage.json
 
 > 📚 **เช็คก่อนรัน:** `scripts/cost-gate.js` ยังไม่อยู่ใน starter — ได้มาหลังรัน `node scripts/catch-up.js w7` หรือคัดลอกจาก `solutions/w7/drop-in/scripts/cost-gate.js` (ตรวจจริง: ถ้ายังไม่มีไฟล์ `node scripts/cost-gate.js` จะขึ้น `MODULE_NOT_FOUND`)
 
-7. ยืนยันปิดท้าย: gate ยังเขียวครบ — พร้อมเข้า Workshop 8
+8. ยืนยันปิดท้าย: gate ยังเขียวครบ — พร้อมเข้า Workshop 8
 
 ```powershell
 npm run gate
@@ -93,6 +121,7 @@ npm run gate
 ## ✅ Checkpoint
 
 - [ ] `.claude/hooks/block-dangerous-bash.js` บล็อก `rm -rf` (exit 2) และปล่อย `npm run gate` (exit 0)
+- [ ] สั่งผ่าน Claude ใน TUI แล้วเห็น hook เป็นคนบล็อก (ไม่ใช่คุณกด deny เอง) และโฟลเดอร์ทดสอบยังอยู่
 - [ ] `.claude/settings.json` ผูก PreToolUse กับ Bash แล้ว
 - [ ] cost gate exit 0 เมื่อต่ำกว่าเพดาน และ exit 2 เมื่อเกิน
 - [ ] รู้ว่าเพดาน 2 USD เป็นค่าสอน — จดตัวเลขจริงของห้องแล้วปรับเองภายหลัง
@@ -102,6 +131,7 @@ npm run gate
 | อาการ | สาเหตุ | แก้ |
 |---|---|---|
 | hook ขึ้น malformed payload แล้ว exit 0 | payload พังจาก pipe ของ PowerShell 5.1 | ใช้ไฟล์ + `Start-Process -RedirectStandardInput` ตามขั้น 3 |
+| สั่งผ่าน Claude แล้วคำสั่งรันจริง (ไม่โดนบล็อก) | เซสชันเปิดก่อน hook ถูกเขียน หรือ `settings.json` ไม่อยู่ที่ราก workshop | ตรวจ `.claude/settings.json` ที่ราก workshop repo แล้วเปิดเซสชัน TUI ใหม่ |
 | `JSON.parse` พังทั้งที่ JSON ถูก | BOM จาก `Set-Content -Encoding UTF8` | ใช้ `UTF8Encoding($false)` |
 | `Cannot find module .../cost-gate.js` | ยังไม่มีสคริปต์ | catch-up `w7` หรือคัดลอกจาก `solutions/w7/drop-in/scripts/` |
 | gate ไม่ 6/6 | ข้อมูลหรือเซิร์ฟเวอร์ไม่ใช่ชุด Workshop 3/4 | catch-up `w3` แล้ว `w4` |
