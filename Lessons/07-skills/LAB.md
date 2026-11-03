@@ -26,7 +26,7 @@ Frontmatter: name release-checklist; description "Use before releasing the Regis
 Body: four checks — server boots, quality gate result is recorded, /api/health must not contain sk-, server is stopped before the gate.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สร้าง .claude/skills/release-checklist/SKILL.md
@@ -46,7 +46,7 @@ frontmatter: name เป็น release-checklist และ description เป็
 I want to release the Registry Insight app now. Walk me through it.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ฉันจะปล่อย Registry Insight ตอนนี้ พาฉันทำทีละขั้น
@@ -64,7 +64,7 @@ Frontmatter exactly: name release-manager; description "Use when the Registry In
 Body: you are the release manager. Run the release-checklist skill in order and report each check as PASS or FAIL with evidence. Never print any value that starts with sk-. Do not change server.js or the CSV.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ในโฟลเดอร์นี้ สร้าง .claude/agents/release-manager.md
@@ -84,7 +84,7 @@ frontmatter ต้องตรงนี้: name เป็น release-manager; d
 @release-manager Run the release checklist now. Report PASS or FAIL for each check.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @release-manager รัน release checklist เลย รายงานผลข้อละ PASS หรือ FAIL

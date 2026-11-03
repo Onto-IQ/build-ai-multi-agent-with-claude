@@ -71,7 +71,7 @@ Body sections: Method, Output format with file:line evidence, Constraints that f
 Do not change server.js or the CSV.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ในโฟลเดอร์นี้ ให้สร้าง .claude/agents/data-researcher.md

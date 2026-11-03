@@ -38,7 +38,7 @@ In this folder, create two agent files.
 2) .claude/agents/developer.md — Frontmatter: name developer; description "Use proactively to implement one task from docs/TASKS.md"; tools Read, Grep, Glob, Write, Edit, Bash; model sonnet. Body: you are the developer. You implement exactly the tasks assigned to you, citing the task numbers. Node only, no dependencies. Never touch scripts/quality-gate.js.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ในโฟลเดอร์นี้ สร้างไฟล์เอเจนต์สองตัว
@@ -58,7 +58,7 @@ In this folder, create two agent files.
 @planner Read docs/EXPLORATION-REPORT.md and data/README.md, then write docs/TASKS.md: the ordered tasks to clean data/dataset.csv and prove it, organized as three tracks (data, backend, frontend), who owns each file, and which task must never touch scripts/quality-gate.js.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @planner อ่าน docs/EXPLORATION-REPORT.md กับ data/README.md แล้วเขียน docs/TASKS.md: ลิสต์งานเรียงลำดับเพื่อทำความสะอาด data/dataset.csv และพิสูจน์ผล จัดเป็นสามส่วน (data, backend, frontend) ใครเป็นเจ้าของไฟล์ไหน และงานไหนห้ามแตะ scripts/quality-gate.js
@@ -116,7 +116,7 @@ Cite which task numbers you completed.
 When finished, ask each teammate by name to shut down (message data, then backend, then frontend). Do not call Stop Task using the names data/backend/frontend — those are teammate names, not task IDs.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @developer ทำหน้าที่หัวหน้าทีม อ่าน docs/TASKS.md
@@ -197,7 +197,7 @@ echo $LASTEXITCODE
 @developer Compare scripts/clean-export.sql against docs/DESIGN.md and write docs/REVIEW.md with the differences. Fix nothing.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @developer เทียบ scripts/clean-export.sql กับ docs/DESIGN.md แล้วเขียน docs/REVIEW.md สรุปจุดต่าง ห้ามแก้ของ

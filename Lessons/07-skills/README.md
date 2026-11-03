@@ -61,7 +61,7 @@ Frontmatter: name release-checklist; description "Use before releasing the Regis
 Body: four checks — server boots, quality gate result is recorded, /api/health must not contain sk-, server is stopped before the gate.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สร้าง .claude/skills/release-checklist/SKILL.md

@@ -39,7 +39,7 @@ Frontmatter: name writer; description "Use when figures must become a Thai execu
 Body: you are the writer. You write docs/EXECUTIVE-SUMMARY.md in Thai. Prefer figures from handoff files written by other agents (docs/QA-REPORT.md, docs/region-capital.csv, data-researcher notes, or a short figures file from qa / release-manager). Do not invent numbers. If you must re-check a live endpoint and the machine is Windows, use PowerShell via Bash tool, for example: powershell -NoProfile -Command "Invoke-RestMethod http://127.0.0.1:3000/api/summary | ConvertTo-Json -Compress" — only when the server is already running; do not start long-lived servers yourself. Keep file names and endpoint names in English. Never edit server.js, web/, or scripts/quality-gate.js.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ในโฟลเดอร์นี้ สร้าง .claude/agents/writer.md
@@ -69,7 +69,7 @@ Agents that need another agent's output must NOT run before it.
 Report under 400 words and name each deliverable.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สร้าง release ฉบับสุดท้ายของ Registry Insight ด้วยทีมเอเจนต์ที่มีอยู่: planner data-researcher developer qa writer (อยู่ใน .claude/agents/)

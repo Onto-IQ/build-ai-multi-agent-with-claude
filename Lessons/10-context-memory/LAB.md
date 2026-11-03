@@ -16,7 +16,7 @@
 Add memory: project to the frontmatter of both .claude/agents/data-researcher.md and .claude/agents/qa.md. Keep name, description, tools, and any mcpServers line on each file exactly as they are. Do not change the bodies. Do not add memory to developer, planner, or release-manager.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 เพิ่ม memory: project ใน frontmatter ของทั้ง .claude/agents/data-researcher.md และ .claude/agents/qa.md คง name, description, tools และบรรทัด mcpServers (ถ้ามี) ของแต่ละไฟล์ไว้เหมือนเดิม ห้ามแก้ body ห้ามใส่ memory ให้ developer, planner หรือ release-manager
@@ -42,7 +42,7 @@ memory: project
 @qa Remember this project note: Always reproduce bugs with a real HTTP request before writing docs/QA-REPORT.md. Never trust a developer claim that "it works" without your own reproduction. Do not edit server.js.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @data-researcher จดไว้ว่า Registry Insight ใช้ Node http ล้วน ไม่มี dependency ห้ามแนะนำ Express ถ้าไม่ได้ขอ

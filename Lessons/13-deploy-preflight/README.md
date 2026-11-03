@@ -70,7 +70,7 @@ After login, run npx vercel whoami and report PASS or FAIL with the account name
 Do not deploy. Do not link or create a project yet. Do not print tokens, cookies, or any sk- value.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 เตรียมล็อกอิน Vercel CLI ให้ workshop repo นี้ เพื่อเตรียม deploy ทีหลัง
@@ -94,7 +94,7 @@ After deploying, give me the production URL and the commit (or deployment id) th
 Do not print any sk- value. Do not add ANTHROPIC_API_KEY as a Vercel env var.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 Deploy แอป Registry Insight ขึ้น Vercel โดยใช้เฉพาะ Vercel CLI (npx vercel)

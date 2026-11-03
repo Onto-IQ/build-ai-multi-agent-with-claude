@@ -94,7 +94,7 @@ claude mcp list
 Add mcpServers: data-duckdb to the frontmatter of .claude/agents/data-researcher.md. Keep the tools line exactly as it is.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 เพิ่ม mcpServers: data-duckdb ใน frontmatter ของ .claude/agents/data-researcher.md คงบรรทัด tools เดิมไว้
@@ -116,7 +116,7 @@ mcpServers: data-duckdb
 Use the data-duckdb MCP execute_query tool to run: SELECT month, count(*) AS companies, sum(TRY_CAST(replace(replace(capital_raw, ',', ''), ' ', '') AS BIGINT)) AS capital_thb FROM businesses_raw GROUP BY month ORDER BY month. Report the table. Do not edit files.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ใช้ tool execute_query ของ MCP data-duckdb รัน: SELECT month, count(*) AS companies, sum(TRY_CAST(replace(replace(capital_raw, ',', ''), ' ', '') AS BIGINT)) AS capital_thb FROM businesses_raw GROUP BY month ORDER BY month แล้วรายงานตาราง ห้ามแก้ไฟล์
@@ -136,7 +136,7 @@ Use the data-duckdb MCP execute_query tool to run: SELECT month, count(*) AS com
 Create scripts/analysis.sql for DuckDB: join data/dataset.csv province against a province-to-region mapping table written as a VALUES list, group by region, and COPY the result (region, companies, capital_thb) to docs/region-capital.csv. Order by capital descending. Run nothing yet.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สร้าง scripts/analysis.sql สำหรับ DuckDB: จับคู่คอลัมน์ province จาก data/dataset.csv กับตารางแผนที่จังหวัดเป็นภาคแบบ VALUES list แล้ว GROUP BY region และ COPY ผล (region, companies, capital_thb) ไปที่ docs/region-capital.csv เรียงทุนมากไปน้อย ยังไม่ต้องรัน
@@ -160,7 +160,7 @@ duckdb -c ".read scripts/analysis.sql"
 @data-researcher Read docs/region-capital.csv only. Write docs/ANALYSIS.md in Thai with: (1) a short title and one sentence stating the source files (dataset.csv clean · analysis.sql · region-capital.csv), (2) a markdown table of all six regions with companies and capital_thb exactly as in the CSV, (3) one observation sentence that cites numbers from that table only. Do not invent totals or regions. Do not edit scripts/analysis.sql or .mcp.json.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @data-researcher อ่านเฉพาะ docs/region-capital.csv แล้วเขียน docs/ANALYSIS.md เป็นภาษาไทย โดยมี (1) ชื่อเรื่องสั้น + ประโยคหนึ่งบอกแหล่งที่มา (dataset.csv สะอาด · analysis.sql · region-capital.csv) (2) ตาราง markdown ทั้ง 6 ภาค พร้อมจำนวนกิจการและทุน ตาม CSV เป๊ะ (3) ข้อสังเกตหนึ่งประโยคที่อ้างตัวเลขจากตารางนั้นเท่านั้น ห้ามเดายอดหรือภาคเพิ่ม ห้ามแก้ scripts/analysis.sql หรือ .mcp.json

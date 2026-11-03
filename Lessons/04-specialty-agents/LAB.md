@@ -26,7 +26,7 @@ Body sections: Method, Output format with file:line evidence, Constraints that f
 Do not change server.js or the CSV.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ในโฟลเดอร์นี้ ให้สร้าง .claude/agents/data-researcher.md
@@ -49,7 +49,7 @@ frontmatter ต้องตรงนี้: name เป็น data-researcher; d
 @data-researcher Explain POST /api/notes citing server.js:line for every claim. Do not edit files.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @data-researcher อธิบายว่า POST /api/notes ทำอะไร โดยทุกข้ออ้างต้องระบุ server.js:บรรทัด ห้ามแก้ไฟล์

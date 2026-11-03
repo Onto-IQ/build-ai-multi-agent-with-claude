@@ -28,7 +28,7 @@ claude
 Explore this project for 2 minutes and name the single riskiest file. Under 80 words.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สำรวจโปรเจกต์นี้ประมาณ 2 นาที แล้วบอกไฟล์เดียวที่เสี่ยงที่สุด พร้อมเหตุผล ไม่เกิน 80 คำ

@@ -34,7 +34,7 @@ npm run gate
 Create .claude/hooks/block-dangerous-bash.js: a Node script that reads a JSON payload from stdin with fields tool_name and tool_input.command. If the command contains rm -rf, taskkill, or Remove-Item -Recurse, print "blocked dangerous command: <command>" to stderr and exit with code 2. Otherwise exit 0 silently. Then bind it in .claude/settings.json as a PreToolUse hook matcher for the Bash tool.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สร้าง .claude/hooks/block-dangerous-bash.js: สคริปต์ Node อ่าน JSON จาก stdin มีฟิลด์ tool_name กับ tool_input.command ถ้าคำสั่งมี rm -rf, taskkill หรือ Remove-Item -Recurse ให้พิมพ์ "blocked dangerous command: <command>" ลง stderr แล้ว exit code 2 ถ้าไม่ใช่ exit 0 เงียบ ๆ จากนั้นผูกใน .claude/settings.json เป็น PreToolUse hook matcher ของเครื่องมือ Bash

@@ -83,7 +83,7 @@ npm run gate && echo GATE-GREEN
 scripts/quality-gate.js currently FAILS. Replace data/dataset.csv with a cleaned file and change server.js only enough that all three cases pass. Do not edit scripts/quality-gate.js. Then show me the command output.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 scripts/quality-gate.js ตอนนี้ FAIL ให้แทนที่ data/dataset.csv ด้วยไฟล์ที่สะอาด และแก้ server.js น้อยที่สุดจน quality gate หกเคสผ่าน ห้ามแก้ scripts/quality-gate.js แล้วแสดงผลคำสั่งให้ดู

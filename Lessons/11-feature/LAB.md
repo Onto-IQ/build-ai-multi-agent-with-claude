@@ -53,7 +53,7 @@ feature ใหม่ที่**คุณเลือกจากเมนู 5 �
 @planner We are adding a new feature: <FEATURE>. Read docs/PRODUCT-SPEC.md, data/README.md, and the current web/ files, then write docs/FEATURE-PLAN.md: the exact files to create or edit, the endpoint contract if any, the UI changes, and the acceptance checks. Do not write code. Keep scope under about 60 minutes.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @planner เราจะเพิ่ม feature ใหม่: <FEATURE> อ่าน docs/PRODUCT-SPEC.md data/README.md และไฟล์ใน web/ ที่มีอยู่ แล้วเขียน docs/FEATURE-PLAN.md: ไฟล์ไหนต้องสร้างหรือแก้ endpoint contract ถ้ามี การเปลี่ยนหน้าเว็บ และเกณฑ์ตรวจรับ ห้ามเขียนโค้ด จำกัดขอบเขตให้อยู่ในงานประมาณ 60 นาที
@@ -69,7 +69,7 @@ feature ใหม่ที่**คุณเลือกจากเมนู 5 �
 @developer Implement docs/FEATURE-PLAN.md exactly. Node only, no dependencies. Keep GET /api/summary, /api/health and /api/notes contracts unchanged. After coding, run npm run gate yourself and report the exit code.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @developer ทำตาม docs/FEATURE-PLAN.md เป๊ะ Node ล้วน ไม่มี dependency คง contract ของ GET /api/summary, /api/health และ /api/notes เดิมไว้ หลังเขียนโค้ดเสร็จ รัน npm run gate เองแล้วรายงาน exit code
@@ -93,7 +93,7 @@ npm run gate
 @qa Verify the new feature: <FEATURE>. Check the UI works with real requests, the gate is still 6/6, and nothing prints sk-. Append the result to docs/QA-REPORT.md as a new section. Name the section with the feature code if known (A-E).
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @qa ตรวจรับ feature ใหม่: <FEATURE> ตรวจว่าหน้าเว็บทำงานจริง gate ยัง 6/6 และไม่มีอะไรพิมพ์ sk- แล้ว append ผลเข้า docs/QA-REPORT.md เป็นหัวข้อใหม่ ระบุรหัส A-E ถ้ามี

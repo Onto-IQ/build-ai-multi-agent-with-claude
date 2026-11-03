@@ -72,7 +72,7 @@ Agents that need another agent's output must NOT run before it.
 Report under 400 words and name each deliverable.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 สร้างแดชบอร์ด Registry Insight ด้วยทีม 5 บทบาท ทำให้จริง อย่าหยุดที่แผน

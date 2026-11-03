@@ -36,7 +36,7 @@ Frontmatter: name qa; description "Use when implementation claims to be done. Re
 Body: you are QA. You reproduce bugs with real requests before writing anything. You write docs/QA-REPORT.md with findings citing server.js:line and the exact reproduction. After a fix, you re-run the same reproduction and append the result. You never modify server.js or data/dataset.csv.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ในโฟลเดอร์นี้ สร้าง .claude/agents/qa.md
@@ -54,7 +54,7 @@ frontmatter: name เป็น qa; description ว่า Use when implementation
 @qa Four quality gate cases still fail: bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists. Reproduce each with real requests, find the root causes in server.js, and write docs/QA-REPORT.md with three findings (crash, token leak, notes not validated or persisted), each citing server.js:line and the exact reproduction. Do not fix anything.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @qa เคส quality gate ยังแดงสี่เคส: bad-json-does-not-crash, health-no-secrets, notes-validation, notes-persists รีโปรดิวส์ทีละเคสด้วย request จริง หา root cause ใน server.js แล้วเขียน docs/QA-REPORT.md สาม findings (crash, token รั่ว, โน้ตไม่ถูกตรวจและไม่ถูกเก็บ) ทุก finding อ้าง server.js:บรรทัด และวิธีรีโปรดิวส์ ห้ามแก้อะไร
@@ -70,7 +70,7 @@ frontmatter: name เป็น qa; description ว่า Use when implementation
 @developer Read docs/QA-REPORT.md and fix exactly the three findings: make POST /api/notes answer 400 { error: 'INVALID_JSON' } for a non-JSON or non-object body, answer 400 { error: 'INVALID_TEXT' } when text is missing or empty, persist every note to data/notes.json and add GET /api/notes returning the stored notes, and make /api/health return { ok: true } with no token of any shape. Keep everything else unchanged. Do not touch scripts/quality-gate.js.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @developer อ่าน docs/QA-REPORT.md แล้วแก้เฉพาะสาม findings: POST /api/notes ด้วยของที่ไม่ใช่ JSON หรือไม่ใช่ object ต้องตอบ 400 { error: 'INVALID_JSON' }, ขาด text หรือ text ว่างต้องตอบ 400 { error: 'INVALID_TEXT' }, เก็บทุกโน้ตลง data/notes.json และเพิ่ม GET /api/notes คืนโน้ตที่เก็บไว้, และ /api/health ตอบ { ok: true } ไม่มี token รูปแบบใด อย่าเปลี่ยนอย่างอื่น ห้ามแตะ scripts/quality-gate.js
@@ -94,7 +94,7 @@ npm run gate
 @qa Re-run the reproduction from docs/QA-REPORT.md against the fixed server and append the result to the report as "Evidence after fix".
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 @qa รันรีโปรดิวส์ใน docs/QA-REPORT.md ซ้ำกับ server ตัวที่แก้แล้ว แล้ว append ผลเข้ารายงานในหัวข้อ Evidence after fix
@@ -119,7 +119,7 @@ Run the QA fix cycle using specialty agents only (no Agent Teams).
 Do not claim the gate passed until I paste the gate output. After I confirm 6/6, invoke @qa to append "Evidence after fix" to the same QA-REPORT.md.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 รันวงจรแก้ด้วย QA โดยใช้ specialty agent อย่างเดียว (ห้ามเปิด Agent Teams)

@@ -34,7 +34,7 @@ Dispatch 3 parallel Explore subagents on this Registry Insight app.
 Do not modify files. Return one report under 300 words with headings: structure, data quality, risks.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ส่ง Explore subagent 3 ตัวทำพร้อมกันในแอป Registry Insight
@@ -54,7 +54,7 @@ Do not modify files. Return one report under 300 words with headings: structure,
 Write the final report to docs/EXPLORATION-REPORT.md with headings: structure, data quality, risks. Each risk must cite file:line.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 เขียนรายงานฉบับสุดท้ายลง docs/EXPLORATION-REPORT.md มีหัวข้อ โครงสร้าง, คุณภาพข้อมูล, จุดเสี่ยง ทุกจุดเสี่ยงต้องอ้าง file:line
@@ -157,7 +157,7 @@ Keep the whole file under 250 words. Cite file:line for disputed items.
 When finished, ask all teammates to shut down.
 ```
 
-**เวอร์ชันไทย (ใช้ได้เต็มที่):**
+**เวอร์ชันไทย (ใช้ได้ผลเท่ากัน):**
 
 ```text
 ใช้ Agent Teams (ไม่ใช่ Explore subagent) สร้าง teammate ชื่อชัดเจน 3 ตัว:
